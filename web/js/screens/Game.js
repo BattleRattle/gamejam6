@@ -1,6 +1,7 @@
 define('GameScreen', [
-	'createjs'
-], function(createjs){
+	'createjs',
+	'Movement'
+], function(createjs, Movement){
 	var Game = function() {
 
 	};
@@ -10,7 +11,10 @@ define('GameScreen', [
 	}
 
 	Game.prototype.enter =  function (canvas, stage) {
-		this.exit();
+		var movement = new Movement();
+		movement.initialize();
+
+//		this.exit();
 	};
 
 	Game.prototype.exit = function() {
