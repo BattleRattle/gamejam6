@@ -1,7 +1,7 @@
 
 require.config({
 	paths: {
-		// define external libraries
+		createjs: 'libs/createjs-2013.12.12.min'
 	}
 
 });

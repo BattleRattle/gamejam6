@@ -1,7 +1,8 @@
 
 define([
+	'createjs'
 
-], function () {
+], function (createjs) {
 	var initialize = function () {
 		console.log("app init")
 	};
