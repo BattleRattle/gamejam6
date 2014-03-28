@@ -10,7 +10,8 @@ require.config({
 		'MenuScreen': 'screens/Menu',
 		'CharacterScreen': 'screens/Character',
 		'GameScreen': 'screens/Game',
-		'GameOverScreen': 'screens/GameOver'
+		'GameOverScreen': 'screens/GameOver',
+		'Movement': 'movement'
 	}
 
 });
