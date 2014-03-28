@@ -66,7 +66,7 @@ ConnectionHandler.prototype.sendBroadcast = function(socket, response, includeSe
 		return;
 	}
 
-	this.game.getPlayers().each(function(player) {
+	this.game.getPlayers().forEach(function(player) {
 		if (includeSelf && sendingPlayer === player) return;
 		player.getSocket().send(this.createRawResponse(response));
 	}.bind(this));
