@@ -5,23 +5,23 @@ var ConnectionEventFactory = function(connectionHandler) {
 	this.eventHandlers = {};
 };
 
-ConnectionEventFactory.prototype.getEventHandler = function(remoteClass) {
-	if (this.eventHandlers[remoteClass]) {
-		return this.eventHandlers[remoteClass];
+ConnectionEventFactory.prototype.getEventHandler = function(type) {
+	if (this.eventHandlers[type]) {
+		return this.eventHandlers[type];
 	}
 
-	switch (remoteClass) {
+	switch (type) {
 		case PlayerEventHandler.TYPE:
-			this.eventHandlers[remoteClass] = new PlayerEventHandler();
+			this.eventHandlers[type] = new PlayerEventHandler();
 			break;
 
 		default:
-			throw new Error('event handler is not implemented: ' + remoteClass);
+			throw new Error('event handler is not implemented: ' + type);
 	}
 
-	this.eventHandlers[remoteClass].setConnectionHandler(this.connectionHandler);
+	this.eventHandlers[type].setConnectionHandler(this.connectionHandler);
 
-	return this.eventHandlers[remoteClass];
+	return this.eventHandlers[type];
 };
 
 module.exports = ConnectionEventFactory;

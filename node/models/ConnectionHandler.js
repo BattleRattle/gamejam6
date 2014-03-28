@@ -45,11 +45,11 @@ ConnectionHandler.prototype.handleResponse = function(socket, response) {
 		return;
 	}
 
-	if (response.getType() === Response.TYPE_DIRECT) {
+	if (response.getBroadcastType() === Response.TYPE_DIRECT) {
 		this.sendResponse(socket, response);
-	} else if (response.getType() === Response.TYPE_BROADCAST_INCLUDE_SELF) {
+	} else if (response.getBroadcastType() === Response.TYPE_BROADCAST_INCLUDE_SELF) {
 		this.sendBroadcast(socket, response, true);
-	} else if (response.getType() === Response.TYPE_BROADCAST_EXCLUDE_SELF) {
+	} else if (response.getBroadcastType() === Response.TYPE_BROADCAST_EXCLUDE_SELF) {
 		this.sendBroadcast(socket, response, false);
 	} else {
 		throw new Error('Response type not implemented: ' + response.getType());
@@ -69,13 +69,13 @@ ConnectionHandler.prototype.sendBroadcast = function(socket, response, includeSe
 	this.game.getPlayers().each(function(player) {
 		if (includeSelf && sendingPlayer === player) return;
 		player.getSocket().send(this.createRawResponse(response));
-	});
+	}.bind(this));
 };
 
 ConnectionHandler.prototype.createRawResponse = function(response) {
 	return JSON.stringify({
-		'type': response.getType(),
-		'event': response.getEvent()
+		type: response.getType(),
+		event: response.getEvent()
 	});
 };
 
