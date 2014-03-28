@@ -1,6 +1,7 @@
-var Response = function(type, event) {
+var Response = function(type, event, broadcastType) {
 	this.type = type;
 	this.event = event;
+	this.broadcastType = broadcastType;
 };
 
 Response.TYPE_DIRECT = 'direct';
@@ -13,6 +14,10 @@ Response.prototype.getType = function () {
 
 Response.prototype.getEvent = function () {
 	return this.event;
+};
+
+Response.prototype.getBroadcastType = function() {
+	return this.broadcastType;
 };
 
 module.exports = Response;
