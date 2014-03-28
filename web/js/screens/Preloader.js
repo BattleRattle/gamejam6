@@ -1,9 +1,8 @@
 define('PreloaderScreen', [
 	'createjs'
 ], function(createjs){
-	var assetManifest = [
-
-	];
+	var assetManifest,
+		logo;
 
 	var Preloader = function() {
 
@@ -14,32 +13,46 @@ define('PreloaderScreen', [
 	}
 
 	Preloader.prototype.enter =  function (canvas, stage) {
-			var that = this;
+		var self = this;
 
-			this.stage = stage;
-			this.canvas = canvas;
+		this.stage = stage;
+		this.canvas = canvas;
 
-			this.assets = {};
+		var preloaderPreloader = new createjs.LoadQueue(true);
+		preloaderPreloader.loadFile('data/assets.json');
+		preloaderPreloader.loadFile('img/logo.jpg');
+		preloaderPreloader.on('fileload', function (event) {
+			if ("data/assets.json" === event.item.id) {
+				assetManifest = event.result;
+			} else if ("img/logo.jpg" === event.item.id) {
+				logo = event.result;
+			}
+		});
 
-			this.totalAssets = assetManifest.length;
-			this.loadedAssets = 0;
+		preloaderPreloader.on('complete', function (event) {
+			self.assets = {};
+
+			self.totalAssets = assetManifest.length;
+			self.loadedAssets = 0;
 
 			//call preload, and install soundjs as plugin
-			this.loader = new createjs.LoadQueue();
-			this.loader.installPlugin(createjs.SoundJS);
+			self.loader = new createjs.LoadQueue();
+			self.loader.installPlugin(createjs.SoundJS);
 
 			//define callbacks
-			this.loader.onFileLoad = function(loadedFile){
-				that.handleFileLoad(loadedFile);
-			};
+			self.loader.on('fileload', function(loadedFile){
+				self.handleFileLoad(loadedFile);
+			});
 
-			this.loader.onComplete = function(){
-				that.handleComplete();
-			};
+			self.loader.on('complete', function() {
+				self.handleComplete();
+			});
 
 			//load file from manifest
-			this.loader.loadManifest(assetManifest);
-			this.exit();
+			self.loader.loadManifest(assetManifest);
+		});
+
+		preloaderPreloader.load();
 	};
 
 	Preloader.prototype.exit = function () {
