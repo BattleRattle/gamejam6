@@ -8,9 +8,16 @@ PlayerEventHandler.prototype = AbstractEventHandler.prototype;
 PlayerEventHandler.TYPE = 'player';
 
 PlayerEventHandler.prototype.callNewPlayer = function(player) {
+	var playerCopy = {};
+	for (var key in player) {
+		if (key !== 'socket') {
+			playerCopy[key] = player[key];
+		}
+	}
+
 	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, {
 		action: 'join',
-		player: player
+		player: playerCopy
 	}, false);
 };
 
