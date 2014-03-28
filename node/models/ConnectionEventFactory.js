@@ -11,8 +11,8 @@ ConnectionEventFactory.prototype.getEventHandler = function(remoteClass) {
 	}
 
 	switch (remoteClass) {
-		case ActionEventHandler.CLASS_NAME:
-			this.eventHandlers[remoteClass] = new ActionEventHandler();
+		case PlayerEventHandler.TYPE:
+			this.eventHandlers[remoteClass] = new PlayerEventHandler();
 			break;
 
 		default:
