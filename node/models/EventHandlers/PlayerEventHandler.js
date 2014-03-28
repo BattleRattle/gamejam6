@@ -8,16 +8,23 @@ PlayerEventHandler.prototype = AbstractEventHandler.prototype;
 PlayerEventHandler.TYPE = 'player';
 
 PlayerEventHandler.prototype.callNewPlayer = function(player) {
-	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, 'newPlayer', {
-		'id': player.playerId,
-		'x': 0,
-		'y': 0
+	var playerCopy = {};
+	for (var key in player) {
+		if (key !== 'socket') {
+			playerCopy[key] = player[key];
+		}
+	}
+
+	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, {
+		action: 'join',
+		player: playerCopy
 	}, false);
 };
 
 PlayerEventHandler.prototype.callPlayerLeft = function(player) {
-	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, 'playerLeft', {
-		'id': player.playerId
+	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, {
+		action: 'leave',
+		playerId: player.id
 	}, false);
 };
 

@@ -2,7 +2,7 @@ var express = require('express'),
 	routes = require('./routes'),
 	http = require('http'),
 	path = require('path'),
-	io = require('socket.io').listen(3001),
+	socketio = require('socket.io'),
 	ConnectionHandler = require('./models/ConnectionHandler'),
 	Game = require('./models/Game');
 
@@ -28,8 +28,9 @@ app.get('/', routes.index);
 
 http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
-});
 
-connectionHandler = new ConnectionHandler(io);
-var game = new Game(connectionHandler);
-game.start();
+	var io = socketio.listen(this);
+	var connectionHandler = new ConnectionHandler(io);
+	var game = new Game(connectionHandler);
+	game.start();
+});

@@ -1,13 +1,14 @@
 
 define('App', [
 	'createjs',
+	'Socket',
 	'PreloaderScreen',
 	'MenuScreen',
 	'CharacterScreen',
 	'GameScreen',
 	'GameOverScreen'
 
-], function (createjs, PreloaderScreen, MenuScreen, CharacterScreen, GameScreen, GameOverScreen) {
+], function (createjs, Socket, PreloaderScreen, MenuScreen, CharacterScreen, GameScreen, GameOverScreen) {
 	var App = function() {
 
 	};
@@ -34,6 +35,9 @@ define('App', [
 			self.gotoMenu();
 		});
 		preloader.enter(this.canvas, this.stage);
+
+		var socket = new Socket();
+		socket.initialize();
 	};
 
 	App.prototype.gotoMenu = function () {

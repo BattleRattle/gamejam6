@@ -11,13 +11,13 @@ var Game = function(connectionHandler) {
 
 Game.prototype.start = function() {
 
-}
+};
 
 Game.prototype.createPlayer = function(socket) {
 	var player = new Player(socket);
 	this.players.push(player);
 
-	var playerHandler = this.connectionEventFactory.getEventHandler(ActionEventHandler.CLASS_NAME);
+	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
 	playerHandler.callNewPlayer(player);
 
 	return player;
@@ -25,7 +25,7 @@ Game.prototype.createPlayer = function(socket) {
 
 Game.prototype.removePlayer = function(socket) {
 	var player = this.getPlayerBySocket(socket);
-	var playerHandler = this.connectionEventFactory.getEventHandler(ActionEventHandler.CLASS_NAME);
+	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
 	playerHandler.callPlayerLeft(player);
 
 	this.players.splice(this.players.indexOf(player), 1);
