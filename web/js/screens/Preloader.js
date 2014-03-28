@@ -1,4 +1,4 @@
-define('Preloader', [
+define('PreloaderScreen', [
 	'createjs'
 ], function(createjs){
 	var assetManifest = [
@@ -39,7 +39,7 @@ define('Preloader', [
 
 			//load file from manifest
 			this.loader.loadManifest(assetManifest);
-
+			this.exit();
 	};
 
 	Preloader.prototype.exit = function () {
