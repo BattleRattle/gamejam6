@@ -12,12 +12,21 @@ define('App', [
 
 	};
 
+	App.prototype.resize = function () {
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+	};
 
 	App.prototype.initialize = function () {
 		var self = this;
 
 		this.canvas = document.getElementById('canvas');
+		this.resize();
 		this.stage = new createjs.Stage(this.canvas);
+
+		window.onresize = function() {
+			self.resize();
+		};
 
 		var preloader = new PreloaderScreen();
 		preloader.registerOnExit(function(assets) {
