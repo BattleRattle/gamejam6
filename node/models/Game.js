@@ -149,7 +149,7 @@ Game.prototype.tick = function() {
 		}
 	}.bind(this));
 
-	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this.currentTick, changes);
+	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this, this.currentTick, changes);
 	this.changes.reset();
 };
 
