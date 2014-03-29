@@ -76,6 +76,10 @@
 		"src": "img/deco/steine.png"
 	},
 	{
+		"id": "watte",
+		"src": "img/deco/watte.png"
+	},
+	{
 		"id": "maedchen",
 		"src": "img/maedchen.png"
 	},

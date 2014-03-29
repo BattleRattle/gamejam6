@@ -12,14 +12,20 @@ define('MapView', [
 		container = new createjs.Container();
 		parent.addChild(container);
 
-		bitmap = new createjs.Bitmap(assets['steine']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET + 2 * ViewConstants.MAP_TILE_HEIGHT - 75;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH * 2.5;
-		container.addChild(bitmap);
-		
-		var mapTiles = assets['map_data'][mapId].tiles,
-			bitmap;
-		for (var i in mapTiles) {
+		var mapData = assets['map_data'][mapId],
+			deco,
+			bitmap,
+			mapTiles = mapData.tiles,
+			i;
+		for (i in mapData.deco) {
+			deco = mapData.deco[i];
+			bitmap = new createjs.Bitmap(assets[deco.type]);
+			bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET + (1 + deco.position.y) * ViewConstants.MAP_TILE_HEIGHT + 95 - bitmap.image.height;
+			bitmap.x = ViewConstants.MAP_TILE_WIDTH * deco.position.x + 50;
+			container.addChild(bitmap);
+		}
+
+		for (i in mapTiles) {
 			for (var j in mapTiles[i]) {
 				if (0 === mapTiles[i][j]) {
 					continue;
