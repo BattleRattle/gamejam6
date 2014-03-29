@@ -49,7 +49,9 @@ Game.prototype.addPlayer = function(player) {
 	player.setGame(this);
 
 	if (this.players.length === this.slotsTotal) {
-		this.start();
+		setTimeout(function() {
+			this.start();
+		}.bind(this), 500);
 	}
 };
 
