@@ -1,7 +1,11 @@
 
 var KEYCODE_SPACE = 32,
 	KEYCODE_LEFT = 37,
-	KEYCODE_RIGHT = 39;
+	KEYCODE_UP = 38,
+	KEYCODE_RIGHT = 39,
+	KEYCODE_A = 65,
+	KEYCODE_D = 68,
+	KEYCODE_W = 87;
 
 define([
 	'createjs'
@@ -34,14 +38,18 @@ define([
 
 			switch(event.keyCode) {
 				case KEYCODE_SPACE:
+				case KEYCODE_UP:
+				case KEYCODE_W:
 					type = Movement.MOVEMENT_JUMP;
 					break;
 
 				case KEYCODE_LEFT:
+				case KEYCODE_A:
 					type = Movement.MOVEMENT_LEFT;
 					break;
 
 				case KEYCODE_RIGHT:
+				case KEYCODE_D:
 					type = Movement.MOVEMENT_RIGHT;
 					break;
 			}
