@@ -1,6 +1,7 @@
 {
 	"monster1": {
 		"name": "Bismarck",
+		"selection": "selection_bismark",
 		"width": 114,
 		"height": 85,
 		"stats": {
@@ -8,7 +9,8 @@
 		}
 	},
 	"monster2": {
-		"name": "Napoleon",
+		"name": "Lincoln",
+		"selection": "selection_lincoln",
 		"width": 114,
 		"height": 85,
 		"stats": {
@@ -16,7 +18,8 @@
 		}
 	},
 	"monster3": {
-		"name": "Lincoln",
+		"name": "Napoleon",
+		"selection": "selection_bismark",
 		"width": 114,
 		"height": 85,
 		"stats": {

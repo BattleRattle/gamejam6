@@ -17,7 +17,7 @@ define('GameView', [
 		background.initialize(assets, container);
 
 		var map = new Map();
-		map.initialize(assets, container, 'map1');
+		map.initialize(assets, container, gameData.mapId);
 	};
 
 	return GameView;

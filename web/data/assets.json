@@ -102,5 +102,17 @@
 	{
 		"id": "teddy",
 		"src": "img/toys/teddy.png"
+	},
+	{
+		"id": "selection_bismark",
+		"src": "img/selection/character_bismarck.png"
+	},
+	{
+		"id": "selection_lincoln",
+		"src": "img/selection/character_lincoln.png"
+	},
+	{
+		"id": "selection_glow",
+		"src": "img/selection/character_glow.png"
 	}
 ]

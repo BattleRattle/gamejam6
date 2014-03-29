@@ -5,32 +5,41 @@ define('CharacterScreen', [
 		assets;
 
 	var CONTENT_HEIGHT = 1000,
-		CONTENT_WIDTH = 1500,
-		BOX_WIDTH = 500;
+		CONTENT_WIDTH = 1600,
+		BOX_WIDTH = 610;
 
-	var drawBox = function (box, image) {
-		var data = assets['monster_data'][image];
-		var bitmap = new createjs.Bitmap(assets[image]);
+	var drawBox = function (box, image, stage) {
+		var data = assets['monster_data'][image],
+			bitmap,
+			glow,
+			label;
+
+		glow = new createjs.Bitmap(assets['selection_glow']);
+		glow.y = 100;
+		glow.visible = false;
+		box.addChild(glow);
+
+		bitmap = new createjs.Bitmap(assets[data.selection]);
 		bitmap.y = 100;
-		bitmap.x = 50;
-		var scale = BOX_WIDTH / (bitmap.image.width + 100);
-		bitmap.scaleX = scale;
-		bitmap.scaleY = scale;
 		box.addChild(bitmap);
 
-		var label = new createjs.Text(data.name, "bold 60px Arial", "#fff");
-		label.y = 50 + BOX_WIDTH;
-		label.x = 50;
+		label = new createjs.Text(data.name.toUpperCase(), "bold 40px Arial", "#fff");
+		label.y = BOX_WIDTH - 70;
+		label.x = 190;
 		box.addChild(label);
 
-		var shape = new createjs.Shape();
-		shape.graphics.beginStroke("#fff").drawRect(0, 0, BOX_WIDTH - 20, CONTENT_HEIGHT - 70);
-		shape.x = 20;
-		shape.y = 70;
-		box.addChild(shape);
-
 		box.y = 40;
-	}
+
+		box.addEventListener('mouseover', function () {
+			glow.visible = true;
+			stage.update();
+		});
+
+		box.addEventListener('mouseout', function () {
+			glow.visible = false;
+			stage.update();
+		});
+	};
 
 	var Character = function() {
 
@@ -57,21 +66,26 @@ define('CharacterScreen', [
 		this.canvas = canvas;
 		assets = as;
 
+		drawBox.bind(this);
+
 		container = new createjs.Container();
+		container.y = 100;
 		this.resize();
 		stage.addChild(container);
 		window.onresize = function () {
 			self.resize();
 		};
 
+		this.stage.enableMouseOver(20);
+
 		var header = new createjs.Text("Character Selection", "bold 60px Arial", "#fff");
 		header.y = 40;
-		header.x = 500;
+		header.x = 550;
 		container.addChild(header);
 
 		var monster1Box = new createjs.Container();
 		monster1Box.x = 0;
-		drawBox(monster1Box, 'monster1');
+		drawBox(monster1Box, 'monster1', stage);
 		container.addChild(monster1Box);
 		monster1Box.addEventListener('click', function () {
 			self.exit('monster1');
@@ -79,7 +93,7 @@ define('CharacterScreen', [
 
 		var monster2Box = new createjs.Container();
 		monster2Box.x = CONTENT_WIDTH / 3;
-		drawBox(monster2Box, 'monster2');
+		drawBox(monster2Box, 'monster2', stage);
 		container.addChild(monster2Box);
 		monster2Box.addEventListener('click', function () {
 			self.exit('monster2');
@@ -87,7 +101,7 @@ define('CharacterScreen', [
 
 		var monster3Box = new createjs.Container();
 		monster3Box.x = CONTENT_WIDTH / 3 * 2;
-		drawBox(monster3Box, 'monster3');
+		drawBox(monster3Box, 'monster3', stage);
 		container.addChild(monster3Box);
 		monster3Box.addEventListener('click', function () {
 			self.exit('monster3');
@@ -97,6 +111,7 @@ define('CharacterScreen', [
 	};
 
 	Character.prototype.exit = function(monster) {
+		this.stage.enableMouseOver(0);
 		this.stage.removeChild(container);
 		this.stage.update();
 		this.onExit(monster);
