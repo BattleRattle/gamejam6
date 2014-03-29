@@ -22,5 +22,9 @@
 	{
 		"id": "tile2",
 		"src": "img/tiles/stage.png"
+	},
+	{
+		"id": "background",
+		"src": "img/background.jpg"
 	}
 ]

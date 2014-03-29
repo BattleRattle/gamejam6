@@ -1,7 +1,8 @@
 define('GameView', [
 	'createjs',
-	'MapView'
-], function (createjs, Map) {
+	'MapView',
+	'BackgroundView'
+], function (createjs, Map, Background) {
 	var container;
 
 	var GameView = function() {
@@ -11,6 +12,9 @@ define('GameView', [
 	GameView.prototype.initialize = function (assets, parent, gameData) {
 		container = new createjs.Container();
 		parent.addChild(container);
+
+		var background = new Background();
+		background.initialize(assets, container);
 
 		var map = new Map();
 		map.initialize(assets, container, 'map1');
