@@ -2,10 +2,11 @@ var Response = require('./Communication/Response.js');
 var Player = require('./Player.js');
 var PlayerEventHandler = require('./EventHandlers/PlayerEventHandler.js');
 var GameEventHandler = require('./EventHandlers/GameEventHandler.js');
+var SyncEventHandler = require('./EventHandlers/GameEventHandler.js');
 
 var gameId = 0;
 var TICK_RATE = 30;
-var tick = 0;
+var SYNC_RATE = 1;
 
 var Game = function(connectionHandler) {
 	this.connectionHandler = connectionHandler;
@@ -13,7 +14,9 @@ var Game = function(connectionHandler) {
 	this.players = [];
 	this.connectionHandler.init(this);
 	this.tickInterval = null;
+	this.syncInterval = null;
 	this.id = ++gameId;
+	this.currentTick = 0;
 };
 
 Game.prototype.start = function() {
@@ -21,6 +24,7 @@ Game.prototype.start = function() {
 	this.connectionEventFactory.getEventHandler(GameEventHandler.TYPE).start(this);
 
 	this.tickInterval = setInterval(this.tick.bind(this), 1000 / TICK_RATE);
+	this.syncInterval = setInterval(this.sync.bind(this), 1000 / SYNC_RATE);
 };
 
 Game.prototype.createPlayer = function(socket) {
@@ -55,8 +59,11 @@ Game.prototype.getPlayers = function() {
 };
 
 Game.prototype.tick = function() {
-	tick++;
-	// sync state
+	this.currentTick++;
+};
+
+Game.prototype.sync = function() {
+	this.connectionEventFactory.getEventHandler(SyncEventHandler.TYPE).start(this);
 };
 
 module.exports = Game;

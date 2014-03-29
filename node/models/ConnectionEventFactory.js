@@ -2,6 +2,7 @@ var PlayerEventHandler = require('./EventHandlers/PlayerEventHandler.js');
 var ActionEventHandler = require('./EventHandlers/ActionEventHandler.js');
 var GameEventHandler = require('./EventHandlers/GameEventHandler.js');
 var LobbyEventHandler = require('./EventHandlers/LobbyEventHandler.js');
+var SyncEventHandler = require('./EventHandlers/SyncEventHandler.js');
 
 
 var ConnectionEventFactory = function(connectionHandler) {
@@ -26,6 +27,9 @@ ConnectionEventFactory.prototype.getEventHandler = function(type) {
             break;
         case GameEventHandler.TYPE:
             this.eventHandlers[type] = new GameEventHandler();
+            break;
+        case SyncEventHandler.TYPE:
+            this.eventHandlers[type] = new SyncEventHandler();
             break;
 
 		default:
