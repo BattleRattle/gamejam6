@@ -1,4 +1,5 @@
 var PlayerEventHandler = require('./EventHandlers/PlayerEventHandler.js');
+var ActionEventHandler = require('./EventHandlers/ActionEventHandler.js');
 
 var ConnectionEventFactory = function(connectionHandler) {
 	this.connectionHandler = connectionHandler;
@@ -14,6 +15,9 @@ ConnectionEventFactory.prototype.getEventHandler = function(type) {
 		case PlayerEventHandler.TYPE:
 			this.eventHandlers[type] = new PlayerEventHandler();
 			break;
+        case ActionEventHandler.TYPE:
+            this.eventHandlers[type] = new ActionEventHandler();
+            break;
 
 		default:
 			console.log('WARNING: Event handler is not implemented: ' + type);
