@@ -20,23 +20,8 @@ define('Socket', [
 		var self = this;
 		socket = socketio.connect();
 
-		Movement.prototype.addEventListener('space_down', function() {
-			self.sendActionEvent(Socket.ACTION_JUMP, Socket.STATE_ACTIVATE);
-		});
-		Movement.prototype.addEventListener('space_up', function() {
-			self.sendActionEvent(Socket.ACTION_JUMP, Socket.STATE_DEACTIVATE);
-		});
-		Movement.prototype.addEventListener('right_down', function() {
-			self.sendActionEvent(Socket.ACTION_MOVE_RIGHT, Socket.STATE_ACTIVATE);
-		});
-		Movement.prototype.addEventListener('right_up', function() {
-			self.sendActionEvent(Socket.ACTION_MOVE_RIGHT, Socket.STATE_DEACTIVATE);
-		});
-		Movement.prototype.addEventListener('left_down', function() {
-			self.sendActionEvent(Socket.ACTION_MOVE_LEFT, Socket.STATE_ACTIVATE);
-		});
-		Movement.prototype.addEventListener('left_up', function() {
-			self.sendActionEvent(Socket.ACTION_MOVE_LEFT, Socket.STATE_DEACTIVATE);
+		Movement.prototype.addEventListener('movement', function(event) {
+			self.sendActionEvent(event.data.type, event.data.state);
 		});
 	};
 
