@@ -15,6 +15,7 @@ var Toy = require('./Toy');
 var gameId = 0;
 var TICK_RATE = 30;
 var SYNC_RATE = 1;
+var MAX_TOY_PICKUP_DISTANCE = 30;
 
 var Game = function(connectionHandler, slots) {
 	this.connectionHandler = connectionHandler;
@@ -28,6 +29,7 @@ var Game = function(connectionHandler, slots) {
 	this.slotsTotal = Math.min(3, Math.max(1, parseInt(slots)));
 	this.collisionTester = new CollisionTester();
 	this.mapId = Object.keys(maps)[parseInt(Math.random() * Object.keys(maps).length)];
+	this.toys = generateToys(maps[this.mapId].girl);
 };
 
 Game.prototype.start = function() {
@@ -37,7 +39,7 @@ Game.prototype.start = function() {
 		gameId: this.id,
 		mapId: this.mapId,
 		players: playerHelper.extractPlayerData(this.players),
-		toys: generateToys(maps[this.mapId].girl)
+		toys: this.toys
 	};
 	var response = new Response('game', event, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.connectionHandler.sendGameBroadcast(this, response);
@@ -150,6 +152,26 @@ Game.prototype.tick = function() {
 			height: maps[MAP]['tiles'].length * TILE_SIZE + OFFSET
 		})) {
 			console.log('WHAAAAA!!!! COLLISION!!!!!111');
+		}
+
+		if (player.actions.pickupToy) {
+			var nearestToy = null;
+			var nearestDistance = null;
+			this.toys.forEach(function(toy) {
+				var distance = Math.sqrt(Math.pow(toy.position.x - player.position.x, 2) + Math.pow(toy.position.y - player.position.y, 2));
+				if (distance > MAX_TOY_PICKUP_DISTANCE) {
+					return;
+				}
+
+				if (nearestDistance == null || distance < nearestDistance) {
+					nearestDistance = distance;
+					nearestToy = toy;
+				}
+			});
+
+			if (nearestToy) {
+				player.pickup(nearestToy);
+			}
 		}
 	}.bind(this));
 

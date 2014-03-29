@@ -6,6 +6,7 @@ var Toy = function(pos) {
 	this.id = ++toyId;
 	this.type = types[typesIndex++ % types.length];
 	this.position = pos;
+	this.owner = null;
 };
 
 module.exports = Toy;
