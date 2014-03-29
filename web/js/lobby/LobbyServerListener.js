@@ -11,8 +11,8 @@ define('LobbyServerListener', [
 		socket.socket.on('message', function(event) {
 			event = JSON.parse(event);
 			if ('lobby' === event['type']) {
-				if (handler[event.action]) {
-					handler[event.action](event);
+				if (handler[event.event.action]) {
+					handler[event.event.action](event);
 				}
 			}
 		});
