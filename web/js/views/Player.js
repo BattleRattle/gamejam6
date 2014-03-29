@@ -22,8 +22,6 @@ define('PlayerView', [
 		parent.addChild(this.container);
 
 		var bitmap = new createjs.Bitmap(assets['monster1']);
-		bitmap.scaleX = 0.3;
-		bitmap.scaleY = 0.3;
 		this.container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
 		this.container.x = data.position.x;
 		this.container.addChild(bitmap);
