@@ -1,13 +1,9 @@
 define('TopHudView', [
 	'createjs',
-	'TopHudPlayerView'
-], function (createjs, TopHudPlayer) {
+	'TopHudPlayerView',
+	'ViewConstants'
+], function (createjs, TopHudPlayer, ViewConstants) {
 	var container;
-
-	var CONTENT_WIDTH = 1600,
-		CONTENT_HEIGHT = 800,
-		HUD_HEIGHT = 200,
-		HUD_WIDTH = 1000;
 
 	var TopHud = function() {
 
@@ -15,11 +11,11 @@ define('TopHudView', [
 
 	TopHud.prototype.initialize = function (parent, players) {
 		container = new createjs.Container();
-		container.x = CONTENT_WIDTH - HUD_WIDTH;
+		container.x = ViewConstants.CONTENT_WIDTH - ViewConstants.HUD_WIDTH;
 		parent.addChild(container);
 
 		var shape = new createjs.Shape();
-		shape.graphics.beginFill("#fff").drawRect(0, 0, HUD_WIDTH, HUD_HEIGHT);
+		shape.graphics.beginFill("#fff").drawRect(0, 0, ViewConstants.HUD_WIDTH, ViewConstants.HUD_HEIGHT);
 		shape.y = 0;
 		container.addChild(shape);
 

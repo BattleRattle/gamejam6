@@ -2,12 +2,10 @@ define('GameScreen', [
 	'createjs',
 	'Movement',
 	'TopHudView',
-	'GameView'
-], function(createjs, Movement, TopHud, View){
+	'GameView',
+	'ViewConstants'
+], function(createjs, Movement, TopHud, View, ViewConstants){
 	var container;
-
-	var CONTENT_WIDTH = 1600,
-		CONTENT_HEIGHT = 800;
 
 	var Game = function() {
 
@@ -21,10 +19,10 @@ define('GameScreen', [
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 
-		var scale = Math.min(this.canvas.width / CONTENT_WIDTH, this.canvas.height / (100 + CONTENT_HEIGHT));
+		var scale = Math.min(this.canvas.width / ViewConstants.CONTENT_WIDTH, this.canvas.height / (100 + ViewConstants.CONTENT_HEIGHT));
 		container.scaleX = scale;
 		container.scaleY = scale;
-		container.x = (this.canvas.width - CONTENT_WIDTH * scale) / 2;
+		container.x = (this.canvas.width - ViewConstants.CONTENT_WIDTH * scale) / 2;
 		this.stage.update();
 	};
 
