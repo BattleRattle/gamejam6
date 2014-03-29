@@ -72,7 +72,6 @@ define([
 		event.state = state;
 
 		this.dispatchEvent(event);
-		console.log(event)
 	};
 
 	return Movement;

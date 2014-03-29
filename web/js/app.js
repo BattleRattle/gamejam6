@@ -68,7 +68,7 @@ define('App', [
 
 	App.prototype.gotoGame = function () {
 		var self = this,
-			game = new GameScreen();
+			game = new GameScreen(socket);
 		game.registerOnExit(function () {
 			console.log('exit game');
 			self.gotoGameOver();

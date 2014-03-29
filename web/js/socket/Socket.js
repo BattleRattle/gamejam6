@@ -17,7 +17,6 @@ define('Socket', [
 	};
 
 	Socket.prototype.sendEvent = function(type, event) {
-		console.log(type, event);
 		socket.send(JSON.stringify({
 			type: type,
 			'event': event

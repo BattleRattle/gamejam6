@@ -4,12 +4,15 @@ define('GameScreen', [
 	'TopHudView',
 	'GameView',
 	'ViewConstants',
-	'PlayerView'
-], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView){
-	var container;
+	'PlayerView',
+	'GameServerListener',
+	'GameState'
+], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GameServerListener, GameState) {
+	var container,
+		socket;
 
-	var Game = function() {
-
+	var Game = function(so) {
+		socket = so;
 	};
 
 	Game.prototype.registerOnExit = function(callback) {
@@ -52,6 +55,16 @@ define('GameScreen', [
 
 		var movement = new Movement();
 		movement.initialize();
+
+		var listener = new GameServerListener();
+		listener.initialize(socket, function(event) {
+			if (event.event.changes[GameState.playerId]) {
+				playerView.update(event.event.changes[GameState.playerId])
+			} else {
+				playerView.update({});
+			}
+			self.stage.update();
+		});
 
 		this.stage.update();
 //		this.exit();

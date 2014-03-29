@@ -7,7 +7,7 @@ var StateChangeList = require('./StateChangeList.js');
 var playerHelper = require('./PlayerHelper.js');
 
 var gameId = 0;
-var TICK_RATE = 1;
+var TICK_RATE = 30;
 var SYNC_RATE = 1;
 var GAME_SLOTS = 1; // TODO: change to 3 later?
 

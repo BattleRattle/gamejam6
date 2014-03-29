@@ -27,7 +27,8 @@ require.config({
 		'ClientSocketListener': 'socket/ClientSocketListener',
 		'LobbyClientListener': 'lobby/LobbyClientListener',
 		'LobbyServerListener': 'lobby/LobbyServerListener',
-		'GameState': 'game/State'
+		'GameState': 'game/State',
+		'GameServerListener': 'game/GameServerListener'
 	}
 
 });

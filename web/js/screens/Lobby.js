@@ -43,7 +43,7 @@ define('LobbyScreen', [
 		};
 
 		var handler = {
-			'entered': function (event) { GameState.playerId = event.playerId },
+			'entered': function (event) { GameState.playerId = event.event.playerId },
 			'created': function() { self.exit() }
 		};
 

@@ -9,7 +9,6 @@ define('ClientSocketListener', [
 
 	Listener.prototype.initialize = function (callback) {
 		Movement.prototype.addEventListener('action', function(event) {
-			console.log('action')
 			callback('action', event);
 		});
 
