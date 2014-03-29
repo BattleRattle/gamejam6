@@ -2,10 +2,10 @@ define('PlayerView', [
 	'createjs',
 	'ViewConstants'
 ], function (createjs, ViewConstants) {
-	var container,
-		config;
+	var config;
 
 	var Player = function() {
+		this.container = null;
 		this.actions = {
 			moveRight: false,
 			moveLeft: false
@@ -17,15 +17,15 @@ define('PlayerView', [
 	};
 
 	Player.prototype.initialize = function (assets, parent, data) {
-		container = new createjs.Container();
-		parent.addChild(container);
+		this.container = new createjs.Container();
+		parent.addChild(this.container);
 
 		var bitmap = new createjs.Bitmap(assets['monster1']);
 		bitmap.scaleX = 0.3;
 		bitmap.scaleY = 0.3;
-		container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
-		container.x = data.position.x;
-		container.addChild(bitmap);
+		this.container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
+		this.container.x = data.position.x;
+		this.container.addChild(bitmap);
 
 		config = assets['params'].movement;
 	};
@@ -51,7 +51,7 @@ define('PlayerView', [
 			}
 		}
 
-		container.x += this.velocity.x;
+		this.container.x += this.velocity.x;
 	};
 
 	return Player;
