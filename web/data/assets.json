@@ -9,11 +9,11 @@
 	},
 	{
 		"id": "monster2",
-		"src": "img/characters/bismarck.png"
+		"src": "img/characters/lincoln.png"
 	},
 	{
 		"id": "monster3",
-		"src": "img/characters/bismarck.png"
+		"src": "img/characters/napoleon.png"
 	},
 	{
 		"id": "monster_data",
@@ -110,6 +110,14 @@
 	{
 		"id": "selection_lincoln",
 		"src": "img/selection/character_lincoln.png"
+	},
+	{
+		"id": "selection_napoleon",
+		"src": "img/selection/character_napoleon.png"
+	},
+	{
+		"id": "character_selection",
+			"src": "img/selection/character_selection.png"
 	},
 	{
 		"id": "selection_glow",

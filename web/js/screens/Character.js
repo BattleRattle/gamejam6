@@ -28,7 +28,7 @@ define('CharacterScreen', [
 		label.x = 190;
 		box.addChild(label);
 
-		box.y = 200;
+		box.y = 250;
 
 		box.addEventListener('mouseover', function () {
 			glow.visible = true;
@@ -81,9 +81,9 @@ define('CharacterScreen', [
 
 		this.stage.enableMouseOver(20);
 
-		var header = new createjs.Text("Character Selection", "bold 60px Arial", "#fff");
-		header.y = 150;
-		header.x = 750;
+		var header = new createjs.Bitmap(assets['character_selection']);
+		header.x = (CONTENT_WIDTH - header.image.width) / 2;
+		header.y = 50;
 		container.addChild(header);
 
 		var monster1Box = new createjs.Container();

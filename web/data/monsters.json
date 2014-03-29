@@ -11,17 +11,17 @@
 	"monster2": {
 		"name": "Lincoln",
 		"selection": "selection_lincoln",
-		"width": 114,
-		"height": 85,
+		"width": 124,
+		"height": 143,
 		"stats": {
 
 		}
 	},
 	"monster3": {
 		"name": "Napoleon",
-		"selection": "selection_bismark",
-		"width": 114,
-		"height": 85,
+		"selection": "selection_napoleon",
+		"width": 109,
+		"height": 139,
 		"stats": {
 
 		}
