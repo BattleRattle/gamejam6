@@ -8,42 +8,48 @@ define([
 ], function(createjs) {
 	var Movement = function() {};
 
+	createjs.EventDispatcher.initialize(Movement.prototype);
+
 	Movement.prototype.initialize = function() {
 		console.log('movement init');
 
-		document.onkeydown = onkeydown;
-		document.onkeyup = onkeyup;
+		document.onkeydown = onkeydown(this);
+		document.onkeyup = onkeyup(this);
 	};
 
-	var onkeydown = function(event) {
-		switch(event.keyCode) {
-			case KEYCODE_SPACE:
-				console.log('space down');
-				break;
+	var onkeydown = function(scope) {
+		return function(event) {
+			switch(event.keyCode) {
+				case KEYCODE_SPACE:
+					scope.dispatchEvent('space_down');
+					break;
 
-			case KEYCODE_LEFT:
-				console.log('left down');
-				break;
+				case KEYCODE_LEFT:
+					scope.dispatchEvent('left_down');
+					break;
 
-			case KEYCODE_RIGHT:
-				console.log('right down');
-				break;
+				case KEYCODE_RIGHT:
+					scope.dispatchEvent('right_down');
+					break;
+			}
 		}
 	};
 
-	var onkeyup = function(event) {
-		switch(event.keyCode) {
-			case KEYCODE_SPACE:
-				console.log('space up');
-				break;
+	var onkeyup = function(scope) {
+		return function(event) {
+			switch(event.keyCode) {
+				case KEYCODE_SPACE:
+					scope.dispatchEvent('space_up');
+					break;
 
-			case KEYCODE_LEFT:
-				console.log('left up');
-				break;
+				case KEYCODE_LEFT:
+					scope.dispatchEvent('left_up');
+					break;
 
-			case KEYCODE_RIGHT:
-				console.log('right up');
-				break;
+				case KEYCODE_RIGHT:
+					scope.dispatchEvent('right_up');
+					break;
+			}
 		}
 	};
 
