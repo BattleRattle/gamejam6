@@ -28,7 +28,7 @@ define('PlayerView', [
 		parent.addChild(this.container);
 
 		this.bitmap = new createjs.Bitmap(assets[data.monsterId]);
-		this.container.y = ViewConstants.CONTENT_HEIGHT - this.bitmap.image.height * 0.27;
+		this.container.y = data.position.y;
 		this.container.x = data.position.x;
 		this.container.addChild(this.bitmap);
 
@@ -100,8 +100,6 @@ define('PlayerView', [
 			width: mapWidth,
 			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET
 		})) {
-			console.log('WHAAAAA!!!! COLLISION!!!!!111');
-
 			if (this.lastPosition.y < this.container.y) {
 				this.container.y += this.velocity.y;
 				this.velocity.y = 0;

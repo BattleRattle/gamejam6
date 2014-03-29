@@ -58,6 +58,8 @@ Game.prototype.end = function() {
 Game.prototype.addPlayer = function(player) {
 	this.players.push(player);
 	player.setGame(this);
+    player.lastPosition.x = player.position.x;
+    player.lastPosition.y = player.position.y;
 
 	if (this.players.length === this.slotsTotal) {
 		setTimeout(function() {
@@ -131,19 +133,14 @@ Game.prototype.tick = function() {
 
 		player.position.y -= player.velocity.y;
 
-		if (player.position.y > 1050 - monsters[player.monsterId].height + 25) {
-			player.position.y = 1050 - monsters[player.monsterId].height + 25;
-			player.velocity.y = 0;
-			player.isFalling = false;
-		}
-
 		var MAP = 'map1';
-		var TILE_SIZE = 300;
-		var OFFSET = 150;
+
+        var TILE_SIZE = 300;
+        var OFFSET = 150;
         var mapWidth = maps[MAP]['tiles'][0].length * TILE_SIZE;
         var monsterWidth = monsters[player.monsterId].width;
 
-		if (this.collisionTester.collide({
+        if (this.collisionTester.collide({
 			position: player.position,
 			collision: collisions[player.monsterId],
 			width: monsterWidth,
@@ -152,15 +149,23 @@ Game.prototype.tick = function() {
 			position: {x: 0, y: -60},
 			collision: collisions[MAP],
 			width: mapWidth,
-			height: maps[MAP]['tiles'].length * TILE_SIZE + OFFSET
+			height: maps[MAP]['tiles'].length * 270 + OFFSET
 		})) {
-			console.log('WHAAAAA!!!! COLLISION!!!!!111');
-		}
+            if (player.lastPosition.y < player.position.y) {
+                player.position.y += player.velocity.y;
+                player.velocity.y = 0;
+                player.isFalling = false;
+            } else {
+                player.position.y += player.velocity.y;
+                player.velocity.y = 0;
+                player.isFalling = true;
+            }
+        }
 
-		if (player.actions.pickupToy) {
-			var nearestToy = null;
-			var nearestDistance = null;
-			this.toys.forEach(function(toy) {
+        if (player.actions.pickupToy) {
+            var nearestToy = null;
+            var nearestDistance = null;
+            this.toys.forEach(function(toy) {
 				var distance = Math.sqrt(Math.pow(toy.position.x - player.position.x, 2) + Math.pow(toy.position.y - player.position.y, 2));
 				if (distance > MAX_TOY_PICKUP_DISTANCE) {
 					return;
@@ -172,10 +177,16 @@ Game.prototype.tick = function() {
 				}
 			});
 
-			if (nearestToy) {
-				player.pickup(nearestToy);
-			}
-		}
+            if (nearestToy) {
+                player.pickup(nearestToy);
+            }
+        }
+
+        if (player.position.y > 1050 - monsters[player.monsterId].height + 25) {
+            player.position.y = 1050 - monsters[player.monsterId].height + 25;
+            player.velocity.y = 0;
+            player.isFalling = false;
+        }
 
         if(player.position.x < 0){
             player.position.x = 0;
@@ -186,6 +197,9 @@ Game.prototype.tick = function() {
             player.position.x =  mapWidth - monsterWidth;
             player.velocity.x = 0;
         }
+
+        player.lastPosition.x = player.position.x;
+        player.lastPosition.y = player.position.y;
 
 	}.bind(this));
 

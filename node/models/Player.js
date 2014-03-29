@@ -19,6 +19,10 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 		x: 0,
 		y: 0
 	};
+    this.lastPosition = {
+      x: 0,
+      y: 0
+    };
 	this.actions = {
 		moveLeft: false,
 		moveRight: false,
