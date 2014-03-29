@@ -25,7 +25,10 @@ var Game = function(connectionHandler) {
 
 Game.prototype.start = function() {
 	console.log('Start Game #' + this.id);
-	this.connectionEventFactory.getEventHandler(GameEventHandler.TYPE).start(this);
+	var response = new Response('game', {action: 'start', gameId: this.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.connectionHandler.sendGameBroadcast(this, response);
+
+//	this.connectionEventFactory.getEventHandler(GameEventHandler.TYPE).start(this);
 
 	this.tickInterval = setInterval(this.tick.bind(this), 1000 / TICK_RATE);
 	this.syncInterval = setInterval(this.sync.bind(this), 1000 / SYNC_RATE);
@@ -33,6 +36,7 @@ Game.prototype.start = function() {
 
 Game.prototype.addPlayer = function(player) {
 	this.players.push(player);
+	player.setGame(this);
 };
 
 Game.prototype.removePlayer = function(player) {

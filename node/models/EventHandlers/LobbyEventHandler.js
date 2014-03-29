@@ -9,6 +9,7 @@ LobbyEventHandler.prototype.create = function(player, event) {
     console.log(event.action + " -> create");
 
 	var game = player.lobby.createGame();
+	game.addPlayer(player);
 
     var responseEvent = {
         action: 'created',
@@ -18,6 +19,8 @@ LobbyEventHandler.prototype.create = function(player, event) {
     };
 
     this.createDirectResponse(player, LobbyEventHandler.TYPE, responseEvent);
+
+	game.start();
 };
 
 LobbyEventHandler.prototype.enter = function(player, event) {

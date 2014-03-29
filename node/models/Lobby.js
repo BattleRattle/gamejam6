@@ -13,16 +13,6 @@ Lobby.prototype.createGame = function() {
 	var game = new Game(this.connectionHandler);
 	this.games.push(game);
 
-	var event = {
-		action: 'created',
-		gameId: game.id,
-		slotsTotal: game.slotsTotal,
-		slotsUsed: game.players.length
-	};
-
-	var response = new Response('lobby', event, Response.TYPE_BROADCAST_INCLUDE_SELF);
-	this.connectionHandler.handleResponse(null, response);
-
 	console.log('Created Game #' + game.id);
 
 	return game;
