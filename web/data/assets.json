@@ -30,5 +30,9 @@
 	{
 		"id": "temp_top_hud",
 		"src": "img/tophud/avatar.png"
+	},
+	{
+		"id": "stage_bottom",
+		"src": "img/stage_bottom.png"
 	}
 ]
