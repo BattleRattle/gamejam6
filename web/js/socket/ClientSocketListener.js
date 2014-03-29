@@ -9,7 +9,7 @@ define('ClientSocketListener', [
 
 	Listener.prototype.initialize = function (callback) {
 		Movement.prototype.addEventListener('movement', function(event) {
-			callback('movement', event);
+			callback('action', event);
 		});
 
 		var lobby = new LobbyClientListener();
