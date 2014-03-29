@@ -6,7 +6,8 @@ var KEYCODE_SPACE = 32,
 	KEYCODE_A = 65,
 	KEYCODE_D = 68,
 	KEYCODE_W = 87,
-	KEYCODE_T = 84;
+	KEYCODE_T = 84,
+	KEYCODE_G = 71;
 
 define([
 	'createjs'
@@ -58,6 +59,10 @@ define([
 
 				case KEYCODE_T:
 					type = Movement.ACTION_PICKUP_TOY;
+					break;
+
+				case KEYCODE_G:
+					type = Movement.ACTION_DROP_TOY;
 					break;
 			}
 
