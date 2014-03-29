@@ -7,9 +7,6 @@ define('Socket', [
 
 	var Socket = function() {};
 
-	Socket.ACTION_PICKUP_TOY = 'pickupToy';
-	Socket.ACTION_DROP_TOY = 'dropToy';
-
 	Socket.prototype.initialize = function() {
 		this.socket = socket = socketio.connect();
 		var clientListener = new ClientSocketListener();

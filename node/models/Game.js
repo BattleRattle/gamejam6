@@ -186,7 +186,7 @@ Game.prototype.sync = function() {
 function generateToys(girl) {
 	var toys = [];
 	for (var i=0; i<7; i++) {
-		toys.push(new Toy({x: parseInt(girl.x - 75 + 150 * Math.random()), y: girl.y}));
+		toys.push(new Toy({x: parseInt(girl.x + 300 * Math.random()), y: girl.y + 120}));
 	}
 	return toys;
 }

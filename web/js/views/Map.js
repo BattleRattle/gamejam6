@@ -41,33 +41,6 @@ define('MapView', [
 		bitmap = new createjs.Bitmap(assets['stage_bottom']);
 		bitmap.y = ViewConstants.HUD_HEIGHT + i * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET;
 		container.addChild(bitmap);
-
-		bitmap = new createjs.Bitmap(assets['roboter']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 150;
-		container.addChild(bitmap);
-
-		bitmap = new createjs.Bitmap(assets['boot']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 110;
-		container.addChild(bitmap);
-
-		bitmap = new createjs.Bitmap(assets['teddy']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 90;
-		container.addChild(bitmap);
-
-		bitmap = new createjs.Bitmap(assets['roboter']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET + 20;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 50;
-		bitmap.rotation = -25;
-		container.addChild(bitmap);
-
-		bitmap = new createjs.Bitmap(assets['teddy']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET - 25;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 75;
-		bitmap.rotation = 45;
-		container.addChild(bitmap);
 	};
 
 	Map.prototype.update = function (data) {
