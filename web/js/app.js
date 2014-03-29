@@ -48,7 +48,7 @@ define('App', [
 			console.log('exit menu');
 			self.gotoCharacter();
 		});
-		menu.enter(this.canvas, this.stage);
+		menu.enter(this.canvas, this.stage, this.assets);
 	};
 
 	App.prototype.gotoCharacter = function () {
@@ -58,7 +58,7 @@ define('App', [
 			console.log('exit character');
 			self.gotoGame();
 		});
-		character.enter(this.canvas, this.stage);
+		character.enter(this.canvas, this.stage, this.assets);
 	};
 
 	App.prototype.gotoGame = function () {

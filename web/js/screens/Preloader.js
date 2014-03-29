@@ -90,7 +90,7 @@ define('PreloaderScreen', [
 	};
 
 	Preloader.prototype.handleFileLoad = function (event) {
-		this.assets[event.id] = event.result;
+		this.assets[event.item.id] = event.result;
 
 		this.loadedAssets++;
 

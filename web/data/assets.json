@@ -2,5 +2,13 @@
 	{
 		"id": "dummy",
 		"src": "img/dummy1.jpg"
+	},
+	{
+		"id": "monster1",
+		"src": "img/characters/monster1.jpg"
+	},
+	{
+		"id": "monster_data",
+		"src": "data/monsters.json"
 	}
 ]
