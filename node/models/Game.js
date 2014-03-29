@@ -129,8 +129,8 @@ Game.prototype.tick = function() {
 
 		player.position.y -= player.velocity.y;
 
-		if (player.position.y > 660) {
-			player.position.y = 660;
+		if (player.position.y > 1050 - monsters[player.monsterId].height + 25) {
+			player.position.y = 1050 - monsters[player.monsterId].height + 25;
 			player.velocity.y = 0;
 			player.isFalling = false;
 		}
@@ -144,7 +144,7 @@ Game.prototype.tick = function() {
 			width: monsters[player.monsterId].width,
 			height: monsters[player.monsterId].height
 		}, {
-			position: {x: 0, y: 0},
+			position: {x: 0, y: -60},
 			collision: collisions[MAP],
 			width: maps[MAP]['tiles'][0].length * TILE_SIZE,
 			height: maps[MAP]['tiles'].length * TILE_SIZE + OFFSET

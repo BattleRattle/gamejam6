@@ -88,10 +88,10 @@ define('PlayerView', [
 			width: this.monsterData.width,
 			height: this.monsterData.height
 		}, {
-			position: {x: 0, y: 0},
+			position: {x: 0, y: -60},
 			collision: this.collisioData['map1'],
-			width: this.mapData['tiles'][0].length * ViewConstants.MAP_TILE_SIZE,
-			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_SIZE + ViewConstants.MAP_TOP_OFFSET
+			width: this.mapData['tiles'][0].length * ViewConstants.MAP_TILE_WIDTH,
+			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET
 		})) {
 			console.log('WHAAAAA!!!! COLLISION!!!!!111');
 
@@ -102,9 +102,8 @@ define('PlayerView', [
 			}
 		}
 
-
-		if (this.container.y > 660) {
-			this.container.y = 660;
+		if (this.container.y > ViewConstants.CONTENT_HEIGHT - this.monsterData.height + 25) {
+			this.container.y = ViewConstants.CONTENT_HEIGHT - this.monsterData.height + 25;
 			this.velocity.y = 0;
 			this.isFalling = false;
 		}
