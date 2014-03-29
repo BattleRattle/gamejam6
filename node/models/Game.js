@@ -7,7 +7,7 @@ var TickEventHandler = require('./EventHandlers/TickEventHandler.js');
 var StateChangeList = require('./StateChangeList.js');
 
 var gameId = 0;
-var TICK_RATE = 30;
+var TICK_RATE = 1;
 var SYNC_RATE = 1;
 
 var Game = function(connectionHandler) {
@@ -64,17 +64,39 @@ Game.prototype.getPlayers = function() {
 Game.prototype.tick = function() {
 	this.currentTick++;
 
+	// apply changes to game state
 	var changes = this.changes.getChanges();
 	for (var index in changes) {
 		for (var property in changes[index]) {
 			for (var p in this.players) {
 				if (this.players[p].id == index) {
-					this.players[p][property] = changes[index][property];
+					this.players[p].actions[property] = changes[index][property];
 					continue;
 				}
 			}
 		}
 	}
+
+	// calculate movements
+	this.players.forEach(function(player) {
+		if (player.actions.moveLeft && !player.actions.moveRight) {
+			player.velocity.x -= 1;
+			if (player.velocity.x < -10) player.velocity.x = -10;
+		}
+		if (player.actions.moveRight && !player.actions.moveLeft) {
+			player.velocity.x += 1;
+			if (player.velocity.x > 10) player.velocity.x = 10;
+		}
+		if (!player.actions.moveLeft && !player.actions.moveRight) {
+			if (player.velocity.x < 0) {
+				player.velocity.x += 1;
+			} else if (player.velocity.x > 0) {
+				player.velocity.x -= 1;
+			}
+		}
+
+		player.position.x += player.velocity.x;	
+	});
 
 	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this.currentTick, changes);
 	this.changes.reset();
