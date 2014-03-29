@@ -9,6 +9,7 @@ var StateChangeList = require('./StateChangeList.js');
 var gameId = 0;
 var TICK_RATE = 1;
 var SYNC_RATE = 1;
+var SECONDS_PER_TICK = 1 / TICK_RATE;
 
 var Game = function(connectionHandler) {
 	this.connectionHandler = connectionHandler;
@@ -71,7 +72,7 @@ Game.prototype.tick = function() {
 			for (var p in this.players) {
 				if (this.players[p].id == index) {
 					this.players[p].actions[property] = changes[index][property];
-					continue;
+					break;
 				}
 			}
 		}
@@ -82,12 +83,10 @@ Game.prototype.tick = function() {
 		if (player.actions.moveLeft && !player.actions.moveRight) {
 			player.velocity.x -= 1;
 			if (player.velocity.x < -10) player.velocity.x = -10;
-		}
-		if (player.actions.moveRight && !player.actions.moveLeft) {
+		} else if (player.actions.moveRight && !player.actions.moveLeft) {
 			player.velocity.x += 1;
 			if (player.velocity.x > 10) player.velocity.x = 10;
-		}
-		if (!player.actions.moveLeft && !player.actions.moveRight) {
+		} else {
 			if (player.velocity.x < 0) {
 				player.velocity.x += 1;
 			} else if (player.velocity.x > 0) {
