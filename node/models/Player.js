@@ -6,6 +6,7 @@ var Player = function(socket/*, name, spawnPosition*/) {
 	this.socket = socket;
 	this.name = 'player-' + this.id; // TODO: set name
 	this.score = 0;
+	this.collectedItems = 0;
 	this.position = {
 		x: 0, // TODO: use spawnPosition
 		y: 0
@@ -28,6 +29,10 @@ Player.prototype.addScore = function (score) {
 
 Player.prototype.getScore = function () {
 	return this.score;
+};
+
+Player.prototype.getCollectedItems = function() {
+	return this.collectedItems;
 };
 
 module.exports = Player;

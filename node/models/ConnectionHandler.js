@@ -62,7 +62,7 @@ ConnectionHandler.prototype.sendResponse = function(socket, response) {
 
 ConnectionHandler.prototype.sendBroadcast = function(socket, response, includeSelf) {
 	var sendingPlayer = this.game.getPlayerBySocket(socket);
-	if (!sendingPlayer) {
+	if (!sendingPlayer && !includeSelf) {
 		return;
 	}
 
