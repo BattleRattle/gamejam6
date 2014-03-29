@@ -91,7 +91,7 @@ Player.prototype.drop = function() {
 	this.game.toys.splice(this.game.toys.indexOf(this.toy, 1));
 	this.toy = null;
 
-	var response = new Response('action', {action: 'dropped', playerId: this.id, toyId: toyIdf}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	var response = new Response('action', {action: 'dropped', playerId: this.id, toyId: toyId}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
