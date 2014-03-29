@@ -73,7 +73,7 @@ define('PlayerView', [
 			this.direction *= -1;
 		}
 
-		if (this.actions.jump && !this.isFalling) {
+		if (this.actions.jump && !this.isFalling && !this.velocity.y) {
 			this.velocity.y = config.jump_velocity;
 			this.isFalling = true;
 		} else {

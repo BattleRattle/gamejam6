@@ -122,7 +122,7 @@ Game.prototype.tick = function() {
 
 		player.position.x += player.velocity.x;
 
-		if (player.actions.jump && !player.isFalling) {
+		if (player.actions.jump && !player.isFalling && !player.velocity.y) {
 			player.velocity.y = jump_velocity;
 			player.isFalling = true;
 		} else {
