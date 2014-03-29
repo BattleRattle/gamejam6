@@ -6,5 +6,21 @@
 		"stats": {
 
 		}
+	},
+	"monster2": {
+		"name": "Napoleon",
+		"width": 114,
+		"height": 85,
+		"stats": {
+
+		}
+	},
+	"monster3": {
+		"name": "Lincoln",
+		"width": 114,
+		"height": 85,
+		"stats": {
+
+		}
 	}
 }

@@ -42,11 +42,6 @@ define('MapView', [
 		bitmap.y = ViewConstants.HUD_HEIGHT + i * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET;
 		container.addChild(bitmap);
 
-		bitmap = new createjs.Bitmap(assets['maedchen']);
-		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET - 125;
-		bitmap.x = ViewConstants.MAP_TILE_WIDTH - 100;
-		container.addChild(bitmap);
-
 		bitmap = new createjs.Bitmap(assets['roboter']);
 		bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET;
 		bitmap.x = ViewConstants.MAP_TILE_WIDTH + 150;

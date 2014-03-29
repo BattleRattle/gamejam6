@@ -29,7 +29,8 @@ require.config({
 		'LobbyServerListener': 'lobby/LobbyServerListener',
 		'GameState': 'game/State',
 		'GameServerListener': 'game/GameServerListener',
-		'CollisionTester': 'player/CollisionTester'
+		'CollisionTester': 'player/CollisionTester',
+		'GirlView': 'views/Girl'
 	}
 
 });

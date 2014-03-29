@@ -8,6 +8,14 @@
 		"src": "img/characters/bismarck.png"
 	},
 	{
+		"id": "monster2",
+		"src": "img/characters/bismarck.png"
+	},
+	{
+		"id": "monster3",
+		"src": "img/characters/bismarck.png"
+	},
+	{
 		"id": "monster_data",
 		"src": "data/monsters.json"
 	},

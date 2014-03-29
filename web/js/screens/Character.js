@@ -79,18 +79,18 @@ define('CharacterScreen', [
 
 		var monster2Box = new createjs.Container();
 		monster2Box.x = CONTENT_WIDTH / 3;
-		drawBox(monster2Box, 'monster1');
+		drawBox(monster2Box, 'monster2');
 		container.addChild(monster2Box);
 		monster2Box.addEventListener('click', function () {
-			self.exit('monster1');
+			self.exit('monster2');
 		});
 
 		var monster3Box = new createjs.Container();
 		monster3Box.x = CONTENT_WIDTH / 3 * 2;
-		drawBox(monster3Box, 'monster1');
+		drawBox(monster3Box, 'monster3');
 		container.addChild(monster3Box);
 		monster3Box.addEventListener('click', function () {
-			self.exit('monster1');
+			self.exit('monster3');
 		});
 
 		stage.update();
