@@ -2,7 +2,8 @@ define('PlayerView', [
 	'createjs',
 	'ViewConstants'
 ], function (createjs, ViewConstants) {
-	var container;
+	var container,
+		config;
 
 	var Player = function() {
 		this.actions = {
@@ -25,6 +26,8 @@ define('PlayerView', [
 		container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
 		container.x = data.position.x;
 		container.addChild(bitmap);
+
+		config = assets['params'].movement;
 	};
 
 	Player.prototype.update = function(changes) {
@@ -35,16 +38,16 @@ define('PlayerView', [
 		}
 
 		if (this.actions.moveLeft && !this.actions.moveRight) {
-			this.velocity.x -= 1;
-			if (this.velocity.x < -10) this.velocity.x = -10;
+			this.velocity.x -= config.friction;
+			if (this.velocity.x < -config.max_velocity) this.velocity.x = -config.max_velocity;
 		} else if (this.actions.moveRight && !this.actions.moveLeft) {
-			this.velocity.x += 1;
-			if (this.velocity.x > 10) this.velocity.x = 10;
+			this.velocity.x += config.acceleration;
+			if (this.velocity.x > config.max_velocity) this.velocity.x = config.max_velocity;
 		} else {
 			if (this.velocity.x < 0) {
-				this.velocity.x += 1;
+				this.velocity.x += config.acceleration;
 			} else if (this.velocity.x > 0) {
-				this.velocity.x -= 1;
+				this.velocity.x -= config.friction;
 			}
 		}
 
