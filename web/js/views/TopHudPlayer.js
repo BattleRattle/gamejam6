@@ -12,11 +12,9 @@ define('TopHudPlayerView', [
 		container = new createjs.Container();
 		parent.addChild(container);
 
-		var shape = new createjs.Shape();
-		shape.graphics.beginFill("#444").drawRect(0, 0, ViewConstants.PLAYER_HUD_WIDTH, ViewConstants.HUD_HEIGHT);
-		shape.x = i * ViewConstants.PLAYER_HUD_WIDTH + 50 * i;
-		shape.y = 0;
-		container.addChild(shape);
+		var bitmap = new createjs.Bitmap(assets['temp_top_hud']);
+		bitmap.x = i * ViewConstants.PLAYER_HUD_WIDTH + 8 * i;
+		container.addChild(bitmap);
 	};
 
 	TopHudPlayer.prototype.update = function (player) {

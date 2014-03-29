@@ -26,5 +26,9 @@
 	{
 		"id": "background",
 		"src": "img/background.jpg"
+	},
+	{
+		"id": "temp_top_hud",
+		"src": "img/tophud/avatar.png"
 	}
 ]

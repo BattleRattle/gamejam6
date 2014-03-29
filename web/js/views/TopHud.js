@@ -14,11 +14,6 @@ define('TopHudView', [
 		container.x = ViewConstants.CONTENT_WIDTH - ViewConstants.HUD_WIDTH;
 		parent.addChild(container);
 
-		var shape = new createjs.Shape();
-		shape.graphics.beginFill("#fff").drawRect(0, 0, ViewConstants.HUD_WIDTH, ViewConstants.HUD_HEIGHT);
-		shape.y = 0;
-		container.addChild(shape);
-
 		for (var i in players) {
 			var playerHud = new TopHudPlayer();
 			playerHud.initialize(assets, container, players[i], i);
