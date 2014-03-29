@@ -27,12 +27,12 @@ define('ToyView', [
 
 	Toy.prototype.pickup = function(toyId, playerId) {
 		this.owner = playerId;
-		this.container.visible = false;
+		this.toys[toyId].visible = false;
 	};
 
 	Toy.prototype.drop = function(toyId) {
 		this.owner = null;
-		this.container.visible = true;
+		delete this.toys[toyId];
 	};
 
 	return Toy;
