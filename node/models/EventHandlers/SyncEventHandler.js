@@ -19,7 +19,7 @@ function extractPlayerData(players) {
 	for (var i in players) {
 		var player = {};
 		for (var key in players[i]) {
-			if (key != 'socket' && key !== 'game') {
+			if (['socket', 'game', 'lobby'].indexOf(key) == -1) {
 				player[key] = players[i][key];
 			}
 		}

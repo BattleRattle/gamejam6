@@ -1,10 +1,10 @@
 var playerId = 0;
 var START_HEALTH = 100;
 
-var Player = function(socket, game/*, name, spawnPosition*/) {
+var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.id = ++playerId;
 	this.socket = socket;
-	this.game = game;
+	this.game = null;
 	this.name = 'player-' + this.id; // TODO: set name
 	this.score = 0;
 	this.collectedItems = 0;
@@ -25,10 +25,16 @@ var Player = function(socket, game/*, name, spawnPosition*/) {
 	};
 	this.direction = 'right';
 	this.health = START_HEALTH;
+	this.monsterId = null;
+	this.lobby = lobby;
 };
 
 Player.prototype.getSocket = function () {
 	return this.socket;
+};
+
+Player.prototype.setGame = function(game) {
+	this.game = game;
 };
 
 Player.prototype.getGame = function() {

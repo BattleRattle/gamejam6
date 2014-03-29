@@ -10,7 +10,7 @@ PlayerEventHandler.TYPE = 'player';
 PlayerEventHandler.prototype.playerJoin = function(player) {
 	var playerCopy = {};
 	for (var key in player) {
-		if (key !== 'socket' && key !== 'game') {
+		if (['socket', 'game', 'lobby'].indexOf(key) == -1) {
 			playerCopy[key] = player[key];
 		}
 	}

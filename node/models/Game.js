@@ -9,18 +9,18 @@ var StateChangeList = require('./StateChangeList.js');
 var gameId = 0;
 var TICK_RATE = 1;
 var SYNC_RATE = 1;
-var SECONDS_PER_TICK = 1 / TICK_RATE;
+var GAME_SLOTS = 1; // TODO: change to 3 later?
 
 var Game = function(connectionHandler) {
 	this.connectionHandler = connectionHandler;
 	this.connectionEventFactory = this.connectionHandler.connectionEventFactory;
 	this.players = [];
-	this.connectionHandler.init(this);
 	this.tickInterval = null;
 	this.syncInterval = null;
 	this.id = ++gameId;
 	this.currentTick = 0;
 	this.changes = new StateChangeList();
+	this.slotsTotal = GAME_SLOTS;
 };
 
 Game.prototype.start = function() {
@@ -31,31 +31,14 @@ Game.prototype.start = function() {
 	this.syncInterval = setInterval(this.sync.bind(this), 1000 / SYNC_RATE);
 };
 
-Game.prototype.createPlayer = function(socket) {
-	var player = new Player(socket, this);
+Game.prototype.addPlayer = function(player) {
 	this.players.push(player);
-
-	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
-	playerHandler.playerJoin(player);
-
-	return player;
 };
 
-Game.prototype.removePlayer = function(socket) {
-	var player = this.getPlayerBySocket(socket);
+Game.prototype.removePlayer = function(player) {
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
 	playerHandler.playerLeave(player);
 	this.players.splice(this.players.indexOf(player), 1);
-};
-
-Game.prototype.getPlayerBySocket = function(socket) {
-	for (var i in this.players) {
-		if (this.players[i].getSocket() === socket) {
-			return this.players[i];
-		}
-	}
-
-	return null;
 };
 
 Game.prototype.getPlayers = function() {

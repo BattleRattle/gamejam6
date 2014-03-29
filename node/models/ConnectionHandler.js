@@ -3,12 +3,12 @@ var Response = require('./Communication/Response.js');
 
 var ConnectionHandler = function(io) {
 	this.io = io;
-	this.game = null;
+	this.lobby = null;
 	this.connectionEventFactory = new ConnectionEventFactory(this);
 };
 
-ConnectionHandler.prototype.init = function(game) {
-	this.game = game;
+ConnectionHandler.prototype.init = function(lobby) {
+	this.lobby = lobby;
 
 	this.io.sockets.on('connection', function(socket) {
 		this.handleConnection(socket);
@@ -16,7 +16,7 @@ ConnectionHandler.prototype.init = function(game) {
 };
 
 ConnectionHandler.prototype.handleConnection = function(socket) {
-	var player = this.game.createPlayer(socket);
+	var player = this.lobby.createPlayer(socket);
 
 	socket.emit('debug', process.env.DEBUG ? true : false);
 
@@ -30,7 +30,7 @@ ConnectionHandler.prototype.handleConnection = function(socket) {
 };
 
 ConnectionHandler.prototype.handleDisconnect = function(socket) {
-	this.game.removePlayer(socket);
+	this.lobby.removePlayer(socket);
 };
 
 ConnectionHandler.prototype.callEventHandler = function(player, data) {
@@ -61,13 +61,19 @@ ConnectionHandler.prototype.sendResponse = function(socket, response) {
 };
 
 ConnectionHandler.prototype.sendBroadcast = function(socket, response, includeSelf) {
-	var sendingPlayer = this.game.getPlayerBySocket(socket);
+	var sendingPlayer = this.lobby.getPlayerBySocket(socket);
 	if (!sendingPlayer && !includeSelf) {
 		return;
 	}
 
-	this.game.getPlayers().forEach(function(player) {
+	this.lobby.players.forEach(function(player) {
 		if (!includeSelf && sendingPlayer === player) return;
+		player.getSocket().send(this.createRawResponse(response));
+	}.bind(this));
+};
+
+ConnectionHandler.prototype.sendGameBroadcast = function(game, response) {
+	game.getPlayers().forEach(function(player) {
 		player.getSocket().send(this.createRawResponse(response));
 	}.bind(this));
 };

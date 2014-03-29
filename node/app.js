@@ -4,7 +4,7 @@ var express = require('express'),
 	path = require('path'),
 	socketio = require('socket.io'),
 	ConnectionHandler = require('./models/ConnectionHandler'),
-	Game = require('./models/Game');
+	Lobby = require('./models/Lobby');
 
 var app = express();
 
@@ -31,6 +31,5 @@ http.createServer(app).listen(app.get('port'), function () {
 
 	var io = socketio.listen(this);
 	var connectionHandler = new ConnectionHandler(io);
-	var game = new Game(connectionHandler);
-	game.start();
+	new Lobby(connectionHandler);
 });
