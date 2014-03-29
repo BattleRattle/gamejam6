@@ -34,5 +34,9 @@
 	{
 		"id": "stage_bottom",
 		"src": "img/stage_bottom.png"
+	},
+	{
+		"id": "params",
+		"src": "data/params.json"
 	}
 ]
