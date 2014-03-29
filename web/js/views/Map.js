@@ -11,8 +11,6 @@ define('MapView', [
 	Map.prototype.initialize = function (assets, parent, mapId) {
 		container = new createjs.Container();
 		parent.addChild(container);
-
-		console.log(assets)
 		
 		var mapTiles = assets['map_data'][mapId].tiles;
 		for (var i in mapTiles) {

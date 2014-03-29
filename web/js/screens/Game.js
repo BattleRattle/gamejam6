@@ -3,8 +3,9 @@ define('GameScreen', [
 	'Movement',
 	'TopHudView',
 	'GameView',
-	'ViewConstants'
-], function(createjs, Movement, TopHud, View, ViewConstants){
+	'ViewConstants',
+	'PlayerView'
+], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView){
 	var container;
 
 	var Game = function() {
@@ -44,6 +45,10 @@ define('GameScreen', [
 
 		var topHud = new TopHud();
 		topHud.initialize(assets, container, [{}, {}, {}/** push players here */]);
+
+		var playerView = new PlayerView();
+		playerView.initialize(assets, container, {});
+
 
 		var movement = new Movement();
 		movement.initialize();

@@ -19,6 +19,7 @@ require.config({
 		'TopHudPlayerView': 'views/TopHudPlayer',
 		'GameView': 'views/Game',
 		'MapView': 'views/Map',
+		'PlayerView': 'views/Player',
 		'BackgroundView': 'views/Background',
 		'ViewConstants': 'views/Constants'
 	}
