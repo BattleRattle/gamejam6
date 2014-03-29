@@ -43,6 +43,11 @@ define('PlayerView', [
 		config = assets['params'].movement;
 	};
 
+	Player.prototype.updateSync = function (player) {
+		this.container.x = player.position.x;
+		this.container.y = player.position.y;
+	}
+
 	Player.prototype.update = function(changes) {
 		if (changes) {
 			for (var i in changes) {

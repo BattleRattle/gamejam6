@@ -87,7 +87,11 @@ define('GameScreen', [
 				stage.update();
 			},
 			'sync': function (event) {
-				topHud.update(event.event.players)
+				topHud.update(event.event.players);
+				for (var i in event.event.players) {
+					var player = event.event.players[i];
+					players[player.id].updateSync(player);
+				}
 				stage.update();
 			},
 			'pickedUp': function (event) {
