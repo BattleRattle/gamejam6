@@ -131,7 +131,6 @@ Game.prototype.tick = function() {
 			player.isFalling = false;
 		}
 
-		return;
 		var MAP = 'map1';
 		var TILE_SIZE = 300;
 		var OFFSET = 150;

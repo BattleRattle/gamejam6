@@ -38,5 +38,9 @@
 	{
 		"id": "params",
 		"src": "data/params.json"
+	},
+	{
+		"id": "collision",
+		"src": "data/collisions.json"
 	}
 ]
