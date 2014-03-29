@@ -18,7 +18,7 @@ ConnectionEventFactory.prototype.getEventHandler = function(type) {
         case ActionEventHandler.TYPE:
             this.eventHandlers[type] = new ActionEventHandler();
             break;
-        case LobbtEventHandler.TYPE:
+        case LobbyEventHandler.TYPE:
             this.eventHandlers[type] = new LobbyEventHandler();
             break;
         case GameEventHandler.TYPE:
