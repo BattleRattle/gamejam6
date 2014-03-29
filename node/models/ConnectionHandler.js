@@ -37,7 +37,7 @@ ConnectionHandler.prototype.callEventHandler = function(player, data) {
 	var object = JSON.parse(data);
 	var handler = this.connectionEventFactory.getEventHandler(object.type);
 
-	return handler[object.method](player, object.data);
+	return handler ? handler[object.type](player, object.event) : null;
 };
 
 ConnectionHandler.prototype.handleResponse = function(socket, response) {

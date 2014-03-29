@@ -18,7 +18,7 @@ Game.prototype.createPlayer = function(socket) {
 	this.players.push(player);
 
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
-	playerHandler.callNewPlayer(player);
+	playerHandler.playerJoin(player);
 
 	return player;
 };
@@ -26,7 +26,7 @@ Game.prototype.createPlayer = function(socket) {
 Game.prototype.removePlayer = function(socket) {
 	var player = this.getPlayerBySocket(socket);
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
-	playerHandler.callPlayerLeft(player);
+	playerHandler.playerLeave(player);
 	this.players.splice(this.players.indexOf(player), 1);
 };
 

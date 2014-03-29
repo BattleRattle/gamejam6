@@ -7,7 +7,7 @@ var PlayerEventHandler = function() {
 PlayerEventHandler.prototype = AbstractEventHandler.prototype;
 PlayerEventHandler.TYPE = 'player';
 
-PlayerEventHandler.prototype.callNewPlayer = function(player) {
+PlayerEventHandler.prototype.playerJoin = function(player) {
 	var playerCopy = {};
 	for (var key in player) {
 		if (key !== 'socket') {
@@ -21,7 +21,7 @@ PlayerEventHandler.prototype.callNewPlayer = function(player) {
 	}, false);
 };
 
-PlayerEventHandler.prototype.callPlayerLeft = function(player) {
+PlayerEventHandler.prototype.playerLeave = function(player) {
 	this.createBroadcastResponse(player, PlayerEventHandler.TYPE, {
 		action: 'leave',
 		playerId: player.id

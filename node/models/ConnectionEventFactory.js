@@ -16,7 +16,8 @@ ConnectionEventFactory.prototype.getEventHandler = function(type) {
 			break;
 
 		default:
-			throw new Error('event handler is not implemented: ' + type);
+			console.log('WARNING: Event handler is not implemented: ' + type);
+			return null;
 	}
 
 	this.eventHandlers[type].setConnectionHandler(this.connectionHandler);
