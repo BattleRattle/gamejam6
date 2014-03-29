@@ -82,6 +82,8 @@ define('PlayerView', [
 
 		this.container.y -= this.velocity.y;
 
+        var mapWidth = this.mapData['tiles'][0].length* ViewConstants.MAP_TILE_WIDTH;
+
 		if (this.collistionTester.collide({
 			position: {x: this.container.x, y: this.container.y},
 			collision: this.collisioData[this.playerData.monsterId],
@@ -90,7 +92,7 @@ define('PlayerView', [
 		}, {
 			position: {x: 0, y: -60},
 			collision: this.collisioData['map1'],
-			width: this.mapData['tiles'][0].length * ViewConstants.MAP_TILE_WIDTH,
+			width: mapWidth,
 			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET
 		})) {
 			console.log('WHAAAAA!!!! COLLISION!!!!!111');
@@ -107,6 +109,18 @@ define('PlayerView', [
 			this.velocity.y = 0;
 			this.isFalling = false;
 		}
+
+        if(this.container.x < 0){
+            this.container.x = 0;
+            if(this.velocity.x < 0){
+                this.velocity.x = 0;
+            }
+        }else if(this.container.x + this.monsterData.width > mapWidth){
+
+            this.container.x =  mapWidth - this.monsterData.width;
+            this.velocity.x = 0;
+        }
+
 
 		this.lastPosition.x = this.container.x;
 		this.lastPosition.y = this.container.y;

@@ -140,15 +140,18 @@ Game.prototype.tick = function() {
 		var MAP = 'map1';
 		var TILE_SIZE = 300;
 		var OFFSET = 150;
+        var mapWidth = maps[MAP]['tiles'][0].length * TILE_SIZE;
+        var monsterWidth = monsters[player.monsterId].width;
+
 		if (this.collisionTester.collide({
 			position: player.position,
 			collision: collisions[player.monsterId],
-			width: monsters[player.monsterId].width,
+			width: monsterWidth,
 			height: monsters[player.monsterId].height
 		}, {
 			position: {x: 0, y: -60},
 			collision: collisions[MAP],
-			width: maps[MAP]['tiles'][0].length * TILE_SIZE,
+			width: mapWidth,
 			height: maps[MAP]['tiles'].length * TILE_SIZE + OFFSET
 		})) {
 			console.log('WHAAAAA!!!! COLLISION!!!!!111');
@@ -173,6 +176,17 @@ Game.prototype.tick = function() {
 				player.pickup(nearestToy);
 			}
 		}
+
+        if(player.position.x < 0){
+            player.position.x = 0;
+            if(player.velocity.x < 0){
+                player.velocity.x = 0;
+            }
+        }else if(player.position.x + monsterWidth > mapWidth){
+            player.position.x =  mapWidth - monsterWidth;
+            player.velocity.x = 0;
+        }
+
 	}.bind(this));
 
 	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this, this.currentTick, changes);
