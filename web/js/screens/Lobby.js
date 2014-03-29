@@ -46,7 +46,7 @@ define('LobbyScreen', [
 		var handler = {
 			'entered': function (event) { GameState.playerId = event.event.playerId; self.singleMulti(event); },
 			'created': function() { self.exit() },
-			'join': function() { self.exit() }
+			'joined': function() { self.exit() }
 		};
 
 		var listener = new LobbyServerListener();
