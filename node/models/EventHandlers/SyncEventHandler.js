@@ -1,32 +1,16 @@
 var AbstractEventHandler = require('./AbstractEventHandler.js');
+var Response = require('./../Communication/Response');
+var PlayerHelper = require('./../PlayerHelper');
 
-var SyncEventHandler = function() {
-
-};
+var SyncEventHandler = function() {};
 
 SyncEventHandler.prototype = AbstractEventHandler.prototype;
 SyncEventHandler.TYPE = 'sync';
 
 SyncEventHandler.prototype.start = function(game) {
-	this.createBroadcastResponse(null, SyncEventHandler.TYPE, {
-		tick: game.tick,
-		players: extractPlayerData(game.players)
-	});
+	var event = {tick: game.currentTick, players: PlayerHelper.extractPlayerData(game.players)};
+	var response = new Response(SyncEventHandler.TYPE, event, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.connectionHandler.sendGameBroadcast(game, response);
 };
-
-function extractPlayerData(players) {
-	var data = [];
-	for (var i in players) {
-		var player = {};
-		for (var key in players[i]) {
-			if (['socket', 'game', 'lobby'].indexOf(key) == -1) {
-				player[key] = players[i][key];
-			}
-		}
-		data.push(player);
-	}
-
-	return data;
-}
 
 module.exports = SyncEventHandler;

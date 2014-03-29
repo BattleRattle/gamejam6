@@ -8,10 +8,6 @@ AbstractEventHandler.prototype.setConnectionHandler = function (connectionHandle
 	this.connectionHandler = connectionHandler;
 };
 
-AbstractEventHandler.prototype.getConnectionHandler = function () {
-	return this.connectionHandler;
-};
-
 AbstractEventHandler.prototype.createDirectResponse = function (player, type, event) {
 	var response = new Response(type, event, Response.TYPE_DIRECT);
 	this.connectionHandler.handleResponse(player.getSocket(), response);
