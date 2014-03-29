@@ -17,6 +17,10 @@ define('PlayerView', [
 			x: 0,
 			y: 0
 		};
+		this.lastPosition = {
+			x: 0,
+			y: 0
+		};
 	};
 
 	Player.prototype.initialize = function (assets, parent, data) {
@@ -27,6 +31,9 @@ define('PlayerView', [
 		this.container.y = ViewConstants.CONTENT_HEIGHT - this.bitmap.image.height * 0.27;
 		this.container.x = data.position.x;
 		this.container.addChild(this.bitmap);
+
+		this.lastPosition.x = this.container.x;
+		this.lastPosition.y = this.container.y;
 
 		this.collistionTester = new CollisionTester();
 		this.monsterData = assets['monster_data'][data.monsterId];
@@ -87,6 +94,12 @@ define('PlayerView', [
 			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_SIZE + ViewConstants.MAP_TOP_OFFSET
 		})) {
 			console.log('WHAAAAA!!!! COLLISION!!!!!111');
+
+			if (this.lastPosition.y < this.container.y) {
+				this.container.y += this.velocity.y;
+				this.velocity.y = 0;
+				this.isFalling = false;
+			}
 		}
 
 
@@ -95,6 +108,9 @@ define('PlayerView', [
 			this.velocity.y = 0;
 			this.isFalling = false;
 		}
+
+		this.lastPosition.x = this.container.x;
+		this.lastPosition.y = this.container.y;
 	};
 
 	return Player;

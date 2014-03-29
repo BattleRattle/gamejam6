@@ -21,6 +21,7 @@ require.config({
 		'GameView': 'views/Game',
 		'MapView': 'views/Map',
 		'PlayerView': 'views/Player',
+		'ToyView': 'views/Toy',
 		'BackgroundView': 'views/Background',
 		'ViewConstants': 'views/Constants',
 		'Lobby': 'lobby/Lobby',
