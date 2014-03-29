@@ -97,6 +97,11 @@ define('GameScreen', [
 			'pickedUp': function (event) {
 				toy.pickup(event.event.toyId, event.event.playerId);
 				stage.update();
+			},
+			'dropped': function (event) {
+				console.log(event)
+				toy.drop(event.event.toyId);
+				stage.update();
 			}
 		});
 

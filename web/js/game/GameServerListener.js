@@ -23,8 +23,8 @@ define('GameServerListener', [
 					handler[event.event.action](event);
 				}
 			} else if ('action' === event['type']) {
-				if (handler['pickedUp']) {
-					handler['pickedUp'](event);
+				if (handler[event.event.action]) {
+					handler[event.event.action](event);
 				}
 			}
 		});
