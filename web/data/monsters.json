@@ -1,6 +1,9 @@
 {
 	"monster1": {
 		"name": "Bismarck",
+		"name": "Monster1",
+		"width": 150,
+		"height": 150,
 		"stats": {
 
 		}

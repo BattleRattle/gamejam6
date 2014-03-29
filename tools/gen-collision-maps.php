@@ -9,6 +9,7 @@ $TMP_DIR = __DIR__ . '/tmp/';
 $TILE_SIZE = 300;
 $HUD_HEIGHT = 200;
 $OFFSET = $HUD_HEIGHT - 50;
+$MONSTER_SCALE_FACTOR = 0.3;
 
 if (!is_dir($TMP_DIR)) {
     mkdir($TMP_DIR);
@@ -51,7 +52,14 @@ foreach ($monsterDefinitions as $monster => $definition) {
     printf('Converting monster "%s" ... ', $monster);
 
     $img = imagecreatefromstring(file_get_contents($WEB_ROOT . $assets[$monster]));
-    $collisionMap[$monster] = getCollisionMap($img);
+    $imgResized = imagecreatetruecolor(imagesx($img) * $MONSTER_SCALE_FACTOR, imagesy($img) * $MONSTER_SCALE_FACTOR);
+    $transparent = imagecolorallocatealpha($imgResized, 255, 0, 255, 127);
+    imagefill($imgResized, 0, 0, $transparent);
+    imagecolortransparent($imgResized, $transparent);
+    imagecopyresampled($imgResized, $img, 0, 0, 0, 0, imagesx($img) * $MONSTER_SCALE_FACTOR, imagesy($img) * $MONSTER_SCALE_FACTOR, imagesx($img), imagesy($img));
+
+    imagepng($imgResized, $TMP_DIR . $monster . '.png', 9);
+    $collisionMap[$monster] = getCollisionMap($imgResized);
 
     echo 'done' . PHP_EOL;
 }
