@@ -14,7 +14,18 @@ define('MenuScreen', [
 
 	Menu.prototype.registerOnExit = function(callback) {
 		this.onExit = callback;
-	}
+	};
+
+	Menu.prototype.resize = function () {
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+
+		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
+		container.scaleX = scale;
+		container.scaleY = scale;
+		container.x = (this.canvas.width - PRELOAD_WIDTH * scale) / 2;
+		this.stage.update();
+	};
 
 	Menu.prototype.enter =  function (canvas, stage, assets) {
 		var self = this;
@@ -23,11 +34,11 @@ define('MenuScreen', [
 		this.assets = assets;
 
 		container = new createjs.Container();
-		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
-		container.scaleX = scale;
-		container.scaleY = scale;
-		container.x = (canvas.width - PRELOAD_WIDTH * scale) / 2;
+		this.resize();
 		this.stage.addChild(container);
+		window.onresize = function () {
+			self.resize();
+		};
 
 		var play = new createjs.Shape();
 		play.graphics.beginFill("#fff").drawRect(0, 0, CONTENT_WIDTH, CONTENT_HEIGHT);

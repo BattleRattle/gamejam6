@@ -16,7 +16,18 @@ define('PreloaderScreen', [
 
 	Preloader.prototype.registerOnExit = function(callback) {
 		this.onExit = callback;
-	}
+	};
+
+	Preloader.prototype.resize = function () {
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+
+		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
+		container.scaleX = scale;
+		container.scaleY = scale;
+		container.x = (this.canvas.width - PRELOAD_WIDTH * scale) / 2;
+		this.stage.update();
+	};
 
 	Preloader.prototype.enter =  function (canvas, stage) {
 		var self = this;
@@ -25,11 +36,12 @@ define('PreloaderScreen', [
 		this.canvas = canvas;
 
 		container = new createjs.Container();
-		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
-		container.scaleX = scale;
-		container.scaleY = scale;
-		container.x = (canvas.width - PRELOAD_WIDTH * scale) / 2;
+		this.resize();
 		this.stage.addChild(container);
+
+		window.onresize = function () {
+			self.resize();
+		};
 
 		progress = new createjs.Shape(); // Remember to define the progress variable at the top!
 		progress.graphics.beginStroke("#C33").drawRect(0, 0, CONTENT_WIDTH, 20);

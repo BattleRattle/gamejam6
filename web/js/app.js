@@ -13,21 +13,13 @@ define('App', [
 
 	};
 
-	App.prototype.resize = function () {
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
-	};
-
 	App.prototype.initialize = function () {
 		var self = this;
 
 		this.canvas = document.getElementById('canvas');
-		this.resize();
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
 		this.stage = new createjs.Stage(this.canvas);
-
-		window.onresize = function() {
-			self.resize();
-		};
 
 		var preloader = new PreloaderScreen();
 		preloader.registerOnExit(function(assets) {
@@ -68,7 +60,7 @@ define('App', [
 			console.log('exit game');
 			self.gotoGameOver();
 		});
-		game.enter(this.canvas, this.stage);
+		game.enter(this.canvas, this.stage, this.assets);
 	};
 
 	App.prototype.gotoGameOver = function () {
@@ -77,7 +69,7 @@ define('App', [
 		gameOver.registerOnExit(function () {
 			console.log('game over');
 		});
-		gameOver.enter(this.canvas, this.stage);
+		gameOver.enter(this.canvas, this.stage, this.assets);
 	};
 
 	return App;

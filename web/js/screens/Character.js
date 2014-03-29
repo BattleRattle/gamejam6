@@ -38,20 +38,31 @@ define('CharacterScreen', [
 
 	Character.prototype.registerOnExit = function(callback) {
 		this.onExit = callback;
-	}
+	};
+
+	Character.prototype.resize = function () {
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+
+		var scale = Math.min(this.canvas.width / CONTENT_WIDTH, this.canvas.height / (100 + CONTENT_HEIGHT));
+		container.scaleX = scale;
+		container.scaleY = scale;
+		container.x = (this.canvas.width - CONTENT_WIDTH * scale) / 2;
+		this.stage.update();
+	};
 
 	Character.prototype.enter =  function (canvas, stage, as) {
 		var self = this;
 		this.stage = stage;
+		this.canvas = canvas;
 		assets = as;
 
-		var scale = Math.min(canvas.width / CONTENT_WIDTH, canvas.height / (100 + CONTENT_HEIGHT));
-
 		container = new createjs.Container();
-		container.x = (canvas.width - CONTENT_WIDTH * scale) / 2;
-		container.scaleX = scale;
-		container.scaleY = scale;
+		this.resize();
 		stage.addChild(container);
+		window.onresize = function () {
+			self.resize();
+		};
 
 		var header = new createjs.Text("Character Selection", "bold 60px Arial", "#fff");
 		header.y = 40;
