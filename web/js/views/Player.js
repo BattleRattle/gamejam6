@@ -10,6 +10,7 @@ define('PlayerView', [
 			moveRight: false,
 			moveLeft: false
 		};
+		this.isFalling = false;
 		this.velocity = {
 			x: 0,
 			y: 0
@@ -38,20 +39,37 @@ define('PlayerView', [
 		}
 
 		if (this.actions.moveLeft && !this.actions.moveRight) {
-			this.velocity.x -= config.friction;
+			this.velocity.x -= config.acceleration;
 			if (this.velocity.x < -config.max_velocity) this.velocity.x = -config.max_velocity;
 		} else if (this.actions.moveRight && !this.actions.moveLeft) {
 			this.velocity.x += config.acceleration;
 			if (this.velocity.x > config.max_velocity) this.velocity.x = config.max_velocity;
 		} else {
 			if (this.velocity.x < 0) {
-				this.velocity.x += config.acceleration;
+				if (this.velocity.x >= -config.friction) this.velocity.x = 0;
+				else this.velocity.x += config.friction;
 			} else if (this.velocity.x > 0) {
-				this.velocity.x -= config.friction;
+				if (this.velocity.x <= config.friction) this.velocity.x = 0;
+				else this.velocity.x -= config.friction;
 			}
 		}
 
 		this.container.x += this.velocity.x;
+
+		if (this.actions.jump && !this.isFalling) {
+			this.velocity.y = config.jump_velocity;
+			this.isFalling = true;
+		} else {
+			this.velocity.y -= config.gravity;
+		}
+
+		this.container.y -= this.velocity.y;
+
+		if (this.container.y > 660) {
+			this.container.y = 660;
+			this.velocity.y = 0;
+			this.isFalling = false;
+		}
 	};
 
 	return Player;

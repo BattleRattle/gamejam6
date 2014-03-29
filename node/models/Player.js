@@ -23,6 +23,7 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 		pickupToy: false,
 		dropToy: false
 	};
+	this.isFalling = false;
 	this.direction = 'right';
 	this.health = START_HEALTH;
 	this.monsterId = null;

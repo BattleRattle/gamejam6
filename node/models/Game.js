@@ -89,6 +89,8 @@ Game.prototype.tick = function() {
 	var max_velocity = params.movement.max_velocity;
 	var max_acceleration = params.movement.acceleration;
 	var friction = params.movement.friction;
+	var jump_velocity = params.movement.jump_velocity;
+	var gravity = params.movement.gravity;
 
 	this.players.forEach(function(player) {
 		if (player.actions.moveLeft && !player.actions.moveRight) {
@@ -99,13 +101,30 @@ Game.prototype.tick = function() {
 			if (player.velocity.x > max_velocity) player.velocity.x = max_velocity;
 		} else {
 			if (player.velocity.x < 0) {
-				player.velocity.x += friction;
+				if (player.velocity.x >= -friction) player.velocity.x = 0;
+				else player.velocity.x += friction;
 			} else if (player.velocity.x > 0) {
-				player.velocity.x -= friction;
+				if (player.velocity.x <= friction) player.velocity.x = 0;
+				else player.velocity.x -= friction;
 			}
 		}
 
-		player.position.x += player.velocity.x;	
+		player.position.x += player.velocity.x;
+
+		if (player.actions.jump && !player.isFalling) {
+			player.velocity.y = jump_velocity;
+			player.isFalling = true;
+		} else {
+			player.velocity.y -= gravity;
+		}
+
+		player.position.y -= player.velocity.y;
+
+		if (player.position.y > 660) {
+			player.position.y = 660;
+			player.velocity.y = 0;
+			player.isFalling = false;
+		}
 	});
 
 	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this.currentTick, changes);

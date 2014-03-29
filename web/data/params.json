@@ -1,7 +1,9 @@
 {
 	"movement": {
-		"max_velocity": 10,
-		"acceleration": 1,
-		"friction": 1
+		"max_velocity": 15,
+		"acceleration": 0.7,
+		"friction": 1.2,
+		"jump_velocity": 40,
+		"gravity": 2.2
 	}
 }
