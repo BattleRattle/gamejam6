@@ -29,7 +29,7 @@ var Game = function(connectionHandler, slots) {
 	this.slotsTotal = Math.min(3, Math.max(1, parseInt(slots)));
 	this.collisionTester = new CollisionTester();
 	this.mapId = Object.keys(maps)[parseInt(Math.random() * Object.keys(maps).length)];
-	this.toys = generateToys(maps[this.mapId].girl);
+	this.toys = generateToys(maps[this.mapId].girl, this.slotsTotal * 3);
 };
 
 Game.prototype.start = function() {
@@ -227,9 +227,9 @@ Game.prototype.sync = function() {
 	this.connectionEventFactory.getEventHandler(SyncEventHandler.TYPE).start(this);
 };
 
-function generateToys(girl) {
+function generateToys(girl, amount) {
 	var toys = [];
-	for (var i=0; i<7; i++) {
+	for (var i=0; i<amount; i++) {
 		toys.push(new Toy({x: parseInt(girl.x + 300 * Math.random()), y: girl.y + 120}));
 	}
 	return toys;
