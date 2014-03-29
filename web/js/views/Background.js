@@ -13,7 +13,7 @@ define('BackgroundView', [
 		parent.addChild(container);
 
 		var bitmap = new createjs.Bitmap(assets['background']);
-		bitmap.scaleX = 2100 / 1600;
+		bitmap.scaleX = 2100 / 2000;
 		container.addChild(bitmap);
 	};
 

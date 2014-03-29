@@ -86,6 +86,9 @@ define('GameScreen', [
 
 				stage.update();
 			},
+			'end': function () {
+				self.exit();
+			},
 			'sync': function (event) {
 				topHud.update(event.event.players);
 				for (var i in event.event.players) {
@@ -106,10 +109,10 @@ define('GameScreen', [
 		});
 
 		this.stage.update();
-//		this.exit();
 	};
 
 	Game.prototype.exit = function() {
+		this.container.removeAllChildren();
 		this.onExit();
 	};
 
