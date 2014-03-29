@@ -50,8 +50,10 @@ define('GameScreen', [
 		var topHud = new TopHud();
 		topHud.initialize(assets, container, [{}, {}, {}/** push players here */]);
 
-		var movement = new Movement();
-		movement.initialize();
+		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#C33");
+		waiting.x = 450;
+		waiting.y = 400;
+		container.addChild(waiting);
 
 		var listener = new GameServerListener();
 		listener.initialize(socket, {
@@ -65,11 +67,18 @@ define('GameScreen', [
 				}
 				self.stage.update();
 			}, 'start': function(event) {
+				container.removeChild(waiting);
+
+				var movement = new Movement();
+				movement.initialize();
+
 				for (var i in event.event.players) {
 					var player = event.event.players[i];
 					players[player.id] = new PlayerView();
 					players[player.id].initialize(assets, container, player);
 				}
+
+				stage.update();
 			}
 		});
 

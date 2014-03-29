@@ -14,9 +14,19 @@ define('Lobby', [
 		event.action = 'enter';
 		event.monsterId = monsterId;
 		this.dispatchEvent(event);
+	};
 
-		event = new createjs.Event('lobby.create');
+	Lobby.prototype.joinGame = function (gameId) {
+		var event = new createjs.Event('lobby.join');
+		event.action = 'join';
+		event.gameId = gameId;
+		this.dispatchEvent(event);
+	};
+
+	Lobby.prototype.createGame = function (isSingle) {
+		var event = new createjs.Event('lobby.create');
 		event.action = 'create';
+		event.slots = isSingle ? 1 : 3;
 		this.dispatchEvent(event);
 	};
 
