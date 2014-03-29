@@ -37,7 +37,7 @@ Game.prototype.start = function() {
 		gameId: this.id,
 		mapId: this.mapId,
 		players: playerHelper.extractPlayerData(this.players),
-		toys: generateToys()
+		toys: generateToys(maps[this.mapId].girl)
 	};
 	var response = new Response('game', event, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.connectionHandler.sendGameBroadcast(this, response);
@@ -161,10 +161,10 @@ Game.prototype.sync = function() {
 	this.connectionEventFactory.getEventHandler(SyncEventHandler.TYPE).start(this);
 };
 
-function generateToys() {
+function generateToys(girl) {
 	var toys = [];
 	for (var i=0; i<7; i++) {
-		toys.push(new Toy());
+		toys.push(new Toy({x: parseInt(girl.x - 75 + 150 * Math.random()), y: girl.y}));
 	}
 	return toys;
 }
