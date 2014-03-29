@@ -4,3 +4,6 @@ node/node_modules
 #ide
 .idea
 atlassian-ide-plugin.xml
+
+#project
+/tools/tmp/*

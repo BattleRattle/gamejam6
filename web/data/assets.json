@@ -62,5 +62,9 @@
 	{
 		"id": "health3",
 		"src": "img/tophud/3.png"
+	},
+	{
+		"id": "deathstar",
+		"src": "img/tophud/xx.png"
 	}
 ]

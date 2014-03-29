@@ -78,14 +78,20 @@ define('TopHudPlayerView', [
 			delete this.health[1];
 		}
 
+		var bitmap;
 		if (typeof this.health[0] !== 'undefined' && player.health <= 0) {
 			this.container.removeChild(this.health[0]);
 			delete this.health[0];
+
+			bitmap = new createjs.Bitmap(assets['deathstar']);
+			bitmap.x = i * ViewConstants.PLAYER_HUD_WIDTH + 8 * i + 10;
+			bitmap.y = -5;
+			this.container.addChild(bitmap);
 		}
 
 		while ( this.starCount < player.collectedItems) {
-			var oldStar = this.stars[this.starCount],
-				bitmap = new createjs.Bitmap(this.assets['star_full']);
+			var oldStar = this.stars[this.starCount];
+			bitmap = new createjs.Bitmap(this.assets['star_full']);
 			bitmap.x = oldStar.x;
 			bitmap.y = oldStar.y;
 			this.stars[this.starCount] = bitmap;
