@@ -133,11 +133,9 @@ Game.prototype.tick = function() {
 
 		player.position.y -= player.velocity.y;
 
-		var MAP = 'map1';
-
         var TILE_SIZE = 300;
         var OFFSET = 150;
-        var mapWidth = maps[MAP]['tiles'][0].length * TILE_SIZE;
+        var mapWidth = maps[this.mapId]['tiles'][0].length * TILE_SIZE;
         var monsterWidth = monsters[player.monsterId].width;
 
         if (this.collisionTester.collide({
@@ -147,9 +145,9 @@ Game.prototype.tick = function() {
 			height: monsters[player.monsterId].height
 		}, {
 			position: {x: 0, y: -60},
-			collision: collisions[MAP],
+			collision: collisions[this.mapId],
 			width: mapWidth,
-			height: maps[MAP]['tiles'].length * 270 + OFFSET
+			height: maps[this.mapId]['tiles'].length * 270 + OFFSET
 		})) {
             if (player.lastPosition.y < player.position.y) {
                 player.position.y += player.velocity.y;
