@@ -26,6 +26,7 @@ define('MenuScreen', [
 		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
 		container.scaleX = scale;
 		container.scaleY = scale;
+		container.x = (canvas.width - PRELOAD_WIDTH * scale) / 2;
 		this.stage.addChild(container);
 
 		var play = new createjs.Shape();
