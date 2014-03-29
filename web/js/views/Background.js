@@ -12,10 +12,8 @@ define('BackgroundView', [
 		container = new createjs.Container();
 		parent.addChild(container);
 
-		if (typeof assets['background'] !== 'undefined') {
-			var bitmap = new createjs.Bitmap(assets['background']);
-			container.addChild(bitmap);
-		}
+		var bitmap = new createjs.Bitmap(assets['background']);
+		container.addChild(bitmap);
 	};
 
 	return Background;
