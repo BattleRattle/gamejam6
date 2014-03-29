@@ -10,5 +10,17 @@
 	{
 		"id": "monster_data",
 		"src": "data/monsters.json"
+	},
+	{
+		"id": "map_data",
+		"src": "data/maps.json"
+	},
+	{
+		"id": "tile1",
+		"src": "img/tiles/stage_left.png"
+	},
+	{
+		"id": "tile2",
+		"src": "img/tiles/stage.png"
 	}
 ]

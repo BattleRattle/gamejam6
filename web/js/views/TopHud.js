@@ -9,7 +9,7 @@ define('TopHudView', [
 
 	};
 
-	TopHud.prototype.initialize = function (parent, players) {
+	TopHud.prototype.initialize = function (assets, parent, players) {
 		container = new createjs.Container();
 		container.x = ViewConstants.CONTENT_WIDTH - ViewConstants.HUD_WIDTH;
 		parent.addChild(container);
@@ -21,7 +21,7 @@ define('TopHudView', [
 
 		for (var i in players) {
 			var playerHud = new TopHudPlayer();
-			playerHud.initialize(container, players[i], i);
+			playerHud.initialize(assets, container, players[i], i);
 		}
 	};
 

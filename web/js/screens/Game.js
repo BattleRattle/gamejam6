@@ -40,10 +40,10 @@ define('GameScreen', [
 		};
 
 		var view = new View();
-		view.initialize(container, {/** game data */});
+		view.initialize(assets, container, {/** game data */});
 
 		var topHud = new TopHud();
-		topHud.initialize(container, [{}, {}, {}/** push players here */]);
+		topHud.initialize(assets, container, [{}, {}, {}/** push players here */]);
 
 		var movement = new Movement();
 		movement.initialize();

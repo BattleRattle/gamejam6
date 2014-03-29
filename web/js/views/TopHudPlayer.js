@@ -8,7 +8,7 @@ define('TopHudPlayerView', [
 
 	};
 
-	TopHudPlayer.prototype.initialize = function (parent, player, i) {
+	TopHudPlayer.prototype.initialize = function (assets, parent, player, i) {
 		container = new createjs.Container();
 		parent.addChild(container);
 
