@@ -77,7 +77,7 @@ Player.prototype.pickup = function(toy) {
 	toy.owner = this;
 
 	var response = new Response('action', {action: 'pickedUp', playerId: this.id, toyId: toy.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
-	this.connectionHandler.sendGameBroadcast(this.game, response);
+	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
 Player.prototype.drop = function() {
