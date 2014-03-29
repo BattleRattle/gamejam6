@@ -101,6 +101,10 @@ define('PlayerView', [
 				this.container.y += this.velocity.y;
 				this.velocity.y = 0;
 				this.isFalling = false;
+			} else {
+				this.container.y += this.velocity.y;
+				this.velocity.y = 0;
+				this.isFalling = true;
 			}
 		}
 
@@ -110,17 +114,13 @@ define('PlayerView', [
 			this.isFalling = false;
 		}
 
-        if(this.container.x < 0){
-            this.container.x = 0;
-            if(this.velocity.x < 0){
-                this.velocity.x = 0;
-            }
-        }else if(this.container.x + this.monsterData.width > mapWidth){
-
-            this.container.x =  mapWidth - this.monsterData.width;
-            this.velocity.x = 0;
+        if (this.container.x < 0) {
+	        this.container.x = 0;
+	        this.velocity.x = 0;
+        } else if (this.container.x + this.monsterData.width > mapWidth) {
+	        this.container.x = mapWidth - this.monsterData.width;
+	        this.velocity.x = 0;
         }
-
 
 		this.lastPosition.x = this.container.x;
 		this.lastPosition.y = this.container.y;
