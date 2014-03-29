@@ -14,9 +14,10 @@ define('TopHudView', [
 		container.x = ViewConstants.CONTENT_WIDTH - ViewConstants.HUD_WIDTH;
 		parent.addChild(container);
 
+		var count = 2;
 		for (var i in players) {
 			this.playerHuds[players[i].id] = new TopHudPlayer();
-			this.playerHuds[players[i].id].initialize(assets, container, players[i], i);
+			this.playerHuds[players[i].id].initialize(assets, container, players[i], count--);
 		}
 	};
 
