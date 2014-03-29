@@ -6,6 +6,7 @@ define('PlayerView', [
 	var config;
 
 	var Player = function() {
+		this.direction = -1;
 		this.container = null;
 		this.actions = {
 			moveRight: false,
@@ -22,10 +23,10 @@ define('PlayerView', [
 		this.container = new createjs.Container();
 		parent.addChild(this.container);
 
-		var bitmap = new createjs.Bitmap(assets[data.monsterId]);
-		this.container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
+		this.bitmap = new createjs.Bitmap(assets[data.monsterId]);
+		this.container.y = ViewConstants.CONTENT_HEIGHT - this.bitmap.image.height * 0.27;
 		this.container.x = data.position.x;
-		this.container.addChild(bitmap);
+		this.container.addChild(this.bitmap);
 
 		this.collistionTester = new CollisionTester();
 		this.monsterData = assets['monster_data'][data.monsterId];
@@ -59,6 +60,11 @@ define('PlayerView', [
 		}
 
 		this.container.x += this.velocity.x;
+		if (this.velocity.x > 0 && this.direction === -1 || this.velocity.x < 0 && this.direction === 1) {
+			this.bitmap.x -= this.direction * this.monsterData.width;
+			this.bitmap.scaleX *= -1;
+			this.direction *= -1;
+		}
 
 		if (this.actions.jump && !this.isFalling) {
 			this.velocity.y = config.jump_velocity;
