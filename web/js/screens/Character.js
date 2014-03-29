@@ -82,7 +82,7 @@ define('CharacterScreen', [
 		drawBox(monster2Box, 'monster1');
 		container.addChild(monster2Box);
 		monster2Box.addEventListener('click', function () {
-			self.exit('monster2');
+			self.exit('monster1');
 		});
 
 		var monster3Box = new createjs.Container();
@@ -90,7 +90,7 @@ define('CharacterScreen', [
 		drawBox(monster3Box, 'monster1');
 		container.addChild(monster3Box);
 		monster3Box.addEventListener('click', function () {
-			self.exit('monster3');
+			self.exit('monster1');
 		});
 
 		stage.update();

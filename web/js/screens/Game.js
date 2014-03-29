@@ -48,7 +48,6 @@ define('GameScreen', [
 		view.initialize(assets, container, {/** game data */});
 
 		var topHud = new TopHud();
-		topHud.initialize(assets, container, [{}, {}, {}/** push players here */]);
 
 		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#C33");
 		waiting.x = 450;
@@ -68,6 +67,8 @@ define('GameScreen', [
 				self.stage.update();
 			}, 'start': function(event) {
 				container.removeChild(waiting);
+
+				topHud.initialize(assets, container, event.event.players);
 
 				var movement = new Movement();
 				movement.initialize();
