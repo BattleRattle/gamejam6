@@ -6,7 +6,8 @@ $WEB_ROOT = __DIR__ . '/../web/';
 $ASSETS_FILE = __DIR__ . '/../web/data/assets.json';
 $TARGET_FILE = __DIR__ . '/../web/data/collisions.json';
 $TMP_DIR = __DIR__ . '/tmp/';
-$TILE_SIZE = 300;
+$TILE_WIDTH = 300;
+$TILE_HEIGHT = 270;
 $HUD_HEIGHT = 200;
 $OFFSET = $HUD_HEIGHT - 50;
 $MONSTER_SCALE_FACTOR = 0.3;
@@ -26,7 +27,7 @@ $collisionMap = [];
 foreach ($mapDefinitions as $map => $definition) {
     printf('Converting map "%s" ... ', $map);
 
-    $img = imagecreatetruecolor(count($definition['tiles'][0]) * $TILE_SIZE, count($definition['tiles']) * $TILE_SIZE + $OFFSET);
+    $img = imagecreatetruecolor(count($definition['tiles'][0]) * $TILE_WIDTH /** this is not really the height */, count($definition['tiles']) * $TILE_HEIGHT + $OFFSET);
 
     $transparent = imagecolorallocatealpha($img, 255, 0, 255, 127);
     imagefill($img, 0, 0, $transparent);
@@ -37,7 +38,7 @@ foreach ($mapDefinitions as $map => $definition) {
             if ($tile === 0) continue;
 
             $tileImg = imagecreatefromstring(file_get_contents($WEB_ROOT . $assets['tile' . $tile]));
-            imagecopy($img, $tileImg, $colIndex * $TILE_SIZE, $OFFSET + $rowIndex * $TILE_SIZE, 0, 0, $TILE_SIZE, $TILE_SIZE);
+            imagecopy($img, $tileImg, $colIndex * $TILE_WIDTH, $OFFSET + $rowIndex * $TILE_HEIGHT, 0, 0, $TILE_WIDTH, $TILE_HEIGHT);
         }
     }
 

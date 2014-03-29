@@ -24,6 +24,10 @@
 		"src": "img/tiles/stage.png"
 	},
 	{
+		"id": "tile3",
+		"src": "img/tiles/stage_right.png"
+	},
+	{
 		"id": "background",
 		"src": "img/background.jpg"
 	},
@@ -66,5 +70,25 @@
 	{
 		"id": "deathstar",
 		"src": "img/tophud/xx.png"
+	},
+	{
+		"id": "steine",
+		"src": "img/deco/steine.png"
+	},
+	{
+		"id": "maedchen",
+		"src": "img/maedchen.png"
+	},
+	{
+		"id": "boot",
+		"src": "img/toys/boot.png"
+	},
+	{
+		"id": "roboter",
+		"src": "img/toys/roboter.png"
+	},
+	{
+		"id": "teddy",
+		"src": "img/toys/teddy.png"
 	}
 ]
