@@ -90,7 +90,7 @@ define('GameScreen', [
 				topHud.update(event.event.players);
 				for (var i in event.event.players) {
 					var player = event.event.players[i];
-					players[player.id].updateSync(player);
+//					players[player.id].updateSync(player);
 				}
 				stage.update();
 			},
