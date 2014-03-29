@@ -37,6 +37,13 @@ Game.prototype.start = function() {
 	this.syncInterval = setInterval(this.sync.bind(this), 1000 / SYNC_RATE);
 };
 
+Game.prototype.end = function() {
+	console.log('Game #' + this.id + ' has ended');
+
+	if (this.tickInterval) clearInterval(this.tickInterval);
+	if (this.syncInterval) clearInterval((this.syncInterval));
+};
+
 Game.prototype.addPlayer = function(player) {
 	this.players.push(player);
 	player.setGame(this);
@@ -46,6 +53,10 @@ Game.prototype.removePlayer = function(player) {
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
 	playerHandler.playerLeave(player);
 	this.players.splice(this.players.indexOf(player), 1);
+
+	if (!this.players.length) {
+		this.end();
+	}
 };
 
 Game.prototype.getPlayers = function() {

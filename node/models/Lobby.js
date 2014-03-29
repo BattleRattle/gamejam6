@@ -30,6 +30,10 @@ Lobby.prototype.createPlayer = function(socket) {
 Lobby.prototype.removePlayer = function(socket) {
 	var player = this.getPlayerBySocket(socket);
 	this.players.splice(this.players.indexOf(player), 1);
+
+	if (player.game) {
+		player.game.removePlayer(player);
+	}
 };
 
 Lobby.prototype.getPlayerBySocket = function(socket) {
