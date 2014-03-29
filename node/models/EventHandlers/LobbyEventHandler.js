@@ -19,8 +19,6 @@ LobbyEventHandler.prototype.create = function(player, event) {
     };
 
     this.createDirectResponse(player, LobbyEventHandler.TYPE, responseEvent);
-
-	game.start();
 };
 
 LobbyEventHandler.prototype.enter = function(player, event) {

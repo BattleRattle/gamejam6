@@ -47,6 +47,10 @@ Game.prototype.end = function() {
 Game.prototype.addPlayer = function(player) {
 	this.players.push(player);
 	player.setGame(this);
+
+	if (this.players.length === this.slotsTotal) {
+		this.start();
+	}
 };
 
 Game.prototype.removePlayer = function(player) {
