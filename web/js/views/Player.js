@@ -23,6 +23,7 @@ define('PlayerView', [
 		bitmap.scaleX = 0.3;
 		bitmap.scaleY = 0.3;
 		container.y = ViewConstants.CONTENT_HEIGHT - bitmap.image.height * 0.27;
+		container.x = data.position.x;
 		container.addChild(bitmap);
 	};
 

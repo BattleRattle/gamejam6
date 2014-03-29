@@ -11,8 +11,12 @@ define('GameServerListener', [
 		socket.socket.on('message', function(event) {
 			event = JSON.parse(event);
 			if ('tick' === event['type']) {
-				if (handler) {
-					handler(event);
+				if (handler['tick']) {
+					handler['tick'](event);
+				}
+			} else if ('game' === event['type']) {
+				if (handler[event.event.action]) {
+					handler[event.event.action](event);
 				}
 			}
 		});

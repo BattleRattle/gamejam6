@@ -9,7 +9,8 @@ define('GameScreen', [
 	'GameState'
 ], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GameServerListener, GameState) {
 	var container,
-		socket;
+		socket,
+		players = {};
 
 	var Game = function(so) {
 		socket = so;
@@ -49,21 +50,27 @@ define('GameScreen', [
 		var topHud = new TopHud();
 		topHud.initialize(assets, container, [{}, {}, {}/** push players here */]);
 
-		var playerView = new PlayerView();
-		playerView.initialize(assets, container, {});
-
-
 		var movement = new Movement();
 		movement.initialize();
 
 		var listener = new GameServerListener();
-		listener.initialize(socket, function(event) {
-			if (event.event.changes[GameState.playerId]) {
-				playerView.update(event.event.changes[GameState.playerId])
-			} else {
-				playerView.update({});
+		listener.initialize(socket, {
+			'tick': function(event) {
+				for (var i in players) {
+					if (event.event.changes[i]) {
+						players[i].update(event.event.changes[i]);
+					} else {
+						players[i].update({});
+					}
+				}
+				self.stage.update();
+			}, 'start': function(event) {
+				for (var i in event.event.players) {
+					var player = event.event.players[i];
+					players[player.id] = new PlayerView();
+					players[player.id].initialize(assets, container, player);
+				}
 			}
-			self.stage.update();
 		});
 
 		this.stage.update();
