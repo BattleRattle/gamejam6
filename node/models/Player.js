@@ -4,7 +4,7 @@ var playerId = 0;
 var START_HEALTH = 100;
 var MAX_TOY_PICKUP_DISTANCE = 30;
 
-var Player = function(socket, lobby/*, name*/) {
+var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.id = ++playerId;
 	this.socket = socket;
 	this.game = null;
@@ -85,11 +85,14 @@ Player.prototype.drop = function() {
 		return;
 	}
 
-	// TODO: check drop zone distance for scores
-
+	var toyId = this.toy.id;
 	this.collectedItems++;
 	this.toy.owner = null;
+	this.game.toys.splice(this.game.toys.indexOf(this.toy, 1));
 	this.toy = null;
+
+	var response = new Response('action', {action: 'dropped', playerId: this.id, toyId: toyIdf}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
 module.exports = Player;

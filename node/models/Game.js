@@ -190,6 +190,14 @@ Game.prototype.tick = function() {
             }
         }
 
+		if (player.actions.dropToy) {
+			var dropPosition = maps[this.mapId].drops[0].position;
+			var distance = Math.sqrt(Math.pow(dropPosition.x - player.position.x, 2) + Math.pow(dropPosition.y - player.position.y, 2));
+			if (distance < MAX_TOY_PICKUP_DISTANCE) {
+				player.drop();
+			}
+		}
+
         if (player.position.y > 1050 - monsters[player.monsterId].height + 25) {
             player.position.y = 1050 - monsters[player.monsterId].height + 25;
             player.velocity.y = 0;
