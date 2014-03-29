@@ -5,13 +5,13 @@ var SyncEventHandler = require('./EventHandlers/GameEventHandler.js');
 var TickEventHandler = require('./EventHandlers/TickEventHandler.js');
 var StateChangeList = require('./StateChangeList.js');
 var playerHelper = require('./PlayerHelper.js');
+var params = require('../../web/data/params.json');
 
 var gameId = 0;
 var TICK_RATE = 30;
 var SYNC_RATE = 1;
-var GAME_SLOTS = 1; // TODO: change to 3 later?
 
-var Game = function(connectionHandler) {
+var Game = function(connectionHandler, slots) {
 	this.connectionHandler = connectionHandler;
 	this.connectionEventFactory = this.connectionHandler.connectionEventFactory;
 	this.players = [];
@@ -20,7 +20,7 @@ var Game = function(connectionHandler) {
 	this.id = ++gameId;
 	this.currentTick = 0;
 	this.changes = new StateChangeList();
-	this.slotsTotal = GAME_SLOTS;
+	this.slotsTotal = Math.min(3, Math.max(1, parseInt(slots)));
 };
 
 Game.prototype.start = function() {
@@ -69,18 +69,22 @@ Game.prototype.tick = function() {
 	}
 
 	// calculate movements
+	var max_velocity = params.movement.max_velocity;
+	var max_acceleration = params.movement.acceleration;
+	var friction = params.movement.friction;
+
 	this.players.forEach(function(player) {
 		if (player.actions.moveLeft && !player.actions.moveRight) {
-			player.velocity.x -= 1;
-			if (player.velocity.x < -10) player.velocity.x = -10;
+			player.velocity.x -= max_acceleration;
+			if (player.velocity.x < -max_velocity) player.velocity.x = -max_velocity;
 		} else if (player.actions.moveRight && !player.actions.moveLeft) {
-			player.velocity.x += 1;
-			if (player.velocity.x > 10) player.velocity.x = 10;
+			player.velocity.x += max_acceleration;
+			if (player.velocity.x > max_velocity) player.velocity.x = max_velocity;
 		} else {
 			if (player.velocity.x < 0) {
-				player.velocity.x += 1;
+				player.velocity.x += friction;
 			} else if (player.velocity.x > 0) {
-				player.velocity.x -= 1;
+				player.velocity.x -= friction;
 			}
 		}
 

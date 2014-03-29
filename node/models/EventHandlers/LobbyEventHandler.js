@@ -8,7 +8,7 @@ LobbyEventHandler.TYPE = 'lobby';
 LobbyEventHandler.prototype.create = function(player, event) {
     console.log(event.action + " -> create");
 
-	var game = player.lobby.createGame();
+	var game = player.lobby.createGame(event.slots);
 	game.addPlayer(player);
 
     var responseEvent = {

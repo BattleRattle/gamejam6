@@ -1,0 +1,7 @@
+{
+	"movement": {
+		"max_velocity": 10,
+		"acceleration": 1,
+		"friction": 10
+	}
+}

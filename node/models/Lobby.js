@@ -9,11 +9,11 @@ var Lobby = function(connectionHandler) {
 	this.connectionHandler.init(this);
 };
 
-Lobby.prototype.createGame = function() {
-	var game = new Game(this.connectionHandler);
+Lobby.prototype.createGame = function(slots) {
+	var game = new Game(this.connectionHandler, slots);
 	this.games.push(game);
 
-	console.log('Created Game #' + game.id);
+	console.log('Created Game #' + game.id + ' with ' + slots + ' slots');
 
 	return game;
 };
