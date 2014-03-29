@@ -27,14 +27,17 @@ Game.prototype.removePlayer = function(socket) {
 	var player = this.getPlayerBySocket(socket);
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
 	playerHandler.callPlayerLeft(player);
-
 	this.players.splice(this.players.indexOf(player), 1);
 };
 
 Game.prototype.getPlayerBySocket = function(socket) {
-	return this.players.reduce(function(previous, player) {
-		return previous || (player.getSocket() === socket ? player : null);
-	});
+	for (var i in this.players) {
+		if (this.players[i].getSocket() === socket) {
+			return this.players[i];
+		}
+	}
+
+	return null;
 };
 
 Game.prototype.getPlayers = function() {
