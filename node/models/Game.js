@@ -10,6 +10,7 @@ var params = require('../../web/data/params.json');
 var collisions = require('../../web/data/collisions.json');
 var monsters = require('../../web/data/monsters.json');
 var maps = require('../../web/data/maps.json');
+var Toy = require('./Toy');
 
 var gameId = 0;
 var TICK_RATE = 30;
@@ -26,6 +27,7 @@ var Game = function(connectionHandler, slots) {
 	this.changes = new StateChangeList();
 	this.slotsTotal = Math.min(3, Math.max(1, parseInt(slots)));
 	this.collisionTester = new CollisionTester();
+	this.mapId = Object.keys(maps)[parseInt(Math.random() * Object.keys(maps).length)];
 };
 
 Game.prototype.start = function() {
@@ -33,7 +35,9 @@ Game.prototype.start = function() {
 	var event = {
 		action: 'start',
 		gameId: this.id,
-		players: playerHelper.extractPlayerData(this.players)
+		mapId: this.mapId,
+		players: playerHelper.extractPlayerData(this.players),
+		toys: generateToys()
 	};
 	var response = new Response('game', event, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.connectionHandler.sendGameBroadcast(this, response);
@@ -156,5 +160,13 @@ Game.prototype.tick = function() {
 Game.prototype.sync = function() {
 	this.connectionEventFactory.getEventHandler(SyncEventHandler.TYPE).start(this);
 };
+
+function generateToys() {
+	var toys = [];
+	for (var i=0; i<7; i++) {
+		toys.push(new Toy());
+	}
+	return toys;
+}
 
 module.exports = Game;

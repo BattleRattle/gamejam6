@@ -28,6 +28,7 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.health = START_HEALTH;
 	this.monsterId = null;
 	this.lobby = lobby;
+	this.toy = null;
 };
 
 Player.prototype.getSocket = function () {
@@ -52,6 +53,10 @@ Player.prototype.getScore = function () {
 
 Player.prototype.getCollectedItems = function() {
 	return this.collectedItems;
+};
+
+Player.prototype.pickup = function(toy) {
+	this.toy = toy;
 };
 
 module.exports = Player;
