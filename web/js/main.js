@@ -28,7 +28,8 @@ require.config({
 		'LobbyClientListener': 'lobby/LobbyClientListener',
 		'LobbyServerListener': 'lobby/LobbyServerListener',
 		'GameState': 'game/State',
-		'GameServerListener': 'game/GameServerListener'
+		'GameServerListener': 'game/GameServerListener',
+		'CollisionTester': 'player/CollisionTester'
 	}
 
 });
