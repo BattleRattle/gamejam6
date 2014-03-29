@@ -3,6 +3,7 @@ var Response = require('./Communication/Response');
 var playerId = 0;
 var START_HEALTH = 100;
 var MAX_TOY_PICKUP_DISTANCE = 30;
+var COLLECT_GOAL = 3;
 
 var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.id = ++playerId;
@@ -93,6 +94,11 @@ Player.prototype.drop = function() {
 
 	var response = new Response('action', {action: 'dropped', playerId: this.id, toyId: toyId}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
+
+	if (this.collectedItems === COLLECT_GOAL) {
+		response = new Response('game', {action: 'end'}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+		this.game.connectionHandler.sendGameBroadcast(this.game, response);
+	}
 };
 
 module.exports = Player;
