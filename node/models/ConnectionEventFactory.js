@@ -3,6 +3,7 @@ var ActionEventHandler = require('./EventHandlers/ActionEventHandler.js');
 var GameEventHandler = require('./EventHandlers/GameEventHandler.js');
 var LobbyEventHandler = require('./EventHandlers/LobbyEventHandler.js');
 var SyncEventHandler = require('./EventHandlers/SyncEventHandler.js');
+var TickEventHandler = require('./EventHandlers/TickEventHandler.js');
 
 
 var ConnectionEventFactory = function(connectionHandler) {
@@ -30,6 +31,9 @@ ConnectionEventFactory.prototype.getEventHandler = function(type) {
             break;
         case SyncEventHandler.TYPE:
             this.eventHandlers[type] = new SyncEventHandler();
+            break;
+        case TickEventHandler.TYPE:
+            this.eventHandlers[type] = new TickEventHandler();
             break;
 
 		default:

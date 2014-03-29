@@ -3,6 +3,8 @@ var Player = require('./Player.js');
 var PlayerEventHandler = require('./EventHandlers/PlayerEventHandler.js');
 var GameEventHandler = require('./EventHandlers/GameEventHandler.js');
 var SyncEventHandler = require('./EventHandlers/GameEventHandler.js');
+var TickEventHandler = require('./EventHandlers/TickEventHandler.js');
+var StateChangeList = require('./StateChangeList.js');
 
 var gameId = 0;
 var TICK_RATE = 30;
@@ -17,6 +19,7 @@ var Game = function(connectionHandler) {
 	this.syncInterval = null;
 	this.id = ++gameId;
 	this.currentTick = 0;
+	this.changes = new StateChangeList();
 };
 
 Game.prototype.start = function() {
@@ -28,7 +31,7 @@ Game.prototype.start = function() {
 };
 
 Game.prototype.createPlayer = function(socket) {
-	var player = new Player(socket);
+	var player = new Player(socket, this);
 	this.players.push(player);
 
 	var playerHandler = this.connectionEventFactory.getEventHandler(PlayerEventHandler.TYPE);
@@ -60,6 +63,21 @@ Game.prototype.getPlayers = function() {
 
 Game.prototype.tick = function() {
 	this.currentTick++;
+
+	var changes = this.changes.getChanges();
+	for (var index in changes) {
+		for (var property in changes[index]) {
+			for (var p in this.players) {
+				if (this.players[p].id == index) {
+					this.players[p][property] = changes[index][property];
+					continue;
+				}
+			}
+		}
+	}
+
+	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this.currentTick, changes);
+	this.changes.reset();
 };
 
 Game.prototype.sync = function() {
