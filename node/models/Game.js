@@ -33,6 +33,16 @@ var Game = function(connectionHandler, slots) {
 };
 
 Game.prototype.start = function() {
+	for (var i in this.players) {
+		var random = Object.keys(maps[this.mapId].spawns)[parseInt(Math.random() * Object.keys(maps[this.mapId].spawns).length)],
+			y = maps[this.mapId].spawns[random].position.y,
+			x = maps[this.mapId].spawns[random].position.x;
+		this.players[i].position = {
+			y: 200 - 50 + (1 + y) * 275,
+			x: 300 * x + 50
+		};
+	}
+
 	console.log('Start Game #' + this.id);
 	var event = {
 		action: 'start',

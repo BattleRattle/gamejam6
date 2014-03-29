@@ -4,7 +4,7 @@ var playerId = 0;
 var START_HEALTH = 100;
 var MAX_TOY_PICKUP_DISTANCE = 30;
 
-var Player = function(socket, lobby/*, name, spawnPosition*/) {
+var Player = function(socket, lobby/*, name*/) {
 	this.id = ++playerId;
 	this.socket = socket;
 	this.game = null;

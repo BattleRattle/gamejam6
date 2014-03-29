@@ -25,7 +25,6 @@ define('App', [
 
 		var preloader = new PreloaderScreen();
 		preloader.registerOnExit(function(assets) {
-			console.log('exit preloader');
 			self.assets = assets;
 			self.gotoCharacter();
 		});
@@ -39,7 +38,6 @@ define('App', [
 		var self = this,
 			character = new CharacterScreen();
 		character.registerOnExit(function (monsterId) {
-			console.log('exit character');
 			self.gotoLobby(monsterId);
 		});
 		character.enter(this.canvas, this.stage, this.assets);
@@ -49,7 +47,6 @@ define('App', [
 		var self = this,
 			lobby = new LobbyScreen(socket);
 		lobby.registerOnExit(function () {
-			console.log('exit lobby');
 			self.gotoGame();
 		});
 		lobby.enter(this.canvas, this.stage, this.assets, monsterId);

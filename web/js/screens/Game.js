@@ -52,7 +52,7 @@ define('GameScreen', [
 			toy = new ToyView(),
 			movement = new Movement();
 
-		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#C33");
+		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#fff");
 		waiting.x = 450;
 		waiting.y = 400;
 		container.addChild(waiting);
