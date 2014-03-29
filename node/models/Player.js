@@ -70,7 +70,7 @@ Player.prototype.pickup = function(toy) {
 	}
 
 	// check, if toy is already owned
-	if (toy.owner) {
+	if (toy.owner || this.toy) {
 		return;
 	}
 
