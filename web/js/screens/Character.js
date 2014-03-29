@@ -4,8 +4,8 @@ define('CharacterScreen', [
 	var container,
 		assets;
 
-	var CONTENT_HEIGHT = 1000,
-		CONTENT_WIDTH = 1600,
+	var CONTENT_WIDTH = 2100,
+		CONTENT_HEIGHT = 1050,
 		BOX_WIDTH = 610;
 
 	var drawBox = function (box, image, stage) {
@@ -28,7 +28,7 @@ define('CharacterScreen', [
 		label.x = 190;
 		box.addChild(label);
 
-		box.y = 40;
+		box.y = 200;
 
 		box.addEventListener('mouseover', function () {
 			glow.visible = true;
@@ -69,22 +69,25 @@ define('CharacterScreen', [
 		drawBox.bind(this);
 
 		container = new createjs.Container();
-		container.y = 100;
 		this.resize();
 		stage.addChild(container);
 		window.onresize = function () {
 			self.resize();
 		};
 
+		var bitmap = new createjs.Bitmap(assets['background']);
+		bitmap.scaleX = CONTENT_WIDTH / bitmap.image.width;
+		container.addChild(bitmap);
+
 		this.stage.enableMouseOver(20);
 
 		var header = new createjs.Text("Character Selection", "bold 60px Arial", "#fff");
-		header.y = 40;
-		header.x = 550;
+		header.y = 150;
+		header.x = 750;
 		container.addChild(header);
 
 		var monster1Box = new createjs.Container();
-		monster1Box.x = 0;
+		monster1Box.x = (CONTENT_WIDTH - BOX_WIDTH) / 2 - BOX_WIDTH + 75;
 		drawBox(monster1Box, 'monster1', stage);
 		container.addChild(monster1Box);
 		monster1Box.addEventListener('click', function () {
@@ -92,15 +95,15 @@ define('CharacterScreen', [
 		});
 
 		var monster2Box = new createjs.Container();
-		monster2Box.x = CONTENT_WIDTH / 3;
 		drawBox(monster2Box, 'monster2', stage);
+		monster2Box.x = (CONTENT_WIDTH - BOX_WIDTH) / 2;
 		container.addChild(monster2Box);
 		monster2Box.addEventListener('click', function () {
 			self.exit('monster2');
 		});
 
 		var monster3Box = new createjs.Container();
-		monster3Box.x = CONTENT_WIDTH / 3 * 2;
+		monster3Box.x = (CONTENT_WIDTH - BOX_WIDTH) / 2 + BOX_WIDTH - 75;
 		drawBox(monster3Box, 'monster3', stage);
 		container.addChild(monster3Box);
 		monster3Box.addEventListener('click', function () {

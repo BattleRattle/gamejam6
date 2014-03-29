@@ -126,5 +126,17 @@
 	{
 		"id": "play_pressed",
 		"src": "img/preloader/startscreen_button_pressed.png"
+	},
+	{
+		"id": "button",
+		"src": "img/button/button.png"
+	},
+	{
+		"id": "button_glow",
+		"src": "img/button/button_glow.png"
+	},
+	{
+		"id": "button_pressed",
+		"src": "img/button/button_pressed.png"
 	}
 ]

@@ -3,13 +3,12 @@ define('App', [
 	'createjs',
 	'Socket',
 	'PreloaderScreen',
-	'MenuScreen',
 	'CharacterScreen',
 	'LobbyScreen',
 	'GameScreen',
 	'GameOverScreen'
 
-], function (createjs, Socket, PreloaderScreen, MenuScreen, CharacterScreen, LobbyScreen, GameScreen, GameOverScreen) {
+], function (createjs, Socket, PreloaderScreen, CharacterScreen, LobbyScreen, GameScreen, GameOverScreen) {
 	var socket;
 
 	var App = function() {

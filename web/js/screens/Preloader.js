@@ -49,6 +49,7 @@ define('PreloaderScreen', [
 		preloaderPreloader.loadFile('img/preloader/startscreen_maedchen.png');
 		preloaderPreloader.loadFile('img/preloader/startscreen_monster.png');
 		preloaderPreloader.loadFile('img/preloader/startscreen_button.png');
+		preloaderPreloader.loadFile('img/preloader/logo.png');
 		preloaderPreloader.on('fileload', function (event) {
 			if ("data/assets.json" === event.item.id) {
 				assetManifest = event.result;
@@ -83,6 +84,11 @@ define('PreloaderScreen', [
 		bitmap = new createjs.Bitmap(assets['img/preloader/startscreen_monster.png']);
 		bitmap.y = CONTENT_HEIGHT - bitmap.image.height + 13;
 		bitmap.x = CONTENT_WIDTH - bitmap.image.width;
+		container.addChild(bitmap);
+
+		bitmap = new createjs.Bitmap(assets['img/preloader/logo.png']);
+		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) / 7;
+		bitmap.x = (CONTENT_WIDTH - bitmap.image.width) / 2;
 		container.addChild(bitmap);
 
 		this.stage.update();
@@ -129,18 +135,18 @@ define('PreloaderScreen', [
 			pressed;
 
 		glow = new createjs.Bitmap(this.assets['play_hover']);
-		glow.y = (CONTENT_HEIGHT - glow.image.height) / 2;
+		glow.y = (CONTENT_HEIGHT - glow.image.height) * 2 / 3;
 		glow.x = (CONTENT_WIDTH - glow.image.width) / 2;
 		glow.visible = false;
 		container.addChild(glow);
 
 		bitmap = new createjs.Bitmap(this.assets['play']);
-		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) / 2;
+		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) * 2 / 3;
 		bitmap.x = (CONTENT_WIDTH - bitmap.image.width) / 2;
 		container.addChild(bitmap);
 
 		pressed = new createjs.Bitmap(this.assets['play_pressed']);
-		pressed.y = (CONTENT_HEIGHT - pressed.image.height) / 2;
+		pressed.y = (CONTENT_HEIGHT - pressed.image.height) * 2 / 3;
 		pressed.x = (CONTENT_WIDTH - pressed.image.width) / 2;
 		pressed.visible = false;
 		container.addChild(pressed);

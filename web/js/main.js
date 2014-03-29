@@ -10,7 +10,6 @@ require.config({
 		'Socket': 'socket/Socket',
 		'App': 'app',
 		'PreloaderScreen': 'screens/Preloader',
-		'MenuScreen': 'screens/Menu',
 		'CharacterScreen': 'screens/Character',
 		'GameScreen': 'screens/Game',
 		'GameOverScreen': 'screens/GameOver',
