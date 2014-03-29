@@ -81,7 +81,12 @@ define('PreloaderScreen', [
 	};
 
 	Preloader.prototype.exit = function () {
-		this.onExit(this.assets);
+		var self = this;
+		setTimeout(function () {
+			self.stage.removeChild(container);
+			self.stage.update();
+			self.onExit(self.assets);
+		}, 500);
 	};
 
 	Preloader.prototype.handleFileLoad = function (event) {
@@ -98,12 +103,7 @@ define('PreloaderScreen', [
 	};
 
 	Preloader.prototype.handleComplete = function () {
-		var self = this;
-		setTimeout(function () {
-			self.stage.removeChild(container);
-			self.stage.update();
-			self.exit();
-		}, 500);
+		this.exit();
 	};
 
 	return Preloader;

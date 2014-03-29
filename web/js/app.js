@@ -32,6 +32,7 @@ define('App', [
 		var preloader = new PreloaderScreen();
 		preloader.registerOnExit(function(assets) {
 			console.log('exit preloader');
+			self.assets = assets;
 			self.gotoMenu();
 		});
 		preloader.enter(this.canvas, this.stage);
