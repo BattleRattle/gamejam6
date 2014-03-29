@@ -35,7 +35,7 @@ ConnectionHandler.prototype.handleDisconnect = function(socket) {
 
 ConnectionHandler.prototype.callEventHandler = function(player, data) {
 	var object = JSON.parse(data);
-	var handler = this.connectionEventFactory.getEventHandler(object.class);
+	var handler = this.connectionEventFactory.getEventHandler(object.type);
 
 	return handler[object.method](player, object.data);
 };
