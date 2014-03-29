@@ -106,7 +106,7 @@ define('GameScreen', [
 
 	Game.prototype.exit = function() {
 		this.onExit();
-	}
+	};
 
 	return Game;
 

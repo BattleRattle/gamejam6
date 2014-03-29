@@ -114,5 +114,17 @@
 	{
 		"id": "selection_glow",
 		"src": "img/selection/character_glow.png"
+	},
+	{
+		"id": "play",
+		"src": "img/preloader/startscreen_button.png"
+	},
+	{
+		"id": "play_hover",
+		"src": "img/preloader/startscreen_button_glow.png"
+	},
+	{
+		"id": "play_pressed",
+		"src": "img/preloader/startscreen_button_pressed.png"
 	}
 ]

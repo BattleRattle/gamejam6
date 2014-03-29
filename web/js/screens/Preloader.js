@@ -2,13 +2,11 @@ define('PreloaderScreen', [
 	'createjs'
 ], function(createjs){
 	var assetManifest,
-		logo,
-		container,
-		progress;
+		container;
 
-	var PRELOAD_WIDTH = 1000,
-		PRELOAD_HEIGHT = 500,
-		CONTENT_WIDTH = 400;
+	var CONTENT_WIDTH = 2100,
+		CONTENT_HEIGHT = 1050,
+		HEIGHT_OFFSET = 150;
 
 	var Preloader = function() {
 
@@ -22,10 +20,10 @@ define('PreloaderScreen', [
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 
-		var scale = Math.min(this.canvas.width / PRELOAD_WIDTH, this.canvas.height / PRELOAD_HEIGHT);
+		var scale = Math.min(this.canvas.width / CONTENT_WIDTH, this.canvas.height / CONTENT_HEIGHT);
 		container.scaleX = scale;
 		container.scaleY = scale;
-		container.x = (this.canvas.width - PRELOAD_WIDTH * scale) / 2;
+		container.x = (this.canvas.width - CONTENT_WIDTH * scale) / 2;
 		this.stage.update();
 	};
 
@@ -43,54 +41,72 @@ define('PreloaderScreen', [
 			self.resize();
 		};
 
-		progress = new createjs.Shape(); // Remember to define the progress variable at the top!
-		progress.graphics.beginStroke("#C33").drawRect(0, 0, CONTENT_WIDTH, 20);
-		progress.x = (PRELOAD_WIDTH - CONTENT_WIDTH) / 2;
-		progress.y = 400;
-		container.addChild(progress);
-
-		var preloaderPreloader = new createjs.LoadQueue(true);
+		var assets = {},
+			preloaderPreloader = new createjs.LoadQueue(true);
 		preloaderPreloader.loadFile('data/assets.json');
-		preloaderPreloader.loadFile('img/logo.jpg');
+		preloaderPreloader.loadFile('img/background.jpg');
+		preloaderPreloader.loadFile('img/stage_bottom.png');
+		preloaderPreloader.loadFile('img/preloader/startscreen_maedchen.png');
+		preloaderPreloader.loadFile('img/preloader/startscreen_monster.png');
+		preloaderPreloader.loadFile('img/preloader/startscreen_button.png');
 		preloaderPreloader.on('fileload', function (event) {
 			if ("data/assets.json" === event.item.id) {
 				assetManifest = event.result;
-			} else if ("img/logo.jpg" === event.item.id) {
-				var bitmap = new createjs.Bitmap(event.result);
-				bitmap.y = 100;
-				bitmap.x = (PRELOAD_WIDTH - CONTENT_WIDTH) / 2;
-
-				bitmap.scaleX = CONTENT_WIDTH / bitmap.image.width;
-				bitmap.scaleY = 250 /bitmap.image.height;
-				container.addChild(bitmap);
-				self.stage.update();
+			} else {
+				assets[event.item.id] = event.result;
 			}
 		});
 
-		preloaderPreloader.on('complete', function (event) {
-			self.assets = {};
-
-			self.totalAssets = assetManifest.length;
-			self.loadedAssets = 0;
-
-			//call preload, and install soundjs as plugin
-			self.loader = new createjs.LoadQueue();
-			self.loader.installPlugin(createjs.SoundJS);
-
-			//define callbacks
-			self.loader.on('fileload', function(event){
-				self.handleFileLoad(event);
-			});
-
-			self.loader.on('complete', function() {
-				self.handleComplete();
-			});
-
-			//load file from manifest
-			self.loader.loadManifest(assetManifest);
+		preloaderPreloader.on('complete', function () {
+			self.drawScreen(assets);
+			self.loadAssets();
 		});
 
 		preloaderPreloader.load();
+	};
+
+	Preloader.prototype.drawScreen = function (assets) {
+		var bitmap;
+
+		bitmap = new createjs.Bitmap(assets['img/background.jpg']);
+		bitmap.scaleX = CONTENT_WIDTH / bitmap.image.width;
+		container.addChild(bitmap);
+
+		bitmap = new createjs.Bitmap(assets['img/stage_bottom.png']);
+		bitmap.y = CONTENT_HEIGHT - bitmap.image.height + HEIGHT_OFFSET;
+		container.addChild(bitmap);
+
+		bitmap = new createjs.Bitmap(assets['img/preloader/startscreen_maedchen.png']);
+		bitmap.y = CONTENT_HEIGHT - bitmap.image.height + 17;
+		container.addChild(bitmap);
+
+		bitmap = new createjs.Bitmap(assets['img/preloader/startscreen_monster.png']);
+		bitmap.y = CONTENT_HEIGHT - bitmap.image.height + 13;
+		bitmap.x = CONTENT_WIDTH - bitmap.image.width;
+		container.addChild(bitmap);
+
+		this.stage.update();
+	};
+
+	Preloader.prototype.loadAssets = function () {
+		var self = this;
+		this.assets = {};
+
+		//call preload, and install soundjs as plugin
+		this.loader = new createjs.LoadQueue();
+		this.loader.installPlugin(createjs.SoundJS);
+
+		//define callbacks
+		this.loader.on('fileload', function(event){
+			self.handleFileLoad(event);
+		});
+
+		this.loader.on('complete', function() {
+			self.handleComplete();
+		});
+
+		//load file from manifest
+		this.loader.loadManifest(assetManifest);
 	};
 
 	Preloader.prototype.exit = function () {
@@ -104,19 +120,61 @@ define('PreloaderScreen', [
 
 	Preloader.prototype.handleFileLoad = function (event) {
 		this.assets[event.item.id] = event.result;
-
-		this.loadedAssets++;
-
-		progress.graphics.clear();
-		// Draw the progress bar
-		progress.graphics.beginFill("#C33").drawRect(0, 0, CONTENT_WIDTH * this.loadedAssets / this.totalAssets, 20);
-		// Draw the outline again.
-		progress.graphics.beginStroke("#C33").drawRect(0, 0, CONTENT_WIDTH, 20);
-		this.stage.update();
 	};
 
 	Preloader.prototype.handleComplete = function () {
-		this.exit();
+		var self = this,
+			bitmap,
+			glow,
+			pressed;
+
+		glow = new createjs.Bitmap(this.assets['play_hover']);
+		glow.y = (CONTENT_HEIGHT - glow.image.height) / 2;
+		glow.x = (CONTENT_WIDTH - glow.image.width) / 2;
+		glow.visible = false;
+		container.addChild(glow);
+
+		bitmap = new createjs.Bitmap(this.assets['play']);
+		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) / 2;
+		bitmap.x = (CONTENT_WIDTH - bitmap.image.width) / 2;
+		container.addChild(bitmap);
+
+		pressed = new createjs.Bitmap(this.assets['play_pressed']);
+		pressed.y = (CONTENT_HEIGHT - pressed.image.height) / 2;
+		pressed.x = (CONTENT_WIDTH - pressed.image.width) / 2;
+		pressed.visible = false;
+		container.addChild(pressed);
+
+		this.stage.enableMouseOver(20);
+
+		this.stage.update();
+
+		bitmap.addEventListener('mousedown', function () {
+			pressed.visible = true;
+			self.stage.update();
+		});
+
+		bitmap.addEventListener('mouseover', function () {
+			glow.visible = true;
+			self.stage.update();
+		});
+
+		bitmap.addEventListener('mouseout', function () {
+			glow.visible = false;
+			pressed.visible = false;
+			self.stage.update();
+		});
+
+		bitmap.addEventListener('click', function () {
+			self.exit();
+		});
+	};
+
+	Preloader.prototype.exit = function() {
+		this.stage.enableMouseOver(0);
+		this.stage.removeChild(container);
+		this.stage.update();
+		this.onExit(this.assets);
 	};
 
 	return Preloader;

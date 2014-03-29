@@ -28,22 +28,12 @@ define('App', [
 		preloader.registerOnExit(function(assets) {
 			console.log('exit preloader');
 			self.assets = assets;
-			self.gotoMenu();
+			self.gotoCharacter();
 		});
 		preloader.enter(this.canvas, this.stage);
 
 		socket = new Socket();
 		socket.initialize();
-	};
-
-	App.prototype.gotoMenu = function () {
-		var self = this,
-			menu = new MenuScreen();
-		menu.registerOnExit(function () {
-			console.log('exit menu');
-			self.gotoCharacter();
-		});
-		menu.enter(this.canvas, this.stage, this.assets);
 	};
 
 	App.prototype.gotoCharacter = function () {
