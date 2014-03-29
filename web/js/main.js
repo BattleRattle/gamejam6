@@ -14,6 +14,7 @@ require.config({
 		'CharacterScreen': 'screens/Character',
 		'GameScreen': 'screens/Game',
 		'GameOverScreen': 'screens/GameOver',
+		'LobbyScreen': 'screens/Lobby',
 		'Movement': 'player/Movement',
 		'TopHudView': 'views/TopHud',
 		'TopHudPlayerView': 'views/TopHudPlayer',
@@ -21,7 +22,12 @@ require.config({
 		'MapView': 'views/Map',
 		'PlayerView': 'views/Player',
 		'BackgroundView': 'views/Background',
-		'ViewConstants': 'views/Constants'
+		'ViewConstants': 'views/Constants',
+		'Lobby': 'lobby/Lobby',
+		'ClientSocketListener': 'socket/ClientSocketListener',
+		'LobbyClientListener': 'lobby/LobbyClientListener',
+		'LobbyServerListener': 'lobby/LobbyServerListener',
+		'GameState': 'game/State'
 	}
 
 });

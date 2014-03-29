@@ -5,10 +5,13 @@ define('App', [
 	'PreloaderScreen',
 	'MenuScreen',
 	'CharacterScreen',
+	'LobbyScreen',
 	'GameScreen',
 	'GameOverScreen'
 
-], function (createjs, Socket, PreloaderScreen, MenuScreen, CharacterScreen, GameScreen, GameOverScreen) {
+], function (createjs, Socket, PreloaderScreen, MenuScreen, CharacterScreen, LobbyScreen, GameScreen, GameOverScreen) {
+	var socket;
+
 	var App = function() {
 
 	};
@@ -29,7 +32,7 @@ define('App', [
 		});
 		preloader.enter(this.canvas, this.stage);
 
-		var socket = new Socket();
+		socket = new Socket();
 		socket.initialize();
 	};
 
@@ -46,11 +49,21 @@ define('App', [
 	App.prototype.gotoCharacter = function () {
 		var self = this,
 			character = new CharacterScreen();
-		character.registerOnExit(function () {
+		character.registerOnExit(function (monsterId) {
 			console.log('exit character');
-			self.gotoGame();
+			self.gotoLobby(monsterId);
 		});
 		character.enter(this.canvas, this.stage, this.assets);
+	};
+
+	App.prototype.gotoLobby = function (monsterId) {
+		var self = this,
+			lobby = new LobbyScreen(socket);
+		lobby.registerOnExit(function () {
+			console.log('exit lobby');
+			self.gotoGame();
+		});
+		lobby.enter(this.canvas, this.stage, this.assets, monsterId);
 	};
 
 	App.prototype.gotoGame = function () {

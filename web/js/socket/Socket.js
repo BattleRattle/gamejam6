@@ -1,8 +1,8 @@
 
 define('Socket', [
 	'socketio',
-	'Movement'
-], function(socketio, Movement) {
+	'ClientSocketListener'
+], function(socketio, ClientSocketListener) {
 	var socket;
 
 	var Socket = function() {};
@@ -11,21 +11,16 @@ define('Socket', [
 	Socket.ACTION_DROP_TOY = 'dropToy';
 
 	Socket.prototype.initialize = function() {
-		var self = this;
-		socket = socketio.connect();
-
-		Movement.prototype.addEventListener('movement', function(event) {
-			self.sendActionEvent(event.data.type, event.data.state);
-		});
+		this.socket = socket = socketio.connect();
+		var clientListener = new ClientSocketListener();
+		clientListener.initialize(this.sendEvent);
 	};
 
-	Socket.prototype.sendActionEvent = function(action, state) {
-		socket.send(JSON.stringify({
-			type: 'action',
-			'event': {
-				action: action,
-				state: state
-			}
+	Socket.prototype.sendEvent = function(type, event) {
+		console.log(type, event);
+		socket.emit(JSON.stringify({
+			type: type,
+			'event': event
 		}));
 	};
 
