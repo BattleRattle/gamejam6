@@ -80,6 +80,8 @@ define('GameScreen', [
 				}
 
 				stage.update();
+			}, 'sync': function (event) {
+				topHud.update(event.event.players)
 			}
 		});
 

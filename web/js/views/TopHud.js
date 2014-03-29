@@ -6,7 +6,7 @@ define('TopHudView', [
 	var container;
 
 	var TopHud = function() {
-
+		this.playerHuds = [];
 	};
 
 	TopHud.prototype.initialize = function (assets, parent, players) {
@@ -15,8 +15,16 @@ define('TopHudView', [
 		parent.addChild(container);
 
 		for (var i in players) {
-			var playerHud = new TopHudPlayer();
-			playerHud.initialize(assets, container, players[i], i);
+			this.playerHuds[players[i].id] = new TopHudPlayer();
+			this.playerHuds[players[i].id].initialize(assets, container, players[i], i);
+		}
+	};
+
+	TopHud.prototype.update = function (players) {
+		var player;
+		for (var i in players) {
+			player = players[i];
+			this.playerHuds[player.id].update(player);
 		}
 	};
 

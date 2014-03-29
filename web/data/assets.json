@@ -28,10 +28,6 @@
 		"src": "img/background.jpg"
 	},
 	{
-		"id": "temp_top_hud",
-		"src": "img/tophud/avatar.png"
-	},
-	{
 		"id": "stage_bottom",
 		"src": "img/stage_bottom.png"
 	},
@@ -42,5 +38,29 @@
 	{
 		"id": "collision",
 		"src": "data/collisions.json"
+	},
+	{
+		"id": "tophud_bg",
+		"src": "img/tophud/avatar_background.png"
+	},
+	{
+		"id": "star_empty",
+		"src": "img/tophud/star1.png"
+	},
+	{
+		"id": "star_full",
+		"src": "img/tophud/star2.png"
+	},
+	{
+		"id": "health1",
+		"src": "img/tophud/1.png"
+	},
+	{
+		"id": "health2",
+		"src": "img/tophud/2.png"
+	},
+	{
+		"id": "health3",
+		"src": "img/tophud/3.png"
 	}
 ]
