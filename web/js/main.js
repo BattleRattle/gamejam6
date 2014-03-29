@@ -14,7 +14,10 @@ require.config({
 		'CharacterScreen': 'screens/Character',
 		'GameScreen': 'screens/Game',
 		'GameOverScreen': 'screens/GameOver',
-		'Movement': 'player/Movement'
+		'Movement': 'player/Movement',
+		'TopHudView': 'views/TopHud',
+		'TopHudPlayerView': 'views/TopHudPlayer',
+		'GameView': 'views/Game'
 	}
 
 });

@@ -1,7 +1,9 @@
 define('GameScreen', [
 	'createjs',
-	'Movement'
-], function(createjs, Movement){
+	'Movement',
+	'TopHudView',
+	'GameView'
+], function(createjs, Movement, TopHud, View){
 	var container;
 
 	var CONTENT_WIDTH = 1600,
@@ -39,9 +41,16 @@ define('GameScreen', [
 			self.resize();
 		};
 
+		var view = new View();
+		view.initialize(container, {/** game data */});
+
+		var topHud = new TopHud();
+		topHud.initialize(container, [/** push players here */]);
+
 		var movement = new Movement();
 		movement.initialize();
 
+		this.stage.update();
 //		this.exit();
 	};
 
