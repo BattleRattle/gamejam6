@@ -67,13 +67,12 @@ define([
 
 		movement_states[movement_type] = state;
 
-		var event = new createjs.Event('movement');
-		event.data = {
-			'type': movement_type,
-			'state': state
-		};
+		var event = new createjs.Event('action');
+		event.action = movement_type;
+		event.state = state;
 
 		this.dispatchEvent(event);
+		console.log(event)
 	};
 
 	return Movement;
