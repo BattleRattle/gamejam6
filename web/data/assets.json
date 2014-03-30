@@ -182,5 +182,9 @@
 	{
 		"id": "monster3_hammer",
 		"src": "img/characters/napoleon_hammer_sprite.png"
+	},
+	{
+		"id": "waiting",
+		"src": "img/waiting.png"
 	}
 ]

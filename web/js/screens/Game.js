@@ -54,9 +54,9 @@ define('GameScreen', [
 			item = new ItemView(),
 			movement = new Movement();
 
-		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#fff");
-		waiting.x = 450;
-		waiting.y = 400;
+		var waiting = new createjs.Bitmap(assets['waiting']);;
+		waiting.x = (2100 - waiting.image.width) / 2;
+		waiting.y = (1050 - waiting.image.height) / 2;
 		container.addChild(waiting);
 
 		var listener = new GameServerListener();
