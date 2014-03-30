@@ -3,11 +3,11 @@ define('GameOverScreen', [
 ], function (createjs) {
 	var container;
 
-	var CONTENT_WIDTH = 1600,
-		CONTENT_HEIGHT = 800;
+	var CONTENT_WIDTH = 2100,
+		CONTENT_HEIGHT = 1050;
 
-	var GameOver = function() {
-
+	var GameOver = function(gameContainer) {
+		this.gameContainer = gameContainer;
 	};
 
 	GameOver.prototype.registerOnExit = function(callback) {
@@ -22,6 +22,10 @@ define('GameOverScreen', [
 		container.scaleX = scale;
 		container.scaleY = scale;
 		container.x = (this.canvas.width - CONTENT_WIDTH * scale) / 2;
+
+		this.gameContainer.scaleX = scale;
+		this.gameContainer.scaleY = scale;
+		this.gameContainer.x = (this.canvas.width - CONTENT_WIDTH * scale) / 2;
 		this.stage.update();
 	};
 
@@ -38,10 +42,18 @@ define('GameOverScreen', [
 			self.resize();
 		};
 
-		this.exit();
+		var bitmap = new createjs.Bitmap(assets['gameover']);
+		bitmap.alpha = 0.5;
+		container.addChild(bitmap);
+
+		var self = this;
+		setTimeout(function () {
+			self.exit();
+		}, 4000);
 	};
 
 	GameOver.prototype.exit = function() {
+		this.stage.removeAllChildren();
 		this.onExit();
 	}
 

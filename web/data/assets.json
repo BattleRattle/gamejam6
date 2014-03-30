@@ -186,5 +186,9 @@
 	{
 		"id": "waiting",
 		"src": "img/waiting.png"
+	},
+	{
+		"id": "gameover",
+		"src": "img/gameover.png"
 	}
 ]

@@ -23,15 +23,20 @@ define('App', [
 		this.canvas.height = window.innerHeight;
 		this.stage = new createjs.Stage(this.canvas);
 
-		var preloader = new PreloaderScreen();
+		this.gotoPreloader();
+
+		socket = new Socket();
+		socket.initialize();
+	};
+
+	App.prototype.gotoPreloader = function () {
+		var self = this,
+			preloader = new PreloaderScreen();
 		preloader.registerOnExit(function(assets) {
 			self.assets = assets;
 			self.gotoCharacter();
 		});
 		preloader.enter(this.canvas, this.stage);
-
-		socket = new Socket();
-		socket.initialize();
 	};
 
 	App.prototype.gotoCharacter = function () {
@@ -55,18 +60,18 @@ define('App', [
 	App.prototype.gotoGame = function () {
 		var self = this,
 			game = new GameScreen(socket);
-		game.registerOnExit(function () {
+		game.registerOnExit(function (gameContainer) {
 			console.log('exit game');
-			self.gotoGameOver();
+			self.gotoGameOver(gameContainer);
 		});
 		game.enter(this.canvas, this.stage, this.assets);
 	};
 
-	App.prototype.gotoGameOver = function () {
+	App.prototype.gotoGameOver = function (gameContainer) {
 		var self = this,
-			gameOver = new GameOverScreen();
+			gameOver = new GameOverScreen(gameContainer);
 		gameOver.registerOnExit(function () {
-			console.log('game over');
+			self.gotoCharacter();
 		});
 		gameOver.enter(this.canvas, this.stage, this.assets);
 	};

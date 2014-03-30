@@ -131,8 +131,7 @@ define('GameScreen', [
 	};
 
 	Game.prototype.exit = function() {
-		this.container.removeAllChildren();
-		this.onExit();
+		this.onExit(container);
 	};
 
 	return Game;
