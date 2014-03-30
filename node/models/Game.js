@@ -31,6 +31,7 @@ var Game = function(connectionHandler, slots) {
 	this.collisionTester = new CollisionTester();
 	this.mapId = Object.keys(maps)[parseInt(Math.random() * Object.keys(maps).length)];
 	this.toys = generateToys(maps[this.mapId].girl, this.slotsTotal * 3);
+    this.usableItem = getUsableItems(this.mapId);
 };
 
 Game.prototype.start = function() {
@@ -43,8 +44,6 @@ Game.prototype.start = function() {
 			x: 300 * x + 50
 		};
 	}
-
-	this.usableItem = getUsableItems(this.mapId);
 
 	console.log('Start Game #' + this.id);
 	var event = {
@@ -240,9 +239,11 @@ Game.prototype.tick = function() {
         player.lastPosition.x = player.position.x;
         player.lastPosition.y = player.position.y;
 
-		for (var i in this.usableItem) {
-			player.pickupItem(this.usableItem[i]);
-		}
+        if(!player.item){
+            for (var i in this.usableItem) {
+                player.pickupItem(this.usableItem[i]);
+            }
+        }
 
 	}.bind(this));
 
@@ -264,26 +265,29 @@ function generateToys(girl, amount) {
 
 function getUsableItems(mapId) {
 	var items = maps[mapId].deco,
-		useable = [],
+		usable = [],
 		item;
 
 	for (var i in items) {
 		item = items[i];
 
+		// adjust last value based on monster height and item height
 		if ("watte" === item.type) {
-			item.position.y = 200 - 50 + (1 + item.position.y) * 270 + 95 - 120; // adjust last value based on monster height and item height
-			item.position.x = 300 * item.position.x + 50;
-			useable.push(items[i]);
+            usable.push({type: item.type,
+                position: {
+                    x: 300 * item.position.x + 50,
+                    y: 200 - 50 + (1 + item.position.y) * 270 + 95 - 120}});
 		}
 
 		if ("hammer" === item.type) {
-			item.position.y = 200 - 50 + (1 + item.position.y) * 270 + 95 - 120;
-			item.position.x = 300 * item.position.x + 50;
-			useable.push(items[i]);
+			usable.push({type: item.type,
+                position: {
+                    x: 300 * item.position.x + 50,
+                    y: 200 - 50 + (1 + item.position.y) * 270 + 95 - 120}});
 		}
 	}
 
-	return useable;
+	return usable;
 }
 
 module.exports = Game;
