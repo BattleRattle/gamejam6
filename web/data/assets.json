@@ -158,5 +158,13 @@
 	{
 		"id": "cry",
 		"src": "img/traenen_links.png"
+	},
+	{
+		"id": "animations",
+		"src": "data/animations.json"
+	},
+	{
+		"id": "monster1_watte",
+		"src": "img/characters/bismarck_watte_sprites.png"
 	}
 ]

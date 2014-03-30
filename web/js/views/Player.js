@@ -72,6 +72,7 @@ define('PlayerView', [
 		this.container = new createjs.Container();
 		this.assets = assets;
 		this.animations = [];
+		this.transformation = null;
 		parent.addChild(this.container);
 
 		this.bitmap = new createjs.Bitmap(assets[data.monsterId]);
@@ -90,6 +91,38 @@ define('PlayerView', [
 		this.playerData = data;
 		this.cryTicks = 0;
 		config = assets['params'].movement;
+	};
+
+	Player.prototype.transform = function (type) {
+		if (type && this.transformation) {
+			this.container.removeChild(this.transformation)
+			delete this.transformation;
+		}
+
+		console.log(this.assets['animations'])
+		if (!type) {
+			this.container.removeChild(this.transformation)
+			delete this.transformation;
+			this.bitmap.visible = true;
+		} else if (typeof this.assets['animations'][type] !== 'undefined' && typeof this.assets['animations'][type][this.monsterId] !== 'undefined') {
+			this.bitmap.visible = false;
+			var data = this.assets['animations'][type][this.monsterId],
+				spriteData = {
+					images: [this.assets[data.image]],
+					frames: data.frames,
+					animations: data.animations
+				},
+				spriteSheet = new createjs.SpriteSheet(spriteData);
+			this.transformation = new createjs.Sprite(spriteSheet, "default");
+			this.transformation.y = data.position.y;
+			this.transformation.x = data.position.x;
+			if (this.direction === -1) {
+				this.transformation.scaleX *= -1;
+			}
+			this.container.addChild(this.transformation);
+		} else {
+			this.bitmap.visible = true;
+		}
 	};
 
 	Player.prototype.cry = function (event) {
@@ -163,6 +196,11 @@ define('PlayerView', [
 			this.bitmap.x -= this.direction * this.monsterData.width;
 			this.bitmap.scaleX *= -1;
 			this.direction *= -1;
+
+			if (this.transformation) {
+				this.transformation.scaleX *= -1;
+				this.transformation.x -= this.direction * this.monsterData.width;
+			}
 		}
 
 		if (this.actions.jump && !this.isFalling && !this.velocity.y) {

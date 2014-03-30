@@ -118,7 +118,8 @@ define('GameScreen', [
 				players[event.event.playerId].cry(event)
 			},
 			'pickedUpItem': function (event) {
-				console.log(event);
+				players[event.event.playerId].transform(event.event.itemType);
+				stage.update();
 			}
 		});
 
