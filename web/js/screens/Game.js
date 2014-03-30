@@ -7,10 +7,11 @@ define('GameScreen', [
 	'PlayerView',
 	'GirlView',
 	'ToyView',
+	'WatteView',
 	'ItemView',
 	'GameServerListener',
 	'GameState'
-], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GirlView, ToyView, ItemView, GameServerListener, GameState) {
+], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GirlView, ToyView, WatteView, ItemView, GameServerListener, GameState) {
 	var container,
 		socket,
 		players = {};
@@ -52,6 +53,7 @@ define('GameScreen', [
 			girl = new GirlView(),
 			toy = new ToyView(),
 			item = new ItemView(),
+			watte = new WatteView(),
 			movement = new Movement();
 
 		var waiting = new createjs.Bitmap(assets['waiting']);;
@@ -69,6 +71,7 @@ define('GameScreen', [
 						players[i].update({});
 					}
 				}
+				watte.update();
 				self.stage.update();
 			},
 			'start': function(event) {
@@ -79,6 +82,7 @@ define('GameScreen', [
 				girl.initialize(assets, container);
 				toy.initialize(assets, container, event.event.toys);
 				item.initialize(assets, container);
+				watte.initialize(assets, container);
 				movement.initialize();
 
 				for (var i in event.event.players) {
@@ -123,6 +127,13 @@ define('GameScreen', [
 			},
 			'itemUsed': function (event) {
 				players[event.event.playerId].transform();
+				if (event.event.itemType === 'watte') {
+					watte.spawn(event.event.additional);
+				}
+				stage.update();
+			},
+			'disappeared': function (event) {
+				watte.disappear(event.event.watteId);
 				stage.update();
 			}
 		});

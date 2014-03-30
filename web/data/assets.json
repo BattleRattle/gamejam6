@@ -88,6 +88,10 @@
 		"src": "img/deco/watte.png"
 	},
 	{
+		"id": "watteball",
+		"src": "img/watteball.png"
+	},
+	{
 		"id": "hammer",
 		"src": "img/deco/hammer.png"
 	},

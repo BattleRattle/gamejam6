@@ -17,6 +17,8 @@ var TICK_RATE = 30;
 var SYNC_RATE = 1;
 var MAX_TOY_PICKUP_DISTANCE = 50;
 var MAX_TOY_DROP_DISTANCE = 4900; // squared -> 70 is actual distance
+var WATTE_GRAVITY = 0.1;
+var WATTE_DAMAGE = 35;
 
 var Game = function(connectionHandler, slots) {
 	this.connectionHandler = connectionHandler;
@@ -31,6 +33,7 @@ var Game = function(connectionHandler, slots) {
 	this.collisionTester = new CollisionTester();
 	this.mapId = Object.keys(maps)[parseInt(Math.random() * Object.keys(maps).length)];
 	this.toys = generateToys(maps[this.mapId].girl, this.slotsTotal * 3);
+	this.watte = [];
     this.usableItem = getUsableItems(this.mapId);
 };
 
@@ -117,6 +120,10 @@ Game.prototype.tick = function() {
 	var jump_velocity = params.movement.jump_velocity;
 	var gravity = params.movement.gravity;
 
+	var TILE_SIZE = 300;
+	var OFFSET = 150;
+	var mapWidth = maps[this.mapId]['tiles'][0].length * TILE_SIZE;
+
 	this.players.forEach(function(player) {
 		if (player.actions.cry && player.cryTicks == 0) {
 			player.cryTicks = 90;
@@ -157,10 +164,7 @@ Game.prototype.tick = function() {
 
 		player.position.y -= player.velocity.y;
 
-        var TILE_SIZE = 300;
-        var OFFSET = 150;
-        var mapWidth = maps[this.mapId]['tiles'][0].length * TILE_SIZE;
-        var monsterWidth = monsters[player.monsterId].width;
+		var monsterWidth = monsters[player.monsterId].width;
 
         if (this.collisionTester.collide({
 			position: player.position,
@@ -245,6 +249,64 @@ Game.prototype.tick = function() {
             }
         }
 
+	}.bind(this));
+
+	this.watte.forEach(function(watte) {
+		watte.velocity.y -= WATTE_GRAVITY;
+		watte.position.x += watte.velocity.x;
+		watte.position.y -= watte.velocity.y;
+
+		// map collision
+		if (watte.position.x <= 0 || watte.position.x >= mapWidth) {
+			this.watte.splice(this.watte.indexOf(watte), 1);
+
+			var response = new Response('watte', {action: 'disappeared', watteId: watte.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+			this.connectionHandler.sendGameBroadcast(this, response);
+
+			return;
+		}
+
+		// player collision (approximated)
+		var watteRadius = 22;
+		var monsterRadius = 50;
+		var monsterCenterOffsets = {
+			'monster1': {x: 80, y: 80},
+			'monster2': {x: 62, y: 67},
+			'monster3': {x: 50, y: 68}
+		};
+
+		var watteCenter = {
+			x: watte.position.x + watteRadius,
+			y: watte.position.y + watteRadius
+		};
+
+		for (var i in this.players) {
+			if (this.players[i] === watte.owner) {
+				continue;
+			}
+
+			var playerCenter = {
+				x: this.players[i].position.x + monsterCenterOffsets[this.players[i].monsterId].x,
+				y: this.players[i].position.y + monsterCenterOffsets[this.players[i].monsterId].y
+			};
+			var distance = Math.sqrt(Math.pow(playerCenter.x - watteCenter.x, 2) + Math.pow(playerCenter.y - watteCenter.y, 2));
+			if (distance <= watteRadius + monsterRadius) {
+				this.players[i].health -= WATTE_DAMAGE;
+				this.watte.splice(this.watte.indexOf(watte), 1);
+
+				var response = new Response('watte', {action: 'disappeared', watteId: watte.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+				this.connectionHandler.sendGameBroadcast(this, response);
+
+				return;
+			}
+		}
+	}.bind(this));
+
+	this.players.forEach(function(player) {
+		if (player.health <= 0) {
+			var response = new Response('player', {action: 'died', playerId: player.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+			this.connectionHandler.sendGameBroadcast(this, response);
+		}
 	}.bind(this));
 
 	this.connectionEventFactory.getEventHandler(TickEventHandler.TYPE).tick(this, this.currentTick, changes);

@@ -31,6 +31,7 @@ require.config({
 		'GameServerListener': 'game/GameServerListener',
 		'CollisionTester': 'player/CollisionTester',
 		'GirlView': 'views/Girl',
+		'WatteView': 'views/Watte',
 		'ItemView': 'views/Item'
 	}
 

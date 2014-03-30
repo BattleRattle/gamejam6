@@ -1,4 +1,5 @@
 var Response = require('./Communication/Response');
+var Watte = require('./Watte');
 
 var playerId = 0;
 var START_HEALTH = 100;
@@ -108,13 +109,13 @@ Player.prototype.useItem = function () {
 	var item = this.item;
 	this.item = null;
 
+	var additional = null;
+
 	switch (item.type) {
 		case 'hammer':
 			var currentPlayer = this;
 			this.game.getPlayers().forEach(function(player) {
 				if (player === currentPlayer) return;
-
-				console.log(player.position, currentPlayer.position)
 				if ((player.position.x - currentPlayer.position.x > 0 && currentPlayer.direction == 1
 					|| player.position.x - currentPlayer.position.x < 0 && currentPlayer.direction == -1)
 					&& Math.abs(player.position.x - currentPlayer.position.x) < HAMMER_DAMAGE_HORIZONTAL_RANGE
@@ -129,9 +130,19 @@ Player.prototype.useItem = function () {
 				}
 			});
 			break;
+
+		case 'watte':
+			var w = new Watte(this);
+			this.game.watte.push(w);
+			additional = {
+				id: w.id,
+				position: w.position,
+				velocity: w.velocity
+			};
+			break;
 	}
 
-	var response = new Response('action', {action: 'itemUsed', playerId: this.id, itemType: item.type}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	var response = new Response('action', {action: 'itemUsed', playerId: this.id, itemType: item.type, additional: additional}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 }
 
