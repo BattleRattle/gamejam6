@@ -22,6 +22,9 @@ define('MapView', [
 			bitmap = new createjs.Bitmap(assets[deco.type]);
 			bitmap.y = ViewConstants.HUD_HEIGHT - ViewConstants.MAP_TOP_OFFSET + (1 + deco.position.y) * ViewConstants.MAP_TILE_HEIGHT + 95 - bitmap.image.height;
 			bitmap.x = ViewConstants.MAP_TILE_WIDTH * deco.position.x + 50;
+			if (deco.position.y == 2) {
+				bitmap.y += 20;
+			}
 			container.addChild(bitmap);
 		}
 

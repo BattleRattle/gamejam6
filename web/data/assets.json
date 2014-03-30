@@ -92,6 +92,10 @@
 		"src": "img/deco/hammer.png"
 	},
 	{
+		"id": "chest",
+		"src": "img/deco/kiste.png"
+	},
+	{
 		"id": "maedchen",
 		"src": "img/maedchen.png"
 	},
