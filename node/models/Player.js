@@ -4,6 +4,9 @@ var playerId = 0;
 var START_HEALTH = 100;
 var MAX_TOY_PICKUP_DISTANCE = 50;
 var COLLECT_GOAL = 3;
+var HAMMER_DAMAGE_HORIZONTAL_RANGE = 200;
+var HAMMER_DAMAGE_VERTICAL_RANGE = 50;
+var HAMMER_DAMAGE = 35;
 
 var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.id = ++playerId;
@@ -33,8 +36,9 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 		cry: false,
 		useItem: false
 	};
+	this.paralyzed = false;
 	this.isFalling = false;
-	this.direction = 'right';
+	this.direction = 1;
 	this.health = START_HEALTH;
 	this.monsterId = null;
 	this.lobby = lobby;
@@ -68,6 +72,12 @@ Player.prototype.getCollectedItems = function() {
 };
 
 Player.prototype.cry = function () {
+	this.paralyzed = true;
+	this.velocity.x = 0;
+	setTimeout(function() {
+		this.paralyzed = false;
+	}.bind(this), 3000);
+
 	var response = new Response('action', {action: 'cried', playerId: this.id, duration: 90 }, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
@@ -91,6 +101,24 @@ Player.prototype.pickupItem = function(item) {
 Player.prototype.useItem = function () {
 	var item = this.item;
 	this.item = null;
+
+	switch (item.type) {
+		case 'hammer':
+			var currentPlayer = this;
+			this.game.getPlayers().forEach(function(player) {
+				if (player === currentPlayer) return;
+
+				console.log(player.position, currentPlayer.position)
+				if ((player.position.x - currentPlayer.position.x > 0 && currentPlayer.direction == 1
+					|| player.position.x - currentPlayer.position.x < 0 && currentPlayer.direction == -1)
+					&& Math.abs(player.position.x - currentPlayer.position.x) < HAMMER_DAMAGE_HORIZONTAL_RANGE
+					&& Math.abs(player.position.y - currentPlayer.position.y) < HAMMER_DAMAGE_VERTICAL_RANGE) {
+					player.health -= HAMMER_DAMAGE;
+					player.cry();
+				}
+			});
+			break;
+	}
 
 	var response = new Response('action', {action: 'itemUsed', playerId: this.id, itemType: item.type}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);

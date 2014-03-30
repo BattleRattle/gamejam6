@@ -190,6 +190,10 @@ define('PlayerView', [
 			}
 		}
 
+		if (this.cryTicks > 0) {
+			this.velocity.x = 0;
+		}
+
 		this.container.x += this.velocity.x;
 		if (this.velocity.x > 0 && this.direction === -1 || this.velocity.x < 0 && this.direction === 1) {
 			this.bitmap.x -= this.direction * this.monsterData.width;

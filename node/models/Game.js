@@ -144,11 +144,12 @@ Game.prototype.tick = function() {
 			}
 		}
 
+		if (player.paralyzed) player.velocity.x = 0;
 		if (player.cryTicks > 0) player.cryTicks--;
 
 		player.position.x += player.velocity.x;
 
-		if (player.actions.jump && !player.isFalling && !player.velocity.y) {
+		if (player.actions.jump && !player.isFalling && !player.velocity.y && !player.paralyzed) {
 			player.velocity.y = jump_velocity;
 			player.isFalling = true;
 		} else {
@@ -231,6 +232,10 @@ Game.prototype.tick = function() {
             player.position.x =  mapWidth - monsterWidth;
             player.velocity.x = 0;
         }
+
+		if (player.velocity.x > 0 && player.direction === -1 || player.velocity.x < 0 && player.direction === 1) {
+			player.direction *= -1;
+		}
 
         player.lastPosition.x = player.position.x;
         player.lastPosition.y = player.position.y;
