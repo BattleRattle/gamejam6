@@ -66,13 +66,11 @@ Player.prototype.getCollectedItems = function() {
 Player.prototype.pickup = function(toy) {
 	// check distance
 	if (Math.sqrt(Math.pow(this.position.x - toy.position.x, 2) + Math.pow(this.position.x - toy.position.x, 2)) > MAX_TOY_PICKUP_DISTANCE) {
-        console.log('distance blub');
 		return;
 	}
 
 	// check, if toy is already owned
 	if (toy.owner || this.toy) {
-        console.log('owned or owner');
 		return;
 	}
 
@@ -84,7 +82,6 @@ Player.prototype.pickup = function(toy) {
 
 Player.prototype.drop = function() {
 	if (!this.toy) {
-        console.log('nothing to drop');
 		return;
 	}
 
@@ -93,8 +90,6 @@ Player.prototype.drop = function() {
 	this.toy.owner = null;
 	this.game.toys.splice(this.game.toys.indexOf(this.toy), 1);
 	this.toy = null;
-
-    console.log('dropped toy');
 
 	var response = new Response('action', {action: 'dropped', playerId: this.id, toyId: toyId}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
