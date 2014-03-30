@@ -178,5 +178,9 @@
 	{
 		"id": "monster2_hammer",
 		"src": "img/characters/lincoln_hammer_sprite.png"
+	},
+	{
+		"id": "monster3_hammer",
+		"src": "img/characters/napoleon_hammer_sprite.png"
 	}
 ]

@@ -72,8 +72,28 @@
 					"speed": 0.4
 				}
 			},
+			"direction": -1,
 			"position": {
-				"y": -20,
+				"y": 0,
+				"x": 0
+			}
+		},
+		"monster3": {
+			"image": "monster3_hammer",
+			"frames": {
+				"width": 230,
+				"height": 188,
+				"count": 8
+			},
+			"animations": {
+				"default": {
+					"frames": [0,1,2,3,4,5,6,7],
+					"speed": 0.4
+				}
+			},
+			"direction": -1,
+			"position": {
+				"y": -30,
 				"x": 0
 			}
 		}

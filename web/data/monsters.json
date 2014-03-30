@@ -12,8 +12,8 @@
 	"monster2": {
 		"name": "Lincoln",
 		"selection": "selection_lincoln",
-		"width": 104,
-		"height": 128,
+		"width": 124,
+		"height": 143,
 		"collisionOffset": -83,
 		"stats": {
 
