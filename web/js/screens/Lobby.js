@@ -73,18 +73,18 @@ define('LobbyScreen', [
 		container.addChild(bitmap);
 
 		glow = new createjs.Bitmap(this.assets['button_glow']);
-		glow.y = (CONTENT_HEIGHT - glow.image.height) / 4;
+		glow.y = (CONTENT_HEIGHT - glow.image.height) / 3;
 		glow.x = (CONTENT_WIDTH - glow.image.width) / 2;
 		glow.visible = false;
 		container.addChild(glow);
 
 		bitmap = new createjs.Bitmap(this.assets['button']);
-		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) / 4;
+		bitmap.y = (CONTENT_HEIGHT - bitmap.image.height) / 3;
 		bitmap.x = (CONTENT_WIDTH - bitmap.image.width) / 2;
 		container.addChild(bitmap);
 
 		pressed = new createjs.Bitmap(this.assets['button_pressed']);
-		pressed.y = (CONTENT_HEIGHT - pressed.image.height) / 4;
+		pressed.y = (CONTENT_HEIGHT - pressed.image.height) / 3;
 		pressed.x = (CONTENT_WIDTH - pressed.image.width) / 2;
 		pressed.visible = false;
 		container.addChild(pressed);
@@ -115,18 +115,18 @@ define('LobbyScreen', [
 		});
 
 		glow2 = new createjs.Bitmap(this.assets['button_glow']);
-		glow2.y = (CONTENT_HEIGHT - glow2.image.height) * 3 / 4;
+		glow2.y = (CONTENT_HEIGHT - glow2.image.height) * 2 / 3;
 		glow2.x = (CONTENT_WIDTH - glow2.image.width) / 2;
 		glow2.visible = false;
 		container.addChild(glow2);
 
 		bitmap2 = new createjs.Bitmap(this.assets['button']);
-		bitmap2.y = (CONTENT_HEIGHT - bitmap2.image.height) * 3/ 4;
+		bitmap2.y = (CONTENT_HEIGHT - bitmap2.image.height) * 2/ 3;
 		bitmap2.x = (CONTENT_WIDTH - bitmap2.image.width) / 2;
 		container.addChild(bitmap2);
 
 		pressed2 = new createjs.Bitmap(this.assets['button_pressed']);
-		pressed2.y = (CONTENT_HEIGHT - pressed2.image.height) * 3 / 4;
+		pressed2.y = (CONTENT_HEIGHT - pressed2.image.height) * 2 / 3;
 		pressed2.x = (CONTENT_WIDTH - pressed2.image.width) / 2;
 		pressed2.visible = false;
 		container.addChild(pressed2);
@@ -164,12 +164,12 @@ define('LobbyScreen', [
 
 		var label = new createjs.Text("Single Player", "bold 70px Arial", "#fff");
 		label.x = 800;
-		label.y = 275;
+		label.y = 345;
 		container.addChild(label);
 
 		label = new createjs.Text("Multi Player", "bold 70px Arial", "#fff");
-		label.x = 800;
-		label.y = 675;
+		label.x = 815;
+		label.y = 605;
 		container.addChild(label);
 
 		this.stage.update();
