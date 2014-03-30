@@ -73,6 +73,7 @@ define('PlayerView', [
 		this.assets = assets;
 		this.animations = [];
 		this.transformation = null;
+		this.tranforamtionData = null;
 		parent.addChild(this.container);
 
 		this.bitmap = new createjs.Bitmap(assets[data.monsterId]);
@@ -112,11 +113,12 @@ define('PlayerView', [
 					animations: data.animations
 				},
 				spriteSheet = new createjs.SpriteSheet(spriteData);
+			this.tranforamtionData = data;
 			this.transformation = new createjs.Sprite(spriteSheet, "default");
 			this.transformation.y = data.position.y;
 			this.transformation.x = data.position.x;
-			if (this.direction === -1) {
-				this.transformation.scaleX *= data.scale;
+			if (this.direction != data.direction) {
+				this.transformation.scaleX *= -1;
 			}
 			this.container.addChild(this.transformation);
 		} else {
@@ -202,7 +204,7 @@ define('PlayerView', [
 
 			if (this.transformation) {
 				this.transformation.scaleX *= -1;
-				this.transformation.x -= this.direction * this.monsterData.width;
+				this.transformation.x -= this.direction * this.monsterData.width * this.tranforamtionData.direction;
 			}
 		}
 

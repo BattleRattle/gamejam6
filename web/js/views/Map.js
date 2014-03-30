@@ -42,7 +42,7 @@ define('MapView', [
 		}
 
 		bitmap = new createjs.Bitmap(assets['stage_bottom']);
-		bitmap.y = ViewConstants.HUD_HEIGHT + i * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET;
+		bitmap.y = ViewConstants.HUD_HEIGHT + i * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET - 17;
 		container.addChild(bitmap);
 	};
 

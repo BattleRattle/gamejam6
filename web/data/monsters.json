@@ -2,9 +2,9 @@
 	"monster1": {
 		"name": "Bismarck",
 		"selection": "selection_bismark",
-		"width": 114,
-		"height": 85,
-		"collisionOffset": -60,
+		"width": 148,
+		"height": 147,
+		"collisionOffset": -80,
 		"stats": {
 
 		}
@@ -24,7 +24,7 @@
 		"selection": "selection_napoleon",
 		"width": 99,
 		"height": 136,
-		"collisionOffset": -93,
+		"collisionOffset": -96,
 		"stats": {
 
 		}

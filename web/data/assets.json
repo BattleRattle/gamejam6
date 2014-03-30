@@ -168,6 +168,10 @@
 		"src": "img/characters/bismarck_watte_sprites.png"
 	},
 	{
+		"id": "monster2_watte",
+		"src": "img/characters/lincoln_watte_sprites.png"
+	},
+	{
 		"id": "monster3_watte",
 		"src": "img/characters/napoleon_watte_sprites.png"
 	},
