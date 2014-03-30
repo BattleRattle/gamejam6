@@ -18,5 +18,25 @@
 				"x": 50
 			}
 		}
+	},
+	"hammer": {
+		"monster2": {
+			"image": "monster2_hammer",
+			"frames": {
+				"width": 236,
+				"height": 163,
+				"count": 7
+			},
+			"animations": {
+				"default": {
+					"frames": [0,1,2,3,4,5,6],
+					"speed": 0.4
+				}
+			},
+			"position": {
+				"y": -20,
+				"x": 0
+			}
+		}
 	}
 }

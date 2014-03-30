@@ -264,8 +264,15 @@ function getUsableItems(mapId) {
 
 	for (var i in items) {
 		item = items[i];
+
 		if ("watte" === item.type) {
 			item.position.y = 200 - 50 + (1 + item.position.y) * 270 + 95 - 120; // adjust last value based on monster height and item height
+			item.position.x = 300 * item.position.x + 50;
+			useable.push(items[i]);
+		}
+
+		if ("hammer" === item.type) {
+			item.position.y = 200 - 50 + (1 + item.position.y) * 270 + 95 - 120;
 			item.position.x = 300 * item.position.x + 50;
 			useable.push(items[i]);
 		}
