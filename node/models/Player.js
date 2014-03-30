@@ -71,14 +71,20 @@ Player.prototype.getCollectedItems = function() {
 	return this.collectedItems;
 };
 
-Player.prototype.cry = function () {
+Player.prototype.cry = function (timeout) {
 	this.paralyzed = true;
 	this.velocity.x = 0;
-	setTimeout(function() {
-		this.paralyzed = false;
-	}.bind(this), 3000);
 
-	var response = new Response('action', {action: 'cried', playerId: this.id, duration: 90 }, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	if (timeout !== -1) {
+		setTimeout(function() {
+			this.paralyzed = false;
+		}.bind(this), 3000);
+		var duration = 90;
+	} else {
+		var duration = 99999999999;
+	}
+
+	var response = new Response('action', {action: 'cried', playerId: this.id, duration: duration }, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
@@ -114,7 +120,12 @@ Player.prototype.useItem = function () {
 					&& Math.abs(player.position.x - currentPlayer.position.x) < HAMMER_DAMAGE_HORIZONTAL_RANGE
 					&& Math.abs(player.position.y - currentPlayer.position.y) < HAMMER_DAMAGE_VERTICAL_RANGE) {
 					player.health -= HAMMER_DAMAGE;
-					player.cry();
+					if (player.health > 0) {
+						player.cry();
+					} else {
+						player.cry(-1);
+					}
+
 				}
 			});
 			break;
