@@ -182,7 +182,7 @@ define('PlayerView', [
 			width: this.monsterData.width,
 			height: this.monsterData.height
 		}, {
-			position: {x: 0, y: -60},
+			position: {x: 0, y: this.monsterData.collisionOffset},
 			collision: this.collisioData['map1'],
 			width: mapWidth,
 			height: this.mapData['tiles'].length * ViewConstants.MAP_TILE_HEIGHT + ViewConstants.MAP_TOP_OFFSET

@@ -4,6 +4,7 @@
 		"selection": "selection_bismark",
 		"width": 114,
 		"height": 85,
+		"collisionOffset": -60,
 		"stats": {
 
 		}
@@ -11,8 +12,9 @@
 	"monster2": {
 		"name": "Lincoln",
 		"selection": "selection_lincoln",
-		"width": 124,
-		"height": 143,
+		"width": 104,
+		"height": 128,
+		"collisionOffset": -83,
 		"stats": {
 
 		}
@@ -20,8 +22,9 @@
 	"monster3": {
 		"name": "Napoleon",
 		"selection": "selection_napoleon",
-		"width": 109,
-		"height": 139,
+		"width": 99,
+		"height": 136,
+		"collisionOffset": -93,
 		"stats": {
 
 		}
