@@ -30,7 +30,8 @@ require.config({
 		'GameState': 'game/State',
 		'GameServerListener': 'game/GameServerListener',
 		'CollisionTester': 'player/CollisionTester',
-		'GirlView': 'views/Girl'
+		'GirlView': 'views/Girl',
+		'ItemView': 'views/Item'
 	}
 
 });

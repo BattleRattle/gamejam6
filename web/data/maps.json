@@ -21,7 +21,14 @@
 			{
 				"type": "watte",
 				"position": {
-					"x": 5,
+					"x": 4,
+					"y": 0
+				}
+			},
+			{
+				"type": "hammer",
+				"position": {
+					"x": 6,
 					"y": 1
 				}
 			}

@@ -7,7 +7,7 @@ define('ToyView', [
 			x: 0,
 			y: 0
 		};
-		this.owner = null;
+		this.owned = {};
 		this.toys = {};
 	};
 
@@ -25,12 +25,13 @@ define('ToyView', [
 	};
 
 	Toy.prototype.pickup = function(toyId, playerId) {
-		this.owner = playerId;
+		this.owned[playerId] = toyId;
 		this.toys[toyId].visible = false;
 	};
 
 	Toy.prototype.drop = function(toyId) {
-		this.owner = null;
+		this.owned[playerId] = null;
+		this.container.removeChild(this.toys[toyId]);
 		delete this.toys[toyId];
 	};
 

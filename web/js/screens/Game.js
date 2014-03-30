@@ -7,9 +7,10 @@ define('GameScreen', [
 	'PlayerView',
 	'GirlView',
 	'ToyView',
+	'ItemView',
 	'GameServerListener',
 	'GameState'
-], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GirlView, ToyView, GameServerListener, GameState) {
+], function(createjs, Movement, TopHud, View, ViewConstants, PlayerView, GirlView, ToyView, ItemView, GameServerListener, GameState) {
 	var container,
 		socket,
 		players = {};
@@ -50,6 +51,7 @@ define('GameScreen', [
 			topHud = new TopHud(),
 			girl = new GirlView(),
 			toy = new ToyView(),
+			item = new ItemView(),
 			movement = new Movement();
 
 		var waiting = new createjs.Text("Waiting for other players ...", "bold 70px Arial", "#fff");
@@ -99,11 +101,17 @@ define('GameScreen', [
 			},
 			'pickedUp': function (event) {
 				toy.pickup(event.event.toyId, event.event.playerId);
+				if (event.event.playerId == GameState.playerId) {
+					//item.displayItem(toy.toys[toy.owned[GameState.playerId]]);
+				}
 				stage.update();
 			},
 			'dropped': function (event) {
 				console.log(event)
 				toy.drop(event.event.toyId);
+				if (event.event.playerId == GameState.playerId) {
+					//Item.dropItem();
+				}
 				stage.update();
 			}
 		});
