@@ -102,9 +102,17 @@ define('PreloaderScreen', [
 		this.loader = new createjs.LoadQueue();
 		this.loader.installPlugin(createjs.SoundJS);
 
+        createjs.Sound.alternateExtensions = ["mp3"];
+        createjs.Sound.registerSound("sfx/background.mp3", "bg_music");
+
 		//define callbacks
 		this.loader.on('fileload', function(event){
 			self.handleFileLoad(event);
+
+            var instance = createjs.Sound.play("bg_music",{loop:-1});
+            // hold instance in assets
+            self.assets['bg_music'] = instance;
+            instance.volume = 0.2;
 		});
 
 		this.loader.on('complete', function() {
