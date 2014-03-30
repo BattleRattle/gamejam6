@@ -30,7 +30,8 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 		jump: false,
 		pickupToy: false,
 		dropToy: false,
-		cry: false
+		cry: false,
+		useItem: false
 	};
 	this.isFalling = false;
 	this.direction = 'right';
@@ -86,6 +87,14 @@ Player.prototype.pickupItem = function(item) {
 	var response = new Response('action', {action: 'pickedUpItem', playerId: this.id, itemType: item.type}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
+
+Player.prototype.useItem = function () {
+	var item = this.item;
+	this.item = null;
+
+	var response = new Response('action', {action: 'itemUsed', playerId: this.id, itemType: item.type}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.game.connectionHandler.sendGameBroadcast(this.game, response);
+}
 
 Player.prototype.pickup = function(toy) {
 	// check, if toy is already owned

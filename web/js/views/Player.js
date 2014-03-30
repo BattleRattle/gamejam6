@@ -99,7 +99,6 @@ define('PlayerView', [
 			delete this.transformation;
 		}
 
-		console.log(this.assets['animations'])
 		if (!type) {
 			this.container.removeChild(this.transformation)
 			delete this.transformation;
@@ -117,7 +116,7 @@ define('PlayerView', [
 			this.transformation.y = data.position.y;
 			this.transformation.x = data.position.x;
 			if (this.direction === -1) {
-				this.transformation.scaleX *= -1;
+				this.transformation.scaleX *= data.scale;
 			}
 			this.container.addChild(this.transformation);
 		} else {

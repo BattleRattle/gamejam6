@@ -120,6 +120,10 @@ define('GameScreen', [
 			'pickedUpItem': function (event) {
 				players[event.event.playerId].transform(event.event.itemType);
 				stage.update();
+			},
+			'itemUsed': function (event) {
+				players[event.event.playerId].transform();
+				stage.update();
 			}
 		});
 
