@@ -16,6 +16,7 @@ var gameId = 0;
 var TICK_RATE = 30;
 var SYNC_RATE = 1;
 var MAX_TOY_PICKUP_DISTANCE = 50;
+var MAX_TOY_DROP_DISTANCE = 4900; // squared -> 70 is actual distance
 
 var Game = function(connectionHandler, slots) {
 	this.connectionHandler = connectionHandler;
@@ -199,8 +200,12 @@ Game.prototype.tick = function() {
 
 		if (player.actions.dropToy) {
 			var dropPosition = maps[this.mapId].drops[0].position;
-			var distance = Math.sqrt(Math.pow(dropPosition.x - player.position.x, 2) + Math.pow(dropPosition.y - player.position.y, 2));
-			if (distance < MAX_TOY_PICKUP_DISTANCE) {
+
+            var dx = dropPosition.x - player.position.x;
+            var dy = dropPosition.y - player.position.y;
+			var distance = dx*dx + dy*dy;
+
+			if (distance < MAX_TOY_DROP_DISTANCE) {
 				player.drop();
 			}
 		}
