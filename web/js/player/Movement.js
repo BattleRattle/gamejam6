@@ -8,7 +8,8 @@ var KEYCODE_SPACE = 32,
 	KEYCODE_W = 87,
 	KEYCODE_T = 84,
 	KEYCODE_G = 71,
-	KEYCODE_C = 67;
+	KEYCODE_C = 67,
+	KEYCODE_U = 85;
 
 define([
 	'createjs'
@@ -28,6 +29,7 @@ define([
 	Movement.ACTION_PICKUP_TOY = 'pickupToy';
 	Movement.ACTION_DROP_TOY = 'dropToy';
 	Movement.ACTION_CRY = 'cry';
+	Movement.ACTION_USE_ITEM = 'useItem';
 
 	createjs.EventDispatcher.initialize(Movement.prototype);
 
@@ -66,8 +68,13 @@ define([
 				case KEYCODE_G:
 					type = Movement.ACTION_DROP_TOY;
 					break;
+
 				case KEYCODE_C:
 					type = Movement.ACTION_CRY;
+					break;
+
+				case KEYCODE_U:
+					type = Movement.ACTION_USE_ITEM;
 					break;
 			}
 

@@ -166,5 +166,9 @@
 	{
 		"id": "monster1_watte",
 		"src": "img/characters/bismarck_watte_sprites.png"
+	},
+	{
+		"id": "monster3_watte",
+		"src": "img/characters/napoleon_watte_sprites.png"
 	}
 ]

@@ -124,6 +124,10 @@ Game.prototype.tick = function() {
 			player.cry();
 		}
 
+		if (player.actions.useItem && player.item) {
+			player.useItem();
+		}
+
 		if (player.actions.moveLeft && !player.actions.moveRight) {
 			player.velocity.x -= max_acceleration;
 			if (player.velocity.x < -max_velocity) player.velocity.x = -max_velocity;
