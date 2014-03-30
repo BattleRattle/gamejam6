@@ -2,7 +2,7 @@ var Response = require('./Communication/Response');
 
 var playerId = 0;
 var START_HEALTH = 100;
-var MAX_TOY_PICKUP_DISTANCE = 30;
+var MAX_TOY_PICKUP_DISTANCE = 50;
 var COLLECT_GOAL = 3;
 
 var Player = function(socket, lobby/*, name, spawnPosition*/) {
@@ -76,7 +76,6 @@ Player.prototype.pickup = function(toy) {
 
 	this.toy = toy;
 	toy.owner = this;
-
 	var response = new Response('action', {action: 'pickedUp', playerId: this.id, toyId: toy.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };

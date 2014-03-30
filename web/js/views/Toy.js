@@ -19,8 +19,7 @@ define('ToyView', [
 		for (var i in toys) {
 			data = toys[i];
 			this.toys[data.id] = new createjs.Bitmap(assets[data.type]);
-			this.toys[data.id].y = data.position.y;
-			this.toys[data.id].x = data.position.x;
+			this.toys[data.id].setTransform(data.position.x, data.position.y + 56, 1, 1, parseInt(Math.random() * 90) - 45, 0, 0, 56, 56);
 			this.container.addChild(this.toys[data.id]);
 		}
 	};

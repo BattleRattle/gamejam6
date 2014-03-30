@@ -15,7 +15,7 @@ var Toy = require('./Toy');
 var gameId = 0;
 var TICK_RATE = 30;
 var SYNC_RATE = 1;
-var MAX_TOY_PICKUP_DISTANCE = 30;
+var MAX_TOY_PICKUP_DISTANCE = 50;
 
 var Game = function(connectionHandler, slots) {
 	this.connectionHandler = connectionHandler;
