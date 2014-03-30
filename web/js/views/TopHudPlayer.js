@@ -13,6 +13,7 @@ define('TopHudPlayerView', [
 	TopHudPlayer.prototype.initialize = function (assets, parent, player, i) {
 		this.container = new createjs.Container();
 		this.assets = assets;
+		this.index = i;
 		parent.addChild(this.container);
 
 		var data = assets['monster_data'][player.monsterId];
@@ -83,8 +84,8 @@ define('TopHudPlayerView', [
 			this.container.removeChild(this.health[0]);
 			delete this.health[0];
 
-			bitmap = new createjs.Bitmap(assets['deathstar']);
-			bitmap.x = i * ViewConstants.PLAYER_HUD_WIDTH + 8 * i + 10;
+			bitmap = new createjs.Bitmap(this.assets['deathstar']);
+			bitmap.x = this.index * ViewConstants.PLAYER_HUD_WIDTH + 8 * this.index + 10;
 			bitmap.y = -5;
 			this.container.addChild(bitmap);
 		}
