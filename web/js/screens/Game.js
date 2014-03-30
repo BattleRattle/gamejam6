@@ -78,6 +78,7 @@ define('GameScreen', [
 				topHud.initialize(assets, container, event.event.players);
 				girl.initialize(assets, container);
 				toy.initialize(assets, container, event.event.toys);
+				item.initialize(assets, container);
 				movement.initialize();
 
 				for (var i in event.event.players) {
@@ -107,12 +108,14 @@ define('GameScreen', [
 				stage.update();
 			},
 			'dropped': function (event) {
-				console.log(event)
-				toy.drop(event.event.toyId);
+				toy.drop(event.event.toyId, event.event.playerId);
 				if (event.event.playerId == GameState.playerId) {
-					//Item.dropItem();
+					//item.dropItem();
 				}
 				stage.update();
+			},
+			'cried': function (event) {
+				players[event.event.playerId].cry(event)
 			}
 		});
 

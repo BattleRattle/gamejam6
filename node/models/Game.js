@@ -116,6 +116,11 @@ Game.prototype.tick = function() {
 	var gravity = params.movement.gravity;
 
 	this.players.forEach(function(player) {
+		if (player.actions.cry && player.cryTicks == 0) {
+			player.cryTicks = 90;
+			player.cry();
+		}
+
 		if (player.actions.moveLeft && !player.actions.moveRight) {
 			player.velocity.x -= max_acceleration;
 			if (player.velocity.x < -max_velocity) player.velocity.x = -max_velocity;
@@ -131,6 +136,8 @@ Game.prototype.tick = function() {
 				else player.velocity.x -= friction;
 			}
 		}
+
+		if (player.cryTicks > 0) player.cryTicks--;
 
 		player.position.x += player.velocity.x;
 

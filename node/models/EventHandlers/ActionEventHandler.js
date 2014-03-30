@@ -33,4 +33,9 @@ ActionEventHandler.prototype.dropToy = function(player, event) {
 	player.getGame().changes.add(player.id, event.action, event.state);
 };
 
+ActionEventHandler.prototype.cry = function(player, event) {
+	console.log(event.action + " -> " + event.state);
+	player.getGame().changes.add(player.id, event.action, event.state);
+};
+
 module.exports = ActionEventHandler;

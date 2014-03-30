@@ -29,7 +29,8 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 		moveRight: false,
 		jump: false,
 		pickupToy: false,
-		dropToy: false
+		dropToy: false,
+		cry: false
 	};
 	this.isFalling = false;
 	this.direction = 'right';
@@ -37,6 +38,7 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.monsterId = null;
 	this.lobby = lobby;
 	this.toy = null;
+	this.cryTicks = 0;
 };
 
 Player.prototype.getSocket = function () {
@@ -61,6 +63,11 @@ Player.prototype.getScore = function () {
 
 Player.prototype.getCollectedItems = function() {
 	return this.collectedItems;
+};
+
+Player.prototype.cry = function () {
+	var response = new Response('action', {action: 'cried', playerId: this.id, duration: 90 }, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
 Player.prototype.pickup = function(toy) {

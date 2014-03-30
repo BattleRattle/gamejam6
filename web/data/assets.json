@@ -150,5 +150,9 @@
 	{
 		"id": "button_pressed",
 		"src": "img/button/button_pressed.png"
+	},
+	{
+		"id": "cry",
+		"src": "img/traenen_links.png"
 	}
 ]

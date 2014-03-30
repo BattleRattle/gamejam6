@@ -21,10 +21,57 @@ define('PlayerView', [
 			x: 0,
 			y: 0
 		};
+
+		this.cryAnmitaions = {
+			monster1: [
+				{
+					x: -50,
+					y: 30,
+					scaleX: 1,
+					scaleY: 1
+				},
+				{
+					x: 170,
+					y: 30,
+					scaleX: -1,
+					scaleY: 1
+				}
+			],
+			monster2: [
+				{
+					x: -50,
+					y: 10,
+					scaleX: 1,
+					scaleY: 2
+				},
+				{
+					x: 170,
+					y: 10,
+					scaleX: -1,
+					scaleY: 2
+				}
+			],
+			monster3: [
+				{
+					x: -40,
+					y: 10,
+					scaleX: 1,
+					scaleY: 2.4
+				},
+				{
+					x: 145,
+					y: 10,
+					scaleX: -1,
+					scaleY: 2.4
+				}
+			]
+		}
 	};
 
 	Player.prototype.initialize = function (assets, parent, data) {
 		this.container = new createjs.Container();
+		this.assets = assets;
+		this.animations = [];
 		parent.addChild(this.container);
 
 		this.bitmap = new createjs.Bitmap(assets[data.monsterId]);
@@ -36,19 +83,59 @@ define('PlayerView', [
 		this.lastPosition.y = this.container.y;
 
 		this.collistionTester = new CollisionTester();
+		this.monsterId = data.monsterId;
 		this.monsterData = assets['monster_data'][data.monsterId];
 		this.mapData = assets['map_data']['map1'];
 		this.collisioData = assets['collision'];
 		this.playerData = data;
+		this.cryTicks = 0;
 		config = assets['params'].movement;
+	};
+
+	Player.prototype.cry = function (event) {
+		this.cryTicks = event.event.duration;
+		var data1 = {
+			images: [this.assets['cry']],
+			frames: {
+				width: 73,
+				height: 54,
+				count: 8
+			},
+			animations: {
+				default: {
+					frames: [0,1,2,3,4,5,6,7],
+					speed: 0.4
+				}
+			}
+		};
+
+		for (var i in this.cryAnmitaions[this.monsterId]) {
+			var spriteSheet = new createjs.SpriteSheet(data1);
+			var animation = new createjs.Sprite(spriteSheet, "default");
+			animation.x = this.cryAnmitaions[this.monsterId][i].x;
+			animation.y = this.cryAnmitaions[this.monsterId][i].y;
+			animation.scaleX = this.cryAnmitaions[this.monsterId][i].scaleX;
+			animation.scaleY = this.cryAnmitaions[this.monsterId][i].scaleY;
+			this.animations.push(animation);
+			this.container.addChild(animation);
+		}
 	};
 
 	Player.prototype.updateSync = function (player) {
 		this.container.x = player.position.x;
 		this.container.y = player.position.y;
-	}
+	};
 
 	Player.prototype.update = function(changes) {
+		if (this.cryTicks > 0) {
+			this.cryTicks--;
+			if (this.cryTicks == 0) {
+				for (var i in this.animations) {
+					this.container.removeChild(this.animations[i]);
+					delete this.animations[i];
+				}
+			}
+		}
 		if (changes) {
 			for (var i in changes) {
 				this.actions[i] = changes[i];
