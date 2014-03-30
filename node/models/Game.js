@@ -296,6 +296,8 @@ Game.prototype.tick = function() {
 
 				if (this.players[i].health <= 0) {
 					this.players[i].cry(-1);
+				} else {
+					this.players[i].cry();
 				}
 
 				var response = new Response('watte', {action: 'disappeared', watteId: watte.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
