@@ -44,6 +44,8 @@ Game.prototype.start = function() {
 		};
 	}
 
+	this.usableItem = getUsableItems(this.mapId);
+
 	console.log('Start Game #' + this.id);
 	var event = {
 		action: 'start',
@@ -216,18 +218,22 @@ Game.prototype.tick = function() {
             player.isFalling = false;
         }
 
-        if(player.position.x < 0){
+        if (player.position.x < 0) {
             player.position.x = 0;
             if(player.velocity.x < 0){
                 player.velocity.x = 0;
             }
-        }else if(player.position.x + monsterWidth > mapWidth){
+        } else if (player.position.x + monsterWidth > mapWidth) {
             player.position.x =  mapWidth - monsterWidth;
             player.velocity.x = 0;
         }
 
         player.lastPosition.x = player.position.x;
         player.lastPosition.y = player.position.y;
+
+		for (var i in this.usableItem) {
+			player.pickupItem(this.usableItem[i]);
+		}
 
 	}.bind(this));
 
@@ -245,6 +251,23 @@ function generateToys(girl, amount) {
 		toys.push(new Toy({x: parseInt(girl.x + 300 * Math.random()), y: girl.y + 120}));
 	}
 	return toys;
+}
+
+function getUsableItems(mapId) {
+	var items = maps[mapId].deco,
+		useable = [],
+		item;
+
+	for (var i in items) {
+		item = items[i];
+		if ("watte" === item.type) {
+			item.position.y = 200 - 50 + (1 + item.position.y) * 270 + 95 - 120; // adjust last value based on monster height and item height
+			item.position.x = 300 * item.position.x + 50;
+			useable.push(items[i]);
+		}
+	}
+
+	return useable;
 }
 
 module.exports = Game;

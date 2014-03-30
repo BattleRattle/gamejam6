@@ -116,6 +116,9 @@ define('GameScreen', [
 			},
 			'cried': function (event) {
 				players[event.event.playerId].cry(event)
+			},
+			'pickedUpItem': function (event) {
+				console.log(event);
 			}
 		});
 

@@ -38,6 +38,7 @@ var Player = function(socket, lobby/*, name, spawnPosition*/) {
 	this.monsterId = null;
 	this.lobby = lobby;
 	this.toy = null;
+	this.item = null;
 	this.cryTicks = 0;
 };
 
@@ -70,14 +71,30 @@ Player.prototype.cry = function () {
 	this.game.connectionHandler.sendGameBroadcast(this.game, response);
 };
 
-Player.prototype.pickup = function(toy) {
-	// check distance
-	if (Math.sqrt(Math.pow(this.position.x - toy.position.x, 2) + Math.pow(this.position.x - toy.position.x, 2)) > MAX_TOY_PICKUP_DISTANCE) {
+Player.prototype.pickupItem = function(item) {
+	// check, if toy is already owned
+	if (this.toy || this.item) {
 		return;
 	}
 
+	// check distance
+	if (Math.sqrt(Math.pow(this.position.x - item.position.x, 2) + Math.pow(this.position.y - item.position.y, 2)) > MAX_TOY_PICKUP_DISTANCE) {
+		return;
+	}
+
+	this.item = item;
+	var response = new Response('action', {action: 'pickedUpItem', playerId: this.id, itemType: item.type}, Response.TYPE_BROADCAST_INCLUDE_SELF);
+	this.game.connectionHandler.sendGameBroadcast(this.game, response);
+};
+
+Player.prototype.pickup = function(toy) {
 	// check, if toy is already owned
-	if (toy.owner || this.toy) {
+	if (toy.owner || this.toy || this.item) {
+		return;
+	}
+
+	// check distance
+	if (Math.sqrt(Math.pow(this.position.x - toy.position.x, 2) + Math.pow(this.position.y - toy.position.y, 2)) > MAX_TOY_PICKUP_DISTANCE) {
 		return;
 	}
 
