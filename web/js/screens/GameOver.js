@@ -46,9 +46,8 @@ define('GameOverScreen', [
 		bitmap.alpha = 0.5;
 		container.addChild(bitmap);
 
-		var self = this;
 		setTimeout(function () {
-			self.exit();
+			document.location.reload();
 		}, 4000);
 	};
 
