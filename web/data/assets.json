@@ -180,6 +180,10 @@
 		"src": "img/characters/napoleon_watte_sprites.png"
 	},
 	{
+		"id": "monster1_hammer",
+		"src": "img/characters/bismarck_hammer_sprite.png"
+	},
+	{
 		"id": "monster2_hammer",
 		"src": "img/characters/lincoln_hammer_sprite.png"
 	},
