@@ -294,6 +294,10 @@ Game.prototype.tick = function() {
 				this.players[i].health -= WATTE_DAMAGE;
 				this.watte.splice(this.watte.indexOf(watte), 1);
 
+				if (this.players[i].health <= 0) {
+					this.players[i].cry(-1);
+				}
+
 				var response = new Response('watte', {action: 'disappeared', watteId: watte.id}, Response.TYPE_BROADCAST_INCLUDE_SELF);
 				this.connectionHandler.sendGameBroadcast(this, response);
 
